@@ -506,7 +506,20 @@
                 1024: { slidesPerView: 3, spaceBetween: 32 },
             },
         });
-
+// Carrousel Créations (Défilement horizontal)
+new Swiper('.creationsSlider', {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    pagination: { el: '.creationsSlider .swiper-pagination', clickable: true },
+    navigation: { nextEl: '.creationsSlider .swiper-button-next', prevEl: '.creationsSlider .swiper-button-prev' },
+    breakpoints: {
+        640: { slidesPerView: 2, spaceBetween: 24 },
+        1024: { slidesPerView: 3, spaceBetween: 32 },
+    },
+});
+        
         // Menu Mobile & Header Scroll
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
