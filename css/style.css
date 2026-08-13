@@ -593,3 +593,170 @@ section{ padding:110px 0; position:relative; }
 .pd-meta-list strong{ color:var(--ink); }
 
 .related-title{ font-family:var(--font-display); font-size:1.6rem; margin:90px 0 30px; }
+/* ===========================================================
+   STYLE CARTES DESIGN "MONIA TOURS" POUR FLEURS
+   =========================================================== */
+
+/* Alignement titre / sous-titre latéral */
+.section-head-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  gap: 30px;
+}
+
+.section-sub-text {
+  color: var(--ink-soft);
+  max-width: 480px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .section-head-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* Grille des cartes */
+.flower-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 992px) {
+  .flower-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .flower-grid {
+    grid-template-columns: 1fr; /* 1 colonne sur petit écran */
+  }
+}
+
+/* Structure de la Carte */
+.flower-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flower-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Zone Image & Badge */
+.flower-media {
+  position: relative;
+  height: 240px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.flower-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.flower-card:hover .flower-media img {
+  transform: scale(1.08);
+}
+
+/* Badge noir semi-transparent en haut à gauche */
+.flower-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(26, 22, 22, 0.85);
+  color: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+/* Contenu de la Carte */
+.flower-content {
+  padding: 24px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.flower-title {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+  text-transform: capitalize;
+}
+
+.flower-desc {
+  font-size: 0.85rem;
+  color: #7A7471;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+/* Pied de Carte (Prix & Bouton) */
+.flower-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--grey-mid);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flower-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #A09895;
+  letter-spacing: 0.08em;
+}
+
+.price-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--red); /* Ou la couleur orange/rouge dynamique */
+}
+
+/* Bouton Découvrir arrondi à droite */
+.btn-discover {
+  background: #F7F5F3;
+  color: var(--ink);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.btn-discover:hover {
+  background: var(--red);
+  color: #FFFFFF;
+  transform: scale(1.03);
+     }
+
