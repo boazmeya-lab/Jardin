@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produit — Jardin Agro</title>
+<meta name="description" content="Découvrez nos compositions florales premium chez Jardin Agro, à commander en ligne ou via WhatsApp.">
+<link rel="icon" href="assets/images/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <div class="loader-logo">Jardin Agro</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header scrolled" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/images/logo.png" alt="Logo Jardin Agro" width="42" height="42">
+      <span>Jardin Agro</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="index.html#boutique">Boutique</a>
+      <a href="index.html#categories">Catégories</a>
+      <a href="index.html#apropos">À propos</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-btn" href="https://wa.me/243900000000" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5C10 9.4 9.5 8 9.3 7.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 5 4.3.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.2 1 1-3.1-.2-.3C3.5 14.7 3 13.4 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9z"/></svg>
+      </a>
+      <button class="icon-btn" id="cartToggle" aria-label="Voir le panier">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 3h2l2.4 12.2a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20.5" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/></svg>
+        <span class="cart-count" style="display:none">0</span>
+      </button>
+      <a href="index.html#boutique" class="btn btn-primary header-cta">Commander</a>
+      <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileCloseBtn" aria-label="Fermer le menu">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <a href="index.html">Accueil</a>
+  <a href="index.html#boutique">Boutique</a>
+  <a href="index.html#categories">Catégories</a>
+  <a href="index.html#apropos">À propos</a>
+  <a href="index.html#contact">Contact</a>
+  <a href="index.html#boutique" class="btn btn-primary">Commander</a>
+</div>
+
+<!-- ============ PRODUIT ============ -->
+<section class="product-detail">
+  <div class="container">
+    <p class="breadcrumb"><a href="index.html">Accueil</a> / <a href="index.html#boutique">Boutique</a> / <span id="breadcrumbName">Produit</span></p>
+
+    <div class="pd-grid mt-lg">
+      <div class="pd-gallery">
+        <div class="pd-main-image" id="pdMainImageBox">
+          <img id="pdMainImage" src="" alt="" width="700" height="875">
+        </div>
+        <div class="pd-thumbs" id="pdThumbs"></div>
+      </div>
+
+      <div class="pd-info">
+        <span class="product-cat" id="pdCategory"></span>
+        <h1 class="pd-name" id="pdName"></h1>
+        <div class="pd-stars" id="pdStars"></div>
+        <div class="pd-price" id="pdPrice"></div>
+        <p class="pd-desc" id="pdDesc"></p>
+        <div class="pd-avail"><span class="dot"></span> En stock — prêt sous 2h</div>
+
+        <div class="pd-option-block">
+          <span class="pd-label">Taille</span>
+          <div class="size-options">
+            <button class="size-btn" data-size="Petit">Petit</button>
+            <button class="size-btn active" data-size="Moyen">Moyen</button>
+            <button class="size-btn" data-size="Grand">Grand</button>
+          </div>
+        </div>
+
+        <div class="pd-option-block">
+          <span class="pd-label">Quantité</span>
+          <div class="qty-row">
+            <div class="qty-control">
+              <button id="qtyMinus" aria-label="Diminuer la quantité">−</button>
+              <span id="qtyDisplay">1</span>
+              <button id="qtyPlus" aria-label="Augmenter la quantité">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pd-actions">
+          <button class="btn btn-dark" id="addToCartBtn">Ajouter au panier</button>
+          <button class="btn-whatsapp" id="orderWhatsappBtn">Commander sur WhatsApp</button>
+        </div>
+
+        <div class="pd-meta-list">
+          <div><strong>Livraison :</strong> même jour à Kinshasa, 24-48h ailleurs</div>
+          <div><strong>Entretien :</strong> à conserver dans l'eau fraîche, hors soleil direct</div>
+          <div><strong>Garantie :</strong> fraîcheur assurée 5 jours minimum</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="related-title">Vous pourriez aussi aimer</h2>
+    <div class="product-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <img src="assets/images/logo.png" alt="Logo Jardin Agro" width="36" height="36">
+          <span>Jardin Agro</span>
+        </div>
+        <p>Fleuriste premium dédié à créer des émotions à travers des compositions florales uniques, pour toutes les occasions de la vie.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.9.2-1.5 1.5-1.5H16.5V4.2C16.1 4.1 15 4 13.7 4c-2.6 0-4.4 1.6-4.4 4.5V10.5H7v3h2.3V21h4.2Z"/></svg></a>
+          <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a>
+          <a href="https://wa.me/243900000000" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2Zm5.5 12.4c-.3.7-1.5 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.9-1.2-4.8-4.1-4.9-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.7-.4h.5c.2 0 .4 0 .6.4.2.4.7 1.8.7 2 .1.1.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.8 2.2 1.1 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1 .2-.2.4-.2.6-.1.3.1 1.7.8 2 .9.3.1.5.2.6.3 0 .2 0 .7-.1 1.2Z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="index.html#boutique">Boutique</a></li>
+          <li><a href="index.html#categories">Catégories</a></li>
+          <li><a href="index.html#apropos">À propos</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Catégories</h4>
+        <ul class="footer-links">
+          <li><a href="product.html?id=rose-rouge">Roses</a></li>
+          <li><a href="product.html?id=bouquet-mariage">Mariage</a></li>
+          <li><a href="product.html?id=coeur-de-roses">Amour</a></li>
+          <li><a href="product.html?id=lys-blanc">Deuil</a></li>
+          <li><a href="product.html?id=orchidee-blanche">Plantes</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Contact</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C.7 8.4 2.7 3 8 3c1.8 0 3.2 1 4 2.3C12.8 4 14.2 3 16 3c5.3 0 7.3 5.4 5.5 9-2.5 4.5-9.5 9-9.5 9Z" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Avenue des Fleurs, Kinshasa, RDC</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8.1 9.6a16 16 0 0 0 6 6l1.1-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>+243 900 000 000</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 5h18v14H3V5Z" stroke="currentColor" stroke-width="1.5"/><path d="m3 6 9 7 9-7" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>contact@jardinagro.com</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © <span class="current-year">2026</span> Jardin Agro — Tous droits réservés. Conçu avec passion 🌹
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Votre panier</h3>
+    <button class="cart-close" id="cartCloseBtn" aria-label="Fermer le panier">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="cart-total-row"><span>Total</span><span id="cartTotal">$0</span></div>
+    <button class="btn-whatsapp btn-block" id="cartWhatsappBtn" disabled>Commander sur WhatsApp</button>
+  </div>
+</aside>
+
+<a href="https://wa.me/243900000000" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Discuter sur WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2Zm5.5 12.4c-.3.7-1.5 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.9-1.2-4.8-4.1-4.9-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.7-.4h.5c.2 0 .4 0 .6.4.2.4.7 1.8.7 2 .1.1.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.8 2.2 1.1 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1 .2-.2.4-.2.6-.1.3.1 1.7.8 2 .9.3.1.5.2.6.3 0 .2 0 .7-.1 1.2Z"/></svg>
+</a>
+<button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span class="toast-text"></span>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script src="js/product.js"></script>
+</body>
+</html>
