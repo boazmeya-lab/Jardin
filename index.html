@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jardin Agro — Fleuriste de luxe | Bouquets & Compositions Florales</title>
+<meta name="description" content="Jardin Agro, fleuriste premium : bouquets de roses, compositions florales et livraison rapide pour toutes vos occasions. Offrez une émotion.">
+<link rel="icon" href="assets/images/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader">
+  <div class="loader-logo">Jardin Agro</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/images/logo.png" alt="Logo Jardin Agro" width="42" height="42">
+      <span>Jardin Agro</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="index.html#boutique">Boutique</a>
+      <a href="index.html#categories">Catégories</a>
+      <a href="index.html#apropos">À propos</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-btn" href="https://wa.me/243900000000" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5C10 9.4 9.5 8 9.3 7.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 5 4.3.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.2 1 1-3.1-.2-.3C3.5 14.7 3 13.4 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9z"/></svg>
+      </a>
+      <button class="icon-btn" id="cartToggle" aria-label="Voir le panier">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 3h2l2.4 12.2a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20.5" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/></svg>
+        <span class="cart-count" style="display:none">0</span>
+      </button>
+      <a href="#boutique" class="btn btn-primary header-cta">Commander</a>
+      <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileCloseBtn" aria-label="Fermer le menu">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <a href="index.html">Accueil</a>
+  <a href="index.html#boutique">Boutique</a>
+  <a href="index.html#categories">Catégories</a>
+  <a href="index.html#apropos">À propos</a>
+  <a href="index.html#contact">Contact</a>
+  <a href="#boutique" class="btn btn-primary">Commander</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline poster="assets/images/hero.jpg">
+      <source src="assets/videos/video-accueil.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="petals" id="petals"></div>
+
+  <div class="container hero-content">
+    <span class="eyebrow">Fleuriste premium</span>
+    <h1 class="hero-title">Offrez plus que des fleurs,<br><em>offrez une émotion.</em></h1>
+    <p class="hero-subtitle">Des bouquets uniques pour toutes les occasions, composés avec passion et livrés avec soin.</p>
+    <div class="hero-actions">
+      <a href="#boutique" class="btn btn-primary">Commander maintenant</a>
+      <a href="#categories" class="btn btn-outline">Découvrir nos bouquets</a>
+    </div>
+  </div>
+
+  <a href="#categories" class="scroll-cue" aria-label="Défiler vers le bas">
+    <span>Défiler</span>
+    <span class="line"></span>
+  </a>
+</section>
+
+<!-- ============ CATEGORIES ============ -->
+<section id="categories">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Nos univers</span>
+      <h2 class="section-title">Une fleur pour chaque instant</h2>
+      <p class="section-sub">Explorez nos catégories et trouvez la composition parfaite pour l'occasion qui compte pour vous.</p>
+    </div>
+
+    <div class="cat-grid stagger">
+      <a href="product.html?id=rose-rouge" class="cat-card reveal" style="--i:0">
+        <img src="assets/images/rose-rouge-cat.jpg" alt="Catégorie Roses" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">🌹</span> Roses</span>
+      </a>
+      <a href="product.html?id=bouquet-elegance" class="cat-card reveal" style="--i:1">
+        <img src="assets/images/bouquets-cat.jpg" alt="Catégorie Bouquets" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">💐</span> Bouquets</span>
+      </a>
+      <a href="product.html?id=panier-fleuri" class="cat-card reveal" style="--i:2">
+        <img src="assets/images/anniversaire-cat.jpg" alt="Catégorie Anniversaire" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">🎂</span> Anniversaire</span>
+      </a>
+      <a href="product.html?id=coeur-de-roses" class="cat-card reveal" style="--i:3">
+        <img src="assets/images/amour-cat.jpg" alt="Catégorie Amour" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">❤️</span> Amour</span>
+      </a>
+      <a href="product.html?id=bouquet-mariage" class="cat-card reveal" style="--i:4">
+        <img src="assets/images/mariage-cat.jpg" alt="Catégorie Mariage" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">💍</span> Mariage</span>
+      </a>
+      <a href="product.html?id=bouquet-elegance" class="cat-card reveal" style="--i:5">
+        <img src="assets/images/evenement-cat.jpg" alt="Catégorie Événement" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">🎉</span> Événement</span>
+      </a>
+      <a href="product.html?id=lys-blanc" class="cat-card reveal" style="--i:6">
+        <img src="assets/images/deuil-cat.jpg" alt="Catégorie Deuil" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">🤍</span> Deuil</span>
+      </a>
+      <a href="product.html?id=orchidee-blanche" class="cat-card reveal" style="--i:7">
+        <img src="assets/images/plantes-cat.jpg" alt="Catégorie Plantes" loading="lazy" width="400" height="500">
+        <span class="cat-label"><span class="cat-emoji">🌿</span> Plantes</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOUTIQUE / PRODUITS ============ -->
+<section id="boutique" class="bg-light">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">La boutique</span>
+      <h2 class="section-title">Nos compositions du moment</h2>
+      <p class="section-sub">Chaque bouquet est préparé à la commande avec des fleurs fraîches, sélectionnées pour leur qualité.</p>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-chip active" data-filter="Tous">Tous</button>
+      <button class="filter-chip" data-filter="Roses">Roses</button>
+      <button class="filter-chip" data-filter="Bouquets">Bouquets</button>
+      <button class="filter-chip" data-filter="Mariage">Mariage</button>
+      <button class="filter-chip" data-filter="Amour">Amour</button>
+      <button class="filter-chip" data-filter="Anniversaire">Anniversaire</button>
+      <button class="filter-chip" data-filter="Deuil">Deuil</button>
+      <button class="filter-chip" data-filter="Plantes">Plantes</button>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- ============ POURQUOI NOUS ============ -->
+<section id="apropos">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Pourquoi Jardin Agro</span>
+      <h2 class="section-title">Une expérience florale d'exception</h2>
+      <p class="section-sub">Depuis toujours, nous mettons un point d'honneur à offrir la meilleure qualité et le meilleur service à chaque client.</p>
+    </div>
+
+    <div class="why-grid stagger">
+      <div class="why-card reveal" style="--i:0">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c2 3 5 4 5 8a5 5 0 0 1-10 0c0-4 3-5 5-8Z" stroke="currentColor" stroke-width="1.6"/><path d="M12 21v-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <h3 class="why-title">Fleurs fraîches</h3>
+        <p class="why-text">Sélectionnées chaque jour auprès des meilleurs producteurs.</p>
+      </div>
+      <div class="why-card reveal" style="--i:1">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16V7a1 1 0 0 1 1-1h9v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M13 10h4l3 3v3h-7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7" cy="17.5" r="1.6" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="17.5" r="1.6" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <h3 class="why-title">Livraison rapide</h3>
+        <p class="why-text">Vos fleurs livrées le jour même, partout en ville.</p>
+      </div>
+      <div class="why-card reveal" style="--i:2">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3 class="why-title">Paiement sécurisé</h3>
+        <p class="why-text">Commandez en toute confiance, en ligne ou via WhatsApp.</p>
+      </div>
+      <div class="why-card reveal" style="--i:3">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <h3 class="why-title">Qualité garantie</h3>
+        <p class="why-text">Fraîcheur assurée ou nous refaisons votre bouquet.</p>
+      </div>
+      <div class="why-card reveal" style="--i:4">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.4-9.5-8.8C.7 8.4 2.7 5 6 5c2 0 3.3 1 4 2 .7-1 2-2 4-2 3.3 0 5.3 3.4 3.5 7.2C19 16.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <h3 class="why-title">Service client</h3>
+        <p class="why-text">Une équipe à votre écoute avant et après chaque commande.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIVRAISON ============ -->
+<section class="delivery bg-light">
+  <div class="container">
+    <div class="delivery-grid">
+      <div class="delivery-media reveal-scale">
+        <img src="assets/images/livraison.jpg" alt="Livraison de fleurs Jardin Agro" loading="lazy" width="800" height="600">
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Livraison</span>
+        <h2 class="section-title">Nous livrons vos émotions</h2>
+        <p class="section-sub">Jardin Agro assure la livraison rapide et sécurisée de vos bouquets à domicile, au bureau ou sur le lieu de votre choix.</p>
+
+        <div class="delivery-cards">
+          <div class="delivery-card">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 10 12 3l9 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9v11h14V9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <h4>Livraison à domicile</h4>
+            <p>Directement à votre porte, où que vous soyez.</p>
+          </div>
+          <div class="delivery-card">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 21V8l8-5 8 5v13" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 21v-6h6v6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <h4>Livraison au bureau</h4>
+            <p>Surprenez un collègue ou un partenaire au travail.</p>
+          </div>
+          <div class="delivery-card">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="9" width="18" height="11" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 13h18M12 9V6a2.5 2.5 0 0 1 5 0c0 1.5-2.5 3-2.5 3M12 9V6a2.5 2.5 0 0 0-5 0c0 1.5 2.5 3 2.5 3" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+            <h4>Livraison surprise</h4>
+            <p>Discrétion assurée pour un effet garanti.</p>
+          </div>
+          <div class="delivery-card">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            <h4>Livraison express</h4>
+            <p>Reçu en moins de 2 heures dans votre zone.</p>
+          </div>
+        </div>
+
+        <button class="btn-whatsapp" data-whatsapp-generic="Bonjour Jardin Agro 🌹
+Je souhaite obtenir des informations concernant une livraison.">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5C10 9.4 9.5 8 9.3 7.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 5 4.3.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.2 1 1-3.1-.2-.3C3.5 14.7 3 13.4 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9z"/></svg>
+          Commander une livraison
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AVIS CLIENTS ============ -->
+<section id="avis">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Témoignages</span>
+      <h2 class="section-title">Ce que nos clients disent</h2>
+    </div>
+
+    <div class="testi-wrap reveal">
+      <button class="testi-arrow testi-prev" id="testiPrev" aria-label="Avis précédent">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="testi-arrow testi-next" id="testiNext" aria-label="Avis suivant">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="testi-track">
+        <div class="testi-slides" id="testiSlides">
+          <div class="testi-slide">
+            <img class="testi-avatar" src="assets/images/client1.jpg" alt="Photo cliente Nadine K." loading="lazy" width="76" height="76">
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">« Un bouquet absolument magnifique, livré à l'heure exacte. Jardin Agro a rendu ma surprise inoubliable. »</p>
+            <div class="testi-name">Nadine K.</div>
+            <div class="testi-role">Cliente fidèle</div>
+          </div>
+          <div class="testi-slide">
+            <img class="testi-avatar" src="assets/images/client2.jpg" alt="Photo client Patrick M." loading="lazy" width="76" height="76">
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">« Service impeccable du début à la fin. La commande via WhatsApp était rapide et le bouquet encore plus beau qu'en photo. »</p>
+            <div class="testi-name">Patrick M.</div>
+            <div class="testi-role">Client entreprise</div>
+          </div>
+          <div class="testi-slide">
+            <img class="testi-avatar" src="assets/images/client3.jpg" alt="Photo cliente Grace L." loading="lazy" width="76" height="76">
+            <div class="stars">★★★★☆</div>
+            <p class="testi-text">« Des fleurs d'une fraîcheur incroyable pour le mariage de ma sœur. Toute la famille a été conquise. »</p>
+            <div class="testi-name">Grace L.</div>
+            <div class="testi-role">Mariage</div>
+          </div>
+          <div class="testi-slide">
+            <img class="testi-avatar" src="assets/images/client4.jpg" alt="Photo client Eric T." loading="lazy" width="76" height="76">
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">« Une équipe à l'écoute qui a su composer exactement ce que je cherchais. Je recommande sans hésiter. »</p>
+            <div class="testi-name">Eric T.</div>
+            <div class="testi-role">Client fidèle</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-dots" id="testiDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM ============ -->
+<section class="bg-light">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">@jardinagro</span>
+      <h2 class="section-title">Suivez-nous sur Instagram</h2>
+    </div>
+  </div>
+  <div class="insta-grid reveal">
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram1.jpg" alt="Publication Instagram 1" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram2.jpg" alt="Publication Instagram 2" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram3.jpg" alt="Publication Instagram 3" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram4.jpg" alt="Publication Instagram 4" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram5.jpg" alt="Publication Instagram 5" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram6.jpg" alt="Publication Instagram 6" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram7.jpg" alt="Publication Instagram 7" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+    <a class="insta-item" href="#" target="_blank" rel="noopener"><img src="assets/images/instagram8.jpg" alt="Publication Instagram 8" loading="lazy" width="300" height="300"><span class="insta-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></span></a>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section id="contact">
+  <div class="container">
+    <div class="newsletter-strip reveal-scale">
+      <div>
+        <h3>Restez inspiré</h3>
+        <p>Recevez nos nouveautés, offres exclusives et conseils floraux directement dans votre boîte mail.</p>
+      </div>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" required placeholder="Votre adresse e-mail" aria-label="Adresse e-mail">
+        <button type="submit">S'inscrire</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <img src="assets/images/logo.png" alt="Logo Jardin Agro" width="36" height="36">
+          <span>Jardin Agro</span>
+        </div>
+        <p>Fleuriste premium dédié à créer des émotions à travers des compositions florales uniques, pour toutes les occasions de la vie.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.9.2-1.5 1.5-1.5H16.5V4.2C16.1 4.1 15 4 13.7 4c-2.6 0-4.4 1.6-4.4 4.5V10.5H7v3h2.3V21h4.2Z"/></svg></a>
+          <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a>
+          <a href="https://wa.me/243900000000" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2Zm5.5 12.4c-.3.7-1.5 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.9-1.2-4.8-4.1-4.9-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.7-.4h.5c.2 0 .4 0 .6.4.2.4.7 1.8.7 2 .1.1.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.8 2.2 1.1 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1 .2-.2.4-.2.6-.1.3.1 1.7.8 2 .9.3.1.5.2.6.3 0 .2 0 .7-.1 1.2Z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="index.html#boutique">Boutique</a></li>
+          <li><a href="index.html#categories">Catégories</a></li>
+          <li><a href="index.html#apropos">À propos</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Catégories</h4>
+        <ul class="footer-links">
+          <li><a href="product.html?id=rose-rouge">Roses</a></li>
+          <li><a href="product.html?id=bouquet-mariage">Mariage</a></li>
+          <li><a href="product.html?id=coeur-de-roses">Amour</a></li>
+          <li><a href="product.html?id=lys-blanc">Deuil</a></li>
+          <li><a href="product.html?id=orchidee-blanche">Plantes</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Contact</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C.7 8.4 2.7 3 8 3c1.8 0 3.2 1 4 2.3C12.8 4 14.2 3 16 3c5.3 0 7.3 5.4 5.5 9-2.5 4.5-9.5 9-9.5 9Z" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Avenue des Fleurs, Kinshasa, RDC</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8.1 9.6a16 16 0 0 0 6 6l1.1-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>+243 900 000 000</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 5h18v14H3V5Z" stroke="currentColor" stroke-width="1.5"/><path d="m3 6 9 7 9-7" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>contact@jardinagro.com</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © <span class="current-year">2026</span> Jardin Agro — Tous droits réservés. Conçu avec passion 🌹
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Votre panier</h3>
+    <button class="cart-close" id="cartCloseBtn" aria-label="Fermer le panier">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="cart-total-row"><span>Total</span><span id="cartTotal">$0</span></div>
+    <button class="btn-whatsapp btn-block" id="cartWhatsappBtn" disabled>Commander sur WhatsApp</button>
+  </div>
+</aside>
+
+<!-- ============ FLOATING BUTTONS ============ -->
+<a href="https://wa.me/243900000000" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Discuter sur WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2Zm5.5 12.4c-.3.7-1.5 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.9-1.2-4.8-4.1-4.9-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.7-.4h.5c.2 0 .4 0 .6.4.2.4.7 1.8.7 2 .1.1.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.8 2.2 1.1 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1 .2-.2.4-.2.6-.1.3.1 1.7.8 2 .9.3.1.5.2.6.3 0 .2 0 .7-.1 1.2Z"/></svg>
+</a>
+<button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span class="toast-text"></span>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
