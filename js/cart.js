@@ -147,3 +147,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const whatsBtn = document.getElementById("cartWhatsappBtn");
   if(whatsBtn) whatsBtn.addEventListener("click", () => Cart.sendWhatsapp());
 });
+// NUMÉRO WHATSAPP OFFICIEL
+const WHATSAPP_NUMBER = "243998096713"; 
+
+// ÉCOUTE DE TOUS LES BOUTONS D'ACTION (Découvrir / Profiter / Réserver)
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    const text = btn.textContent.trim().toLowerCase();
+
+    if (text.includes('découvrir') || text.includes('profiter') || text.includes('réserver')) {
+        // Retrouve la carte du produit
+        const card = btn.closest('.swiper-slide') || btn.closest('.group') || btn.closest('div');
+        const titleElement = card ? card.querySelector('h3') : null;
+        const productName = titleElement ? titleElement.textContent.trim() : "un de vos bouquets";
+
+        // Message automatique
+        const message = encodeURIComponent(`Bonjour Jardin Agro ! Je souhaite avoir plus d'informations ou commander : ${productName}`);
+        
+        // Redirection WhatsApp
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+    }
+});
+
