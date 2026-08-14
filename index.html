@@ -175,8 +175,7 @@
         </div>
     </section>
 <!-- SECTION : NOS DERNIÈRES CRÉATIONS -->
-    
-<!-- SECTION : NOS DERNIÈRES CRÉATIONS (Carrousel Horizontal) -->
+    <!-- SECTION : NOS DERNIÈRES CRÉATIONS (Style Cartes Produit / Promo) -->
 <section id="creations" class="py-20 bg-white border-b border-slate-100">
     <div class="max-w-7xl mx-auto px-6">
         
@@ -191,107 +190,141 @@
             </p>
         </div>
 
-        <!-- Carrousel Swiper Horizontal -->
+        <!-- Carrousel Swiper -->
         <div class="swiper creationsSlider !pb-14">
             <div class="swiper-wrapper">
                 
                 <!-- 1. Bouquet Romantique -->
                 <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=800&auto=format&fit=crop" alt="Bouquet Romantique" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Coup de cœur</span>
-                            <h3 class="text-xl font-bold text-white">Bouquet Romantique</h3>
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                        <div class="relative h-60 w-full overflow-hidden bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=800&auto=format&fit=crop" alt="Bouquet Romantique" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-4 left-4 bg-brand-sage/90 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">Coup de cœur</span>
+                        </div>
+                        <div class="p-6 flex flex-col justify-between flex-grow">
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-dark mb-1">Bouquet Romantique</h3>
+                                <p class="text-slate-500 text-xs line-clamp-2">Compositions délicates de pivoines et roses fraîches pour des moments inoubliables.</p>
+                            </div>
+                            <div class="pt-6 mt-4 border-t border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <span class="block text-xs text-slate-400 line-through">45 $</span>
+                                    <span class="text-2xl font-black text-brand-primary">35 $</span>
+                                </div>
+                                <button class="bg-slate-100 hover:bg-brand-primary hover:text-white text-brand-dark font-bold text-xs px-5 py-2.5 rounded-xl transition-colors duration-200">
+                                    Découvrir
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. Mariage -->
+                <!-- 2. Mariage & Cérémonie -->
                 <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt="Mariage & Cérémonie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Événement</span>
-                            <h3 class="text-xl font-bold text-white">Mariage & Cérémonie</h3>
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                        <div class="relative h-60 w-full overflow-hidden bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt="Mariage & Cérémonie" class="w-full h-full object-cover">
+                            <span class="absolute top-4 left-4 bg-brand-dark/80 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">Événement</span>
+                        </div>
+                        <div class="p-6 flex flex-col justify-between flex-grow">
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-dark mb-1">Mariage & Cérémonie</h3>
+                                <p class="text-slate-500 text-xs line-clamp-2">Décoration florale complète et arrangements sur-mesure pour votre grand jour.</p>
+                            </div>
+                            <div class="pt-6 mt-4 border-t border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-black text-brand-primary">150 $</span>
+                                </div>
+                                <button class="bg-slate-100 hover:bg-brand-primary hover:text-white text-brand-dark font-bold text-xs px-5 py-2.5 rounded-xl transition-colors duration-200">
+                                    Découvrir
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. Anniversaire -->
+                <!-- 3. Bouquet Anniversaire -->
                 <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=800&auto=format&fit=crop" alt="Bouquet Anniversaire" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Célébration</span>
-                            <h3 class="text-xl font-bold text-white">Bouquet Anniversaire</h3>
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                        <div class="relative h-60 w-full overflow-hidden bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=800&auto=format&fit=crop" alt="Bouquet Anniversaire" class="w-full h-full object-cover">
+                            <span class="absolute top-4 left-4 bg-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Célébration</span>
+                        </div>
+                        <div class="p-6 flex flex-col justify-between flex-grow">
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-dark mb-1">Bouquet Anniversaire</h3>
+                                <p class="text-slate-500 text-xs line-clamp-2">Mélange coloré et joyeux sélectionné pour faire plaisir à vos proches.</p>
+                            </div>
+                            <div class="pt-6 mt-4 border-t border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <span class="block text-xs text-slate-400 line-through">50 $</span>
+                                    <span class="text-2xl font-black text-brand-primary">40 $</span>
+                                </div>
+                                <button class="bg-slate-100 hover:bg-brand-primary hover:text-white text-brand-dark font-bold text-xs px-5 py-2.5 rounded-xl transition-colors duration-200">
+                                    Découvrir
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 4. Bouquet Homme -->
                 <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?q=80&w=800&auto=format&fit=crop" alt="Bouquet Homme" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Élégant</span>
-                            <h3 class="text-xl font-bold text-white">Bouquet Homme</h3>
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                        <div class="relative h-60 w-full overflow-hidden bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?q=80&w=800&auto=format&fit=crop" alt="Bouquet Homme" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 flex flex-col justify-between flex-grow">
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-dark mb-1">Bouquet Homme</h3>
+                                <p class="text-slate-500 text-xs line-clamp-2">Tons sobres, sobres et structurés, une touche végétale élégante et masculine.</p>
+                            </div>
+                            <div class="pt-6 mt-4 border-t border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-black text-brand-primary">30 $</span>
+                                </div>
+                                <button class="bg-slate-100 hover:bg-brand-primary hover:text-white text-brand-dark font-bold text-xs px-5 py-2.5 rounded-xl transition-colors duration-200">
+                                    Découvrir
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. Bouquet Femme -->
+                <!-- 5. Décoration Événementielle -->
                 <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?q=80&w=800&auto=format&fit=crop" alt="Bouquet Femme" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Raffiné</span>
-                            <h3 class="text-xl font-bold text-white">Bouquet Femme</h3>
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                        <div class="relative h-60 w-full overflow-hidden bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=800&auto=format&fit=crop" alt="Décoration Événementielle" class="w-full h-full object-cover">
+                            <span class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Sur-mesure</span>
                         </div>
-                    </div>
-                </div>
-
-                <!-- 6. Décoration Événementielle -->
-                <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=800&auto=format&fit=crop" alt="Décoration Événementielle" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Sur-mesure</span>
-                            <h3 class="text-xl font-bold text-white">Décoration Événementielle</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 7. Fleurs Roses -->
-                <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1522383225653-ed111181a951?q=80&w=800&auto=format&fit=crop" alt="Nuances de Roses" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Collection</span>
-                            <h3 class="text-xl font-bold text-white">Nuances de Roses</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 8. Fleurs Blanches -->
-                <div class="swiper-slide">
-                    <div class="group relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-slate-100 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?q=80&w=800&auto=format&fit=crop" alt="Élégance Blanche" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent flex flex-col justify-end p-6">
-                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">Pureté</span>
-                            <h3 class="text-xl font-bold text-white">Élégance Blanche</h3>
+                        <div class="p-6 flex flex-col justify-between flex-grow">
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-dark mb-1">Décor Événementiel</h3>
+                                <p class="text-slate-500 text-xs line-clamp-2">Habillage végétal et floral pour galas, réceptions et événements d'entreprise.</p>
+                            </div>
+                            <div class="pt-6 mt-4 border-t border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-black text-brand-primary">200 $</span>
+                                </div>
+                                <button class="bg-slate-100 hover:bg-brand-primary hover:text-white text-brand-dark font-bold text-xs px-5 py-2.5 rounded-xl transition-colors duration-200">
+                                    Découvrir
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
             
-            <!-- Contrôles de navigation Swiper -->
+            <!-- Navigation / Pagination Swiper -->
             <div class="swiper-pagination"></div>
             <div class="swiper-button-next hidden md:flex"></div>
             <div class="swiper-button-prev hidden md:flex"></div>
         </div>
     </div>
-</section>
+    </section>
+    
 
     
     <!-- ==========================================
