@@ -1,115 +1,93 @@
-/* ===========================================================
-   JARDIN AGRO — Page produit
-   =========================================================== */
+// NUMÉRO WHATSAPP OFFICIEL
+const WHATSAPP_NUMBER = "243998096713"; 
 
-(function(){
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id") || PRODUCTS[0].id;
-  const product = getProductById(id) || PRODUCTS[0];
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. RÉCUPÉRATION DE L'ID DU PRODUIT DEPUIS L'URL (?id=1)
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
 
-  let selectedSize = "Moyen";
-  let qty = 1;
+    // On cherche le produit correspondant dans la liste "products" (définie dans data.js)
+    const product = (typeof products !== 'undefined') 
+        ? products.find(p => p.id == productId) || products[0] 
+        : null;
 
-  const SIZE_MULTIPLIER = { "Petit": 0.85, "Moyen": 1, "Grand": 1.35 };
+    if (!product) return;
 
-  function currentPrice(){
-    return Math.round(product.price * SIZE_MULTIPLIER[selectedSize]);
-  }
+    // Variables d'état du produit sélectionné
+    let currentQuantity = 1;
+    let selectedSize = product.sizes ? product.sizes[0] : null;
 
-  function render(){
-    document.title = `${product.name} — Jardin Agro`;
+    // 2. INJECTION DES DONNÉES DANS LA PAGE PRODUCT.HTML
+    const titleEl = document.getElementById('product-title');
+    const priceEl = document.getElementById('product-price');
+    const descEl = document.getElementById('product-description');
+    const mainImgEl = document.getElementById('product-main-img');
 
-    document.getElementById("pdName").textContent = product.name;
-    document.getElementById("pdCategory").textContent = product.category;
-    document.getElementById("pdDesc").textContent = product.description;
-    document.getElementById("pdStars").textContent = "★".repeat(product.rating) + "☆".repeat(5 - product.rating);
-    document.getElementById("breadcrumbName").textContent = product.name;
+    if (titleEl) titleEl.textContent = product.name;
+    if (priceEl) priceEl.textContent = `${product.price} $`;
+    if (descEl) descEl.textContent = product.description;
+    if (mainImgEl) mainImgEl.src = product.image;
 
-    const mainImg = document.getElementById("pdMainImage");
-    mainImg.src = product.gallery[0];
-    mainImg.alt = product.name;
-
-    const thumbsWrap = document.getElementById("pdThumbs");
-    thumbsWrap.innerHTML = product.gallery.map((src, i) => `
-      <button class="pd-thumb ${i === 0 ? "active" : ""}" data-src="${src}" aria-label="Image ${i + 1}">
-        <img src="${src}" alt="${product.name} vue ${i + 1}" loading="lazy">
-      </button>
-    `).join("");
-
-    thumbsWrap.querySelectorAll(".pd-thumb").forEach(btn => {
-      btn.addEventListener("click", () => {
-        thumbsWrap.querySelectorAll(".pd-thumb").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        mainImg.src = btn.dataset.src;
-      });
+    // 3. GALERIE DE PHOTOS (Changement de l'image principale au clic)
+    const thumbnails = document.querySelectorAll('.product-thumb');
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', (e) => {
+            if (mainImgEl) mainImgEl.src = e.target.src;
+            // Mise à jour de la bordure active
+            thumbnails.forEach(t => t.classList.remove('border-brand-primary'));
+            e.target.classList.add('border-brand-primary');
+        });
     });
 
-    updatePrice();
-    renderRelated();
-  }
-
-  function updatePrice(){
-    const priceEl = document.getElementById("pdPrice");
-    const price = currentPrice();
-    priceEl.innerHTML = product.oldPrice
-      ? `<span class="old">${SHOP_CONFIG.currency}${product.oldPrice}</span>${SHOP_CONFIG.currency}${price}`
-      : `${SHOP_CONFIG.currency}${price}`;
-  }
-
-  /* Zoom */
-  const mainImageBox = document.getElementById("pdMainImageBox");
-  if(mainImageBox){
-    mainImageBox.addEventListener("click", () => mainImageBox.classList.toggle("zoomed"));
-  }
-
-  /* Size selector */
-  document.querySelectorAll(".size-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      selectedSize = btn.dataset.size;
-      updatePrice();
+    // 4. CHOIX DE LA TAILLE / TAILLE DU BOUQUET (Si disponible)
+    const sizeButtons = document.querySelectorAll('.size-btn');
+    sizeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            sizeButtons.forEach(b => b.classList.remove('bg-brand-primary', 'text-white'));
+            btn.classList.add('bg-brand-primary', 'text-white');
+            selectedSize = btn.dataset.size || btn.textContent.trim();
+        });
     });
-  });
 
-  /* Quantity */
-  const qtyDisplay = document.getElementById("qtyDisplay");
-  document.getElementById("qtyMinus").addEventListener("click", () => {
-    qty = Math.max(1, qty - 1);
-    qtyDisplay.textContent = qty;
-  });
-  document.getElementById("qtyPlus").addEventListener("click", () => {
-    qty += 1;
-    qtyDisplay.textContent = qty;
-  });
+    // 5. BOUTONS QUANTITÉ (+ / -)
+    const qtyMinus = document.getElementById('qty-minus');
+    const qtyPlus = document.getElementById('qty-plus');
+    const qtyDisplay = document.getElementById('qty-display');
 
-  /* Add to cart */
-  document.getElementById("addToCartBtn").addEventListener("click", () => {
-    Cart.add({
-      id: product.id,
-      name: product.name,
-      price: currentPrice(),
-      size: selectedSize,
-      qty: qty,
-      image: product.gallery[0]
-    });
-    showToast(`${product.name} ajouté au panier`);
-  });
+    if (qtyMinus && qtyPlus && qtyDisplay) {
+        qtyMinus.addEventListener('click', () => {
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                qtyDisplay.textContent = currentQuantity;
+            }
+        });
 
-  /* Order directly via WhatsApp */
-  document.getElementById("orderWhatsappBtn").addEventListener("click", () => {
-    const msg = `Bonjour Jardin Agro 🌹\nJe souhaite commander :\nProduit : ${product.name}\nTaille : ${selectedSize}\nQuantité : ${qty}\nPrix : ${SHOP_CONFIG.currency}${currentPrice() * qty}\nMerci.`;
-    const url = `https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
-  });
+        qtyPlus.addEventListener('click', () => {
+            currentQuantity++;
+            qtyDisplay.textContent = currentQuantity;
+        });
+    }
 
-  function renderRelated(){
-    const wrap = document.getElementById("relatedGrid");
-    if(!wrap) return;
-    const related = PRODUCTS.filter(p => p.id !== product.id && p.category === product.category).slice(0, 4);
-    const fallback = related.length ? related : PRODUCTS.filter(p => p.id !== product.id).slice(0, 4);
-    wrap.innerHTML = fallback.map(renderProductCard).join("");
-  }
+    // 6. ENVOI DE LA COMMANDE PAR WHATSAPP
+    const btnOrderWhatsApp = document.getElementById('btn-order-whatsapp');
+    if (btnOrderWhatsApp) {
+        btnOrderWhatsApp.addEventListener('click', () => {
+            const totalPrice = product.price * currentQuantity;
+            
+            // Construction du message WhatsApp propre et détaillé
+            let message = `Bonjour Jardin Agro ! 👋\nJe souhaite passer une commande :\n\n`;
+            message += `🌸 *Produit :* ${product.name}\n`;
+            if (selectedSize) {
+                message += `📏 *Taille :* ${selectedSize}\n`;
+            }
+            message += `🔢 *Quantité :* ${currentQuantity}\n`;
+            message += `💰 *Prix total :* ${totalPrice} $\n\n`;
+            message += `Pouvez-vous me confirmer la disponibilité et la livraison ? Merci !`;
 
-  render();
-})();
+            // Encodage et ouverture de WhatsApp
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+        });
+    }
+});
+                       
