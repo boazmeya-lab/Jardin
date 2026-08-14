@@ -255,3 +255,42 @@ document.querySelectorAll("[data-whatsapp-generic]").forEach(btn => {
     window.open(url, "_blank");
   });
 });
+// --- MENU MOBILE ---
+const menuToggle = document.getElementById('menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+
+if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+}
+
+// --- HEADER SCROLL EFFECT ---
+const header = document.getElementById('main-header');
+if (header) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('bg-brand-dark/90', 'shadow-lg');
+            header.classList.remove('bg-brand-dark/30');
+        } else {
+            header.classList.add('bg-brand-dark/30');
+            header.classList.remove('bg-brand-dark/90', 'shadow-lg');
+        }
+    });
+}
+
+// --- CARROUSEL CRÉATIONS (SWIPER) ---
+if (document.querySelector('.creationsSlider')) {
+    new Swiper('.creationsSlider', {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        loop: true,
+        autoplay: { delay: 3500, disableOnInteraction: false },
+        pagination: { el: '.creationsSlider .swiper-pagination', clickable: true },
+        navigation: { nextEl: '.creationsSlider .swiper-button-next', prevEl: '.creationsSlider .swiper-button-prev' },
+        breakpoints: {
+            640: { slidesPerView: 2, spaceBetween: 24 },
+            1024: { slidesPerView: 3, spaceBetween: 32 },
+        },
+    });
+}
