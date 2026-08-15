@@ -14,27 +14,33 @@
 <body>
 
   <!-- HEADER -->
-  <header id="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">
-        <i class="fa-solid fa-rose"></i> Jardin Agro
+  <header class="site-header">
+  <div class="container header-inner">
+    
+    <!-- Logo avec emplacement image + texte -->
+    <a href="index.html" class="logo">
+      <img src="images/logi.png" alt="Logo Jardin Agro" onerror="this.style.display='none'">
+      <span>Jardin Agro</span>
+    </a>
+
+    <!-- Navigation Bureau -->
+    <nav class="nav-desktop">
+      <a href="index.html">Accueil</a>
+      <a href="products.html">Catalogue & Services</a>
+      <a href="#livraison">Livraison</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Actions En-tête (Panier) -->
+    <div class="header-actions">
+      <a href="cart.html" class="icon-btn" aria-label="Panier">
+        <i class="fa-solid fa-bag-shopping"></i> <span>0</span>
       </a>
-      <nav>
-        <ul class="nav-menu">
-          <li><a href="index.html" class="nav-link active">Accueil</a></li>
-          <li><a href="products.html" class="nav-link">Catalogue & Services</a></li>
-          <li><a href="#livraison" class="nav-link">Livraison</a></li>
-          <li><a href="contact.html" class="nav-link">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="nav-actions">
-        <div class="cart-icon-btn" id="cartToggle">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span class="cart-count" id="cartCount">0</span>
-        </div>
-      </div>
     </div>
+
+  </div>
   </header>
+  
 
   <!-- HERO SECTION -->
   <section class="hero">
