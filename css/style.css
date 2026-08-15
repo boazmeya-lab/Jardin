@@ -288,4 +288,45 @@ a { text-decoration: none; color: inherit; }
     font-size: 1.8rem;
   }
 }
-  
+  /* --- ALIGNEMENT DU HERO (ACCUEIL) --- */
+.hero {
+  position: relative;
+  height: 75vh;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centre le bloc horizontalement */
+  text-align: center;      /* Centre le texte et le bouton */
+  color: #ffffff;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;          /* Assure le centrage au milieu de l'écran */
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* Centre le bouton sous le texte */
+}
+
+/* Grand titre bien en gras */
+.hero-title {
+  font-family: var(--font-title, 'Playfair Display', serif);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;        /* Épaisseur très haute pour l'effet gras */
+  line-height: 1.2;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); /* Améliore la lisibilité sur l'image */
+}
+
+/* Sous-titre */
+.hero-subtitle {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  opacity: 0.95;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+}
+
