@@ -237,4 +237,40 @@ a { text-decoration: none; color: inherit; }
 .hero {
   margin-top: 80px;
      }
-   
+ /* --- ADAPTATION MOBILE --- */
+@media (max-width: 768px) {
+  /* Empêche le débordement horizontal */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Redimensionne le conteneur principal */
+  .container {
+    width: 95%;
+    padding: 0 10px;
+  }
+
+  /* Cache le menu desktop sur téléphone */
+  .nav-desktop {
+    display: none;
+  }
+
+  /* Passe les grilles en 1 seule colonne sur mobile */
+  .services-grid,
+  .flower-grid,
+  .gallery-grid {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
+
+  /* Ajuste la hauteur des cartes pour téléphone */
+  .service-card {
+    height: 200px;
+  }
+
+  /* Adapte la taille du titre */
+  .hero-title {
+    font-size: 1.8rem;
+  }
+}
+  
