@@ -337,7 +337,23 @@ a { text-decoration: none; color: inherit; }
   opacity: 0.95;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
 }
-/* --- STYLES DES CARTES D'AVIS --- */
+/* --- CORRECTION POLICE DES CARTES UNIVERS --- */
+.service-card-title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+
+.service-card-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  color: #f0f0f0;
+}
+
+/* --- CARTE AVIS CLIENTS --- */
 .review-card {
   background: #ffffff;
   padding: 25px;
