@@ -1,29 +1,33 @@
 /* ===========================================================
-   JARDIN AGRO — Design System (Inspiré de Monia Tours)
+   JARDIN AGRO — Design System (Corrigé & Harmonisé)
    =========================================================== */
 
 :root {
   /* Palette Jardin Agro */
-  --red:        #B11A29;
-  --red-dark:   #7A0E1A;
-  --red-light:  #D94456;
-  --white:      #FFFFFF;
-  --grey-light: #F7F5F3;
-  --grey-mid:   #EAE6E2;
-  --ink:        #1A1616;
-  --ink-soft:   #6E6865;
+  --red:           #B11A29;
+  --red-dark:      #7A0E1A;
+  --red-light:     #D94456;
+  --primary-color: #2e5b38;
+  --primary-hover: #23472c;
+  --accent-gold:    #d4af37;
+  
+  --white:         #FFFFFF;
+  --bg-light:      #F7F5F3;
+  --grey-mid:      #EAE6E2;
+  --ink:           #1A1616;
+  --ink-soft:      #6E6865;
 
   /* Typography */
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Poppins", -apple-system, sans-serif;
+  --font-display: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-body:    "Plus Jakarta Sans", "Poppins", -apple-system, sans-serif;
 
   /* Layout */
-  --container: 1200px;
-  --radius-card: 20px;
-  --header-h: 80px;
+  --container:    1200px;
+  --radius-card:  20px;
+  --header-h:     80px;
 }
 
-/* ---------- Reset ---------- */
+/* ---------- Reset & Base ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -57,23 +61,24 @@ a { text-decoration: none; color: inherit; }
 
 .nav-desktop { display: flex; gap: 30px; }
 .nav-desktop a { font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-.nav-desktop a:hover { color: var(--red); }
+.nav-desktop a:hover { color: var(--primary-color); }
 
 .header-actions { display: flex; align-items: center; gap: 14px; }
 .icon-btn {
-  width: 40px; height: 40px; border-radius: 50%; background: var(--grey-light);
+  width: 40px; height: 40px; border-radius: 50%; background: var(--bg-light);
   display: flex; align-items: center; justify-content: center;
 }
-.icon-btn svg { width: 18px; height: 18px; }
 
+/* ---------- Boutons ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 26px; border-radius: 999px; font-weight: 600; font-size: 0.85rem;
-  transition: all 0.25s ease;
+  transition: all 0.25s ease; border: none; cursor: pointer;
 }
-.btn-primary { background: var(--red); color: var(--white); }
-.btn-primary:hover { background: var(--red-dark); }
-.btn-outline { border: 1px solid var(--white); color: var(--white); }
+.btn-primary { background: var(--primary-color); color: var(--white); }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-outline { border: 1.5px solid var(--primary-color); color: var(--primary-color); background: transparent; }
+.btn-outline:hover, .btn-outline.active { background: var(--primary-color); color: var(--white); }
 
 @media(max-width: 899px) {
   .nav-desktop, .header-cta { display: none; }
@@ -89,426 +94,82 @@ a { text-decoration: none; color: inherit; }
 .hero-media video, .hero-media img { width: 100%; height: 100%; object-fit: cover; }
 .hero-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55); z-index: 1; }
 .hero-content { position: relative; z-index: 2; max-width: 680px; }
-.eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); font-weight: 700; display: block; margin-bottom: 10px; }
-.hero-content .eyebrow { color: #FFA3A8; }
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; display: block; margin-bottom: 10px; }
 .hero-title { font-family: var(--font-display); font-size: clamp(2.2rem, 4.5vw, 3.8rem); line-height: 1.15; margin-bottom: 16px; }
-.hero-title em { font-style: italic; color: var(--red-light); }
 .hero-subtitle { font-size: 1.05rem; margin-bottom: 28px; opacity: 0.9; }
-.hero-actions { display: flex; gap: 14px; }
 
-/* ---------- Sections & En-tête Flex (Style Monia Tours) ---------- */
-.flower-section { padding: 80px 0; }
-.bg-light { background: var(--grey-light); }
-
-.section-head-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 40px;
-  gap: 30px;
-}
-.section-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: var(--ink); }
-.section-sub-text { color: var(--ink-soft); max-width: 480px; font-size: 0.95rem; line-height: 1.5; }
-
-@media (max-width: 768px) {
-  .section-head-flex { flex-direction: column; align-items: flex-start; gap: 10px; }
-}
-
-/* ---------- Grille des Cartes ---------- */
-.flower-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-@media (max-width: 992px) { .flower-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { .flower-grid { grid-template-columns: 1fr; } }
-
-/* ---------- Structure Carte "Monia Tours" ---------- */
-.flower-card {
-  background: var(--white);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.flower-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* Image + Badge somptueux */
-.flower-media {
-  position: relative;
-  height: 240px;
-  width: 100%;
-  overflow: hidden;
-}
-.flower-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.flower-card:hover .flower-media img { transform: scale(1.08); }
-
-.flower-badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: rgba(26, 22, 22, 0.85);
-  color: var(--white);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  backdrop-filter: blur(4px);
-  z-index: 2;
-}
-
-/* Détails Carte */
-.flower-content {
-  padding: 24px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-.flower-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.flower-desc {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  margin-bottom: 24px;
-  line-height: 1.4;
-}
-
-/* Bas de Carte (Prix & Bouton) */
-.flower-footer {
-  margin-top: auto;
-  padding-top: 16px;
-  border-top: 1px solid var(--grey-mid);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.flower-price { display: flex; flex-direction: column; }
-.price-label { font-size: 0.65rem; font-weight: 700; color: #A09895; letter-spacing: 0.08em; }
-.price-val { font-size: 1.4rem; font-weight: 800; color: var(--red); }
-
-.btn-discover {
-  background: var(--grey-light);
-  color: var(--ink);
-  padding: 10px 22px;
-  border-radius: 12px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  transition: all 0.25s ease;
-}
-.btn-discover:hover {
-  background: var(--red);
-  color: var(--white);
-}
-
-/* ---------- Instagram Carrousel Latéral ---------- */
-.insta-section { padding: 60px 0; overflow: hidden; }
-.insta-grid {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  padding: 10px 24px 20px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-.insta-grid::-webkit-scrollbar { display: none; }
-
-.insta-item {
-  flex: 0 0 240px;
-  height: 240px;
-  border-radius: 16px;
-  overflow: hidden;
-  scroll-snap-align: start;
-}
-.insta-item img { width: 100%; height: 100%; object-fit: cover; }
-
-@media (max-width: 600px) {
-  .insta-item { flex: 0 0 75%; } /* Balayage horizontal fluide sur Mobile */
-}
-/* ===================================
-   SECTION : NOS DERNIÈRES CRÉATIONS
-   =================================== */
-
-.sub-title {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #2e7d32; /* Vert assorti à Jardin Agro */
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 2rem;
-}
-
-.gallery-item {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  background-color: #f0f0f0;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
-}
-
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%);
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
-  transition: background 0.3s ease;
-}
-
-.gallery-overlay span {
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.gallery-item:hover img {
-  transform: scale(1.08);
-}
-
-/* RESPONSIVE DESIGN FOR GALERIE */
-@media (max-width: 992px) {
-  .gallery-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  
-  .gallery-overlay {
-    padding: 10px;
-  }
-   /* --- REGLES GLOBALES ET REINITIALISATION --- */
-:root {
-  --primary-color: #2e5b38;
-  --primary-hover: #23472c;
-  --accent-gold: #d4af37;
-  --bg-light: #fdfbf7;
-  --text-dark: #222222;
-  --text-muted: #666666;
-  --font-title: 'Playfair Display', serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: var(--font-body);
-  color: var(--text-dark);
-  background-color: #ffffff;
-  line-height: 1.6;
-}
-
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* --- CARTES DE SERVICES AVEC IMAGES (INDEX.HTML) --- */
+/* ---------- Cartes des Services (Style Image de Fond) ---------- */
+.services-section { padding: 70px 0; background: var(--bg-light); }
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
-
-.service-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
+.service-card-link { text-decoration: none; color: inherit; display: block; }
 .service-card {
-  position: relative;
-  height: 280px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  position: relative; height: 280px; border-radius: var(--radius-card);
+  overflow: hidden; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  align-items: flex-end;
+  display: flex; align-items: flex-end;
 }
-
-.service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-}
-
-/* Arrière-plan image pour chaque service */
+.service-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18); }
 .service-card-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; transition: transform 0.5s ease;
 }
-
-.service-card:hover .service-card-bg {
-  transform: scale(1.08);
-}
-
-/* Couche sombre sur l'image pour garder le texte lisible */
+.service-card:hover .service-card-bg { transform: scale(1.08); }
 .service-card-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.1) 100%);
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.1) 100%);
   z-index: 1;
 }
+.service-card-content { position: relative; z-index: 2; padding: 20px; color: var(--white); width: 100%; }
+.service-card-icon { font-size: 1.8rem; color: var(--accent-gold); margin-bottom: 8px; }
+.service-card-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+.service-card-desc { font-size: 0.85rem; opacity: 0.9; }
 
-/* Contenu sur l'image */
-.service-card-content {
-  position: relative;
-  z-index: 2;
-  padding: 20px;
-  color: #ffffff;
-  width: 100%;
+/* ---------- Section Galerie de Créations ---------- */
+.flower-section { padding: 80px 0; }
+.sub-title {
+  display: block; font-size: 0.85rem; font-weight: 700;
+  color: var(--primary-color); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px;
 }
-
-.service-card-icon {
-  font-size: 1.8rem;
-  color: var(--accent-gold);
-  margin-bottom: 8px;
+.gallery-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 2rem;
 }
-
-.service-card-title {
-  font-family: var(--font-title);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 4px;
+.gallery-item {
+  position: relative; border-radius: 16px; overflow: hidden;
+  aspect-ratio: 1 / 1; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  cursor: pointer; background-color: var(--grey-mid);
 }
-
-.service-card-desc {
-  font-size: 0.85rem;
-  opacity: 0.9;
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+.gallery-item:hover img { transform: scale(1.08); }
+.gallery-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%);
+  display: flex; align-items: flex-end; padding: 16px;
 }
+.gallery-overlay span { color: var(--white); font-weight: 700; font-size: 0.95rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-/* --- BOUTONS ET BOUTONS FILTRES --- */
-.btn {
-  display: inline-block;
-  padding: 10px 22px;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  border: none;
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  color: #ffffff;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-hover);
-}
-
-.btn-outline {
-  background-color: transparent;
-  border: 1.5px solid var(--primary-color);
-  color: var(--primary-color);
-}
-
-.btn-outline:hover, .btn-outline.active {
-  background-color: var(--primary-color);
-  color: #ffffff;
-}
-
-/* --- GRILLE DU CATALOGUE (PRODUCTS.HTML) --- */
+/* ---------- Grille du Catalogue (products.html) ---------- */
 .product-card {
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s ease;
-  border: 1px solid #eeeeee;
+  background: var(--white); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06); transition: transform 0.3s ease; border: 1px solid var(--grey-mid);
 }
+.product-card:hover { transform: translateY(-5px); }
+.product-image-wrap { height: 220px; overflow: hidden; }
+.product-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.product-card:hover .product-image-wrap img { transform: scale(1.05); }
+.product-info { padding: 20px; }
+.product-name { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 6px; }
+.product-price { font-weight: 700; color: var(--primary-color); font-size: 1.1rem; margin-bottom: 12px; }
 
-.product-card:hover {
-  transform: translateY(-5px);
+/* ---------- Adaptations Mobiles (Responsive) ---------- */
+@media (max-width: 992px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
-.product-image-wrap {
-  height: 220px;
-  overflow: hidden;
-}
-
-.product-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.product-card:hover .product-image-wrap img {
-  transform: scale(1.05);
-}
-
-.product-info {
-  padding: 20px;
-}
-
-.product-name {
-  font-family: var(--font-title);
-  font-size: 1.1rem;
-  margin-bottom: 6px;
-}
-
-.product-price {
-  font-weight: 700;
-  color: var(--primary-color);
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-   }
-   
-  
-  .gallery-overlay span {
-    font-size: 0.85rem;
-  }
+@media (max-width: 600px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .gallery-overlay { padding: 10px; }
+  .gallery-overlay span { font-size: 0.85rem; }
 }
