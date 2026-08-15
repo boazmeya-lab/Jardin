@@ -52,58 +52,85 @@
   </section>
 
   <!-- SERVICES / CATEGORIES SECTION -->
-  <section class="services-section" style="padding: 70px 0; background: #fdfbf7;">
-    <div class="container">
-      <div class="section-title" style="text-align: center; margin-bottom: 50px;">
-        <h2>Nos Univers & Services</h2>
-        <p>Sélectionnez un service pour explorer la galerie dédiée</p>
-      </div>
-
-      <div class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px;">
-        
-        <a href="products.html?category=hotel" class="service-card-link" style="text-decoration:none; color:inherit;">
-          <div class="service-card" style="background:#fff; padding:30px 20px; border-radius:16px; text-align:center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition:transform 0.3s;">
-            <div style="font-size:2.8rem; color:#2e5b38; margin-bottom:15px;"><i class="fa-solid fa-hotel"></i></div>
-            <h3 style="font-family:'Playfair Display', serif; font-size:1.2rem; margin-bottom:8px;">Fleurs pour Hôtel</h3>
-            <p style="font-size:0.85rem; color:#666;">Halls, suites et réceptions VIP</p>
-          </div>
-        </a>
-
-        <a href="products.html?category=entreprise" class="service-card-link" style="text-decoration:none; color:inherit;">
-          <div class="service-card" style="background:#fff; padding:30px 20px; border-radius:16px; text-align:center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition:transform 0.3s;">
-            <div style="font-size:2.8rem; color:#2e5b38; margin-bottom:15px;"><i class="fa-solid fa-building-columns"></i></div>
-            <h3 style="font-family:'Playfair Display', serif; font-size:1.2rem; margin-bottom:8px;">Entreprises & Banques</h3>
-            <p style="font-size:0.85rem; color:#666;">Abonnements floraux et bureaux</p>
-          </div>
-        </a>
-
-        <a href="products.html?category=conference" class="service-card-link" style="text-decoration:none; color:inherit;">
-          <div class="service-card" style="background:#fff; padding:30px 20px; border-radius:16px; text-align:center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition:transform 0.3s;">
-            <div style="font-size:2.8rem; color:#2e5b38; margin-bottom:15px;"><i class="fa-solid fa-microphone-lines"></i></div>
-            <h3 style="font-family:'Playfair Display', serif; font-size:1.2rem; margin-bottom:8px;">Conférences & Cérémonies</h3>
-            <p style="font-size:0.85rem; color:#666;">Pupitres, scènes et podiums</p>
-          </div>
-        </a>
-
-        <a href="products.html?category=mariage" class="service-card-link" style="text-decoration:none; color:inherit;">
-          <div class="service-card" style="background:#fff; padding:30px 20px; border-radius:16px; text-align:center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition:transform 0.3s;">
-            <div style="font-size:2.8rem; color:#2e5b38; margin-bottom:15px;"><i class="fa-solid fa-champagne-glasses"></i></div>
-            <h3 style="font-family:'Playfair Display', serif; font-size:1.2rem; margin-bottom:8px;">Mariage & Fêtes</h3>
-            <p style="font-size:0.85rem; color:#666;">Salles, tables et bouquets nuptiaux</p>
-          </div>
-        </a>
-
-        <a href="products.html?category=funeraire" class="service-card-link" style="text-decoration:none; color:inherit;">
-          <div class="service-card" style="background:#fff; padding:30px 20px; border-radius:16px; text-align:center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition:transform 0.3s;">
-            <div style="font-size:2.8rem; color:#2e5b38; margin-bottom:15px;"><i class="fa-solid fa-dove"></i></div>
-            <h3 style="font-family:'Playfair Display', serif; font-size:1.2rem; margin-bottom:8px;">Cérémonies Funéraires</h3>
-            <p style="font-size:0.85rem; color:#666;">Couronnes et hommages respectueux</p>
-          </div>
-        </a>
-
-      </div>
+  <!-- SERVICES / CATEGORIES SECTION AVEC IMAGES -->
+<section class="services-section" style="padding: 70px 0; background: var(--bg-light);">
+  <div class="container">
+    <div class="section-title" style="text-align: center; margin-bottom: 50px;">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem;">Nos Univers & Services</h2>
+      <p style="color: #666;">Cliquez sur une catégorie pour découvrir le catalogue d'images dédié</p>
     </div>
-  </section>
+
+    <div class="services-grid">
+      
+      <!-- 1. Hôtel -->
+      <a href="products.html?category=hotel" class="service-card-link">
+        <div class="service-card">
+          <img src="/assets/images/service-hotel.jpg" alt="Fleurs pour Hôtel" class="service-card-bg">
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-icon"><i class="fa-solid fa-hotel"></i></div>
+            <h3 class="service-card-title">Fleurs pour Hôtel</h3>
+            <p class="service-card-desc">Halls, suites et réceptions VIP</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- 2. Entreprises & Banques -->
+      <a href="products.html?category=entreprise" class="service-card-link">
+        <div class="service-card">
+          <img src="/assets/images/service-entreprise.jpg" alt="Fleurs Entreprises & Banques" class="service-card-bg">
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-icon"><i class="fa-solid fa-building-columns"></i></div>
+            <h3 class="service-card-title">Entreprises & Banques</h3>
+            <p class="service-card-desc">Abonnements floraux et bureaux</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- 3. Conférences & Cérémonies -->
+      <a href="products.html?category=conference" class="service-card-link">
+        <div class="service-card">
+          <img src="/assets/images/service-conference.jpg" alt="Conférences et Cérémonies" class="service-card-bg">
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-icon"><i class="fa-solid fa-microphone-lines"></i></div>
+            <h3 class="service-card-title">Conférences & Cérémonies</h3>
+            <p class="service-card-desc">Pupitres, scènes et podiums</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- 4. Mariage & Fêtes -->
+      <a href="products.html?category=mariage" class="service-card-link">
+        <div class="service-card">
+          <img src="/assets/images/service-mariage.jpg" alt="Mariage et Fêtes" class="service-card-bg">
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+            <h3 class="service-card-title">Mariage & Fêtes</h3>
+            <p class="service-card-desc">Salles, tables et bouquets nuptiaux</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- 5. Funéraire -->
+      <a href="products.html?category=funeraire" class="service-card-link">
+        <div class="service-card">
+          <img src="/assets/images/service-funeraire.jpg" alt="Cérémonies Funéraires" class="service-card-bg">
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-icon"><i class="fa-solid fa-dove"></i></div>
+            <h3 class="service-card-title">Cérémonies Funéraires</h3>
+            <p class="service-card-desc">Couronnes et hommages respectueux</p>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+  
 
   <!-- FOOTER -->
   <footer>
