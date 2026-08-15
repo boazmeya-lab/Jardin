@@ -1,6 +1,29 @@
 /* ===========================================================
    JARDIN AGRO — Design System (Corrigé & Harmonisé)
    =========================================================== */
+/* --- REINITIALISATION GLOBALE (EMPECHE LE DEBORDEMENT ET LE DECALAGE) --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Supprime le défilement horizontal parasite */
+  background-color: #ffffff;
+}
+
+/* Redéfinition stricte du conteneur principal */
+.container {
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
