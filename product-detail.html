@@ -11,9 +11,11 @@
 
   <div class="container detail-container">
     <!-- Bouton Retour -->
-    <a href="javascript:history.back()" class="btn-back">
-      <i class="fa-solid fa-arrow-left"></i> Retour au catalogue
-    </a>
+<!-- Dans product-detail.html -->
+<a href="products.html" onclick="if(history.length > 1){ history.back(); return false; }" class="btn-back">
+  <i class="fa-solid fa-arrow-left"></i> Retour au catalogue
+</a>
+    
 
     <div class="product-detail-layout" id="productDetailContent">
       <!-- Le contenu est généré dynamiquement par JS -->
