@@ -1,114 +1,97 @@
-// Base de données des produits par univers
-const products = [
-  // HÔTEL
-  { id: 1, title: "Composition Reception VIP", category: "hotel", price: "45 $", deliverable: true, image: "image/hotel.jpg" },
-  { id: 2, title: "Bouquet Hall d'Accueil", category: "hotel", price: "60 $", deliverable: true, image: "image/couverture.jpg" },
-  
-  // ENTREPRISES & BANQUES
-  { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprise", price: "35 $", deliverable: true, image: "image/bureau.jpg" },
-  
-  // CONFÉRENCES & CÉRÉMONIES
-  { id: 4, title: "Décoration Pupitre & Scène", category: "conference", price: "80 $", deliverable: false, image: "image/evenement.jpg" },
-  
-  // MARIAGE & FÊTES
-  { id: 5, title: "Bouquet Nuptial Élégance", category: "mariage", price: "50 $", deliverable: true, image: "image/mariage.jpg" },
-  
-  // FUNÉRAIRE
-  { id: 6, title: "Couronne d'Hommage Royale", category: "funeraire", price: "70 $", deliverable: true, image: "image/finerail.jpg" }
-];
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personnalisation du Bouquet - Jardin Agro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-const categoryNames = {
-  all: "Tous nos Produits",
-  hotel: "Fleurs pour Hôtels",
-  entreprise: "Entreprises & Banques",
-  conference: "Conférences & CÉRÉMONIES",
-  mariage: "Mariage & Fêtes",
-  funeraire: "CÉRÉMONIES Funéraires"
-};
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logo.png" alt="Jardin Agro Logo">
+        <span>Jardin Agro</span>
+      </a>
+      <a href="products.html" class="btn-back-nav"><i class="fa-solid fa-arrow-left"></i> Catalogue</a>
+    </div>
+  </header>
 
-document.addEventListener('DOMContentLoaded', () => {
-  const productsGrid = document.getElementById('productsGrid');
-  const categoryTitle = document.getElementById('categoryTitle');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-
-  // Gestion du Menu Burger / 3 points en haut
-  const menuToggle = document.querySelector('.menu-toggle') || document.querySelector('.nav-toggle');
-  const navMenu = document.querySelector('.nav-menu') || document.querySelector('.nav-links');
-
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      menuToggle.classList.toggle('open');
-    });
-  }
-
-  // Récupération de la catégorie depuis l'URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const currentCategory = urlParams.get('category') || 'all';
-
-  function renderProducts(category) {
-    if (!productsGrid) return;
-    productsGrid.innerHTML = '';
-    
-    const filtered = category === 'all' 
-      ? products 
-      : products.filter(p => p.category === category);
-
-    if (filtered.length === 0) {
-      productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">Aucun produit disponible dans cette catégorie.</p>`;
-      return;
-    }
-
-    filtered.forEach(product => {
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
+  <main class="container product-page-container">
+    <div class="product-grid">
       
-      const deliverableBadge = product.deliverable 
-        ? `<span class="badge-livrable"><i class="fa-solid fa-truck-fast"></i> Livrable</span>` 
-        : `<span class="badge-livrable sur-mesure"><i class="fa-solid fa-location-dot"></i> Sur place</span>`;
+      <!-- GALERIE PHOTO -->
+      <section class="product-gallery">
+        <div class="main-image-container" id="mainImageContainer">
+          <img id="mainImage" src="image/mariage.jpg" alt="Bouquet Principal">
+          <div class="zoom-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> Survolez pour zoomer</div>
+        </div>
+        <div class="thumbnails-grid" id="thumbnailsGrid">
+          <!-- Les miniatures sont injectées dynamiquement -->
+        </div>
+      </section>
 
-      // Structure propre avec un bouton Découvrir
-      item.innerHTML = `
-        <div class="product-card">
-          <img src="${product.image}" alt="${product.title}">
-          ${deliverableBadge}
-          <div class="gallery-overlay">
-            <div class="product-details">
-              <span class="product-title">${product.title}</span>
-              <span class="product-price">${product.price}</span>
-              <a href="product-detail.html?id=${product.id}" class="btn-discover">
-                Découvrir <i class="fa-solid fa-arrow-right"></i>
-              </a>
+      <!-- PANNEAU DE PERSONNALISATION -->
+      <section class="product-customizer">
+        <header class="product-header">
+          <span class="stock-badge"><i class="fa-solid fa-check"></i> En stock</span>
+          <h1 id="productTitle">Bouquet Élégance Royal</h1>
+          <p id="productDescription" class="product-description">Un arrangement floral raffiné conçu avec des tiges fraîchement coupées pour immortaliser vos moments uniques.</p>
+        </header>
+
+        <form id="customizerForm" onsubmit="return false;">
+          
+          <!-- ÉTAPE 1: FLEURS -->
+          <fieldset class="step-group">
+            <legend><span class="step-number">1</span> Choisissez vos fleurs</legend>
+            <div class="options-grid" id="flowersGrid"></div>
+          </fieldset>
+
+          <!-- ÉTAPE 2: VASE -->
+          <fieldset class="step-group">
+            <legend><span class="step-number">2</span> Choisissez le vase</legend>
+            <div class="options-grid" id="vasesGrid"></div>
+          </fieldset>
+
+          <!-- ÉTAPE 3: RUBAN -->
+          <fieldset class="step-group">
+            <legend><span class="step-number">3</span> Choisissez le ruban 🎀</legend>
+            <div class="options-grid grid-compact" id="ribbonsGrid"></div>
+          </fieldset>
+
+          <!-- ÉTAPE 4: MESSAGE -->
+          <fieldset class="step-group">
+            <legend><span class="step-number">4</span> Message personnalisé (Optionnel)</legend>
+            <div class="textarea-wrapper">
+              <textarea id="customMessage" maxlength="250" placeholder="Écrivez ici le message qui accompagnera votre bouquet..."></textarea>
+              <div class="char-counter"><span id="charCount">0</span>/250</div>
+            </div>
+          </fieldset>
+
+          <!-- RÉCAPITULATIF PRIX ET BOUTONS -->
+          <div class="pricing-summary">
+            <div class="price-box">
+              <span class="price-label">Prix Total</span>
+              <span class="total-price" id="totalPriceDisplay">$0.00</span>
+            </div>
+
+            <div class="action-buttons">
+              <button type="button" class="btn btn-cart" id="btnAddToCart">
+                <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
+              </button>
+              <button type="button" class="btn btn-whatsapp" id="btnWhatsApp">
+                <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+              </button>
             </div>
           </div>
-        </div>
-      `;
-      productsGrid.appendChild(item);
-    });
 
-    if (categoryTitle && categoryNames[category]) {
-      categoryTitle.textContent = categoryNames[category];
-    }
+        </form>
+      </section>
+    </div>
+  </main>
 
-    filterBtns.forEach(btn => {
-      if (btn.dataset.category === category) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-  }
-
-  // Premier affichage au chargement
-  renderProducts(currentCategory);
-
-  // Événements sur les boutons de filtre
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const selectedCategory = btn.dataset.category;
-      const newUrl = window.location.pathname + '?category=' + selectedCategory;
-      window.history.pushState({ path: newUrl }, '', newUrl);
-      renderProducts(selectedCategory);
-    });
-  });
-});
+  <script src="js/product-detail.js"></script>
+</body>
+</html>
