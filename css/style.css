@@ -791,3 +791,343 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   background-color: #f0f7f2;
   box-shadow: 0 0 0 2px var(--primary-color);
 }
+/* ===========================================================
+   PAGE PERSONNALISATION PRODUIT — JARDIN AGRO
+   =========================================================== */
+
+.product-page-container {
+  padding-top: calc(var(--header-h) + 40px);
+  padding-bottom: 80px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 50px;
+  align-items: start;
+}
+
+/* GALERIE PHOTO */
+.product-gallery {
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+}
+
+.main-image-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background-color: var(--bg-light);
+  border: 1px solid var(--grey-mid);
+  cursor: zoom-in;
+}
+
+.main-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.main-image-container:hover img {
+  transform: scale(1.15);
+}
+
+.zoom-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.thumbnails-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.thumb-item {
+  height: 90px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-item.active, .thumb-item:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* EN-TÊTE PRODUIT */
+.stock-badge {
+  display: inline-block;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.product-header h1 {
+  font-size: 2.2rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.product-description {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+/* GROUPS & FEILDSETS */
+.step-group {
+  border: none;
+  margin-bottom: 28px;
+}
+
+.step-group legend {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-number {
+  background: var(--primary-color);
+  color: var(--white);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+/* GRILLE D'OPTIONS */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.options-grid.grid-compact {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* CARTE D'OPTION SELECTIONNABLE */
+.opt-card {
+  position: relative;
+  border: 2px solid var(--grey-mid);
+  border-radius: 12px;
+  padding: 10px;
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.opt-card:hover {
+  border-color: #a3b8a8;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.opt-card.selected {
+  border-color: var(--primary-color);
+  background-color: #f4f8f5;
+  box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.opt-card-img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.opt-card-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.opt-card-price {
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* COCHE DE SÉLECTION */
+.check-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--primary-color);
+  color: var(--white);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s ease;
+}
+
+.opt-card.selected .check-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* SWATCH DE COULEUR (RUBANS) */
+.ribbon-swatch {
+  width: 100%;
+  height: 36px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* CHAMP TEXTE & COMPTEUR */
+.textarea-wrapper {
+  position: relative;
+}
+
+.textarea-wrapper textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px;
+  border: 2px solid var(--grey-mid);
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.textarea-wrapper textarea:focus {
+  border-color: var(--primary-color);
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+/* BLOC PRIX & BOUTONS */
+.pricing-summary {
+  background: #fcfbf9;
+  border: 1px solid var(--grey-mid);
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 30px;
+}
+
+.price-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.price-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.total-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  transition: transform 0.2s ease;
+}
+
+.total-price.updated {
+  transform: scale(1.1);
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-cart {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.btn-cart:hover {
+  background: #333;
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: var(--white);
+}
+
+.btn-whatsapp:hover {
+  background: #1eb956;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .product-gallery {
+    position: static;
+  }
+
+  .main-image-container {
+    height: 360px;
+  }
+
+  .options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}
