@@ -222,7 +222,21 @@
       <p>© 2026 Jardin Agro. Tous droits réservés.</p>
     </div>
   </footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
 
+    if (menuToggle && navMenu) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        // Optionnel : ajouter une classe active au bouton pour animation
+        menuToggle.classList.toggle('active');
+      });
+    }
+  });
+</script>
+  
 </body>
   </html>
               
