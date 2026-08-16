@@ -3,18 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Données des bouquets (images du haut)
   const bouquets = [
-    { id: 'b1', name: 'Élégance Rose & Lys', price: 45, img: 'image/mariage.jpg' },
-    { id: 'b2', name: 'Passion Roses Rouges', price: 50, img: 'image/couverture.jpg' },
-    { id: 'b3', name: 'Sérénité Blanc & Pastel', price: 40, img: 'image/bureau.jpg' },
-    { id: 'b4', name: 'Éclat VIP Multicolore', price: 60, img: 'image/hotel.jpg' }
+    { id: 'b1', name: 'Élégance Rose & Lys', price: 45, img: 'image/rose1.jpg' },
+    { id: 'b2', name: 'Passion Roses Rouges', price: 50, img: 'image/rose2.jpg' },
+    { id: 'b3', name: 'Sérénité Blanc & Pastel', price: 40, img: 'image/rose3.jpg' },
+    { id: 'b4', name: 'Éclat VIP Multicolore', price: 60, img: 'image/rose4.jpg' }
   ];
 
   // Données des vases (images du bas)
   const vases = [
-    { id: 'v0', name: 'Sans vase (Bouquet seul)', price: 0, img: 'image/mariage.jpg' },
-    { id: 'v1', name: 'Vase Transparent', price: 10, img: 'image/hotel.jpg' },
-    { id: 'v2', name: 'Vase Céramique Blanc', price: 15, img: 'image/bureau.jpg' },
-    { id: 'v3', name: 'Vase Doré Premium', price: 20, img: 'image/couverture.jpg' }
+    { id: 'v0', name: 'Sans vase (Bouquet seul)', price: 0, img: 'image/vase1.jpg' },
+    { id: 'v1', name: 'Vase Transparent', price: 10, img: 'image/vase2.jpg' },
+    { id: 'v2', name: 'Vase Céramique Blanc', price: 15, img: 'image/vase3.jpg' },
+    { id: 'v3', name: 'Vase Doré Premium', price: 20, img: 'image/vase4.jpg' }
   ];
 
   let selectedBouquet = bouquets[0];
