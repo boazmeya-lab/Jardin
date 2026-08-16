@@ -17,21 +17,13 @@
   <header class="site-header">
     <div class="container header-inner">
       
-      <!-- Logo -->
-      <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px;">
-  <img src="image/logi.png" alt="Logo Jardin Agro" style="height: 70px; width: auto;" onerror="this.style.display='none'">
-  <span style="font-size: 1.4rem; font-weight: 700;"
+      <!-- Logo corrigé -->
+      <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <img src="image/logi.png" alt="Logo Jardin Agro" style="height: 60px; width: auto;" onerror="this.style.display='none'">
+        <span style="font-size: 1.4rem; font-weight: 700; color: #333;">Jardin Agro</span>
       </a>
-      
 
-      <!-- Bouton Hamburger (Placé à droite avant le panier sur mobile) -->
-      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <!-- Navigation (Redirection vers #univers et #contact) -->
+      <!-- Navigation -->
       <nav class="nav-menu" id="navMenu">
         <a href="index.html">Accueil</a>
         <a href="#univers">Catalogue & Services</a>
@@ -39,8 +31,13 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <!-- Actions (Panier) -->
-      <div class="header-actions">
+      <!-- Zone Actions : Bouton Hamburger + Panier -->
+      <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
+        <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <a href="cart.html" class="icon-btn" aria-label="Panier">
           <i class="fa-solid fa-bag-shopping"></i> <span>0</span>
         </a>
@@ -64,7 +61,7 @@
     </div>
   </section>
 
-  <!-- SERVICES / CATEGORIES SECTION (Ancre id="univers") -->
+  <!-- SERVICES / CATEGORIES SECTION -->
   <section id="univers" class="services-section" style="padding: 70px 0; background: var(--bg-light, #f9f9f9);">
     <div class="container">
       <div class="section-title" style="text-align: center; margin-bottom: 50px;">
@@ -212,7 +209,6 @@
           <li><a href="#univers">Catalogue</a></li>
         </ul>
       </div>
-      <!-- Ancre pour la section Contact -->
       <div class="footer-col" id="contact">
         <h4>Contact</h4>
         <p><i class="fa-solid fa-phone"></i> +243 000 000 000</p>
@@ -235,7 +231,6 @@
           menuToggle.classList.toggle('active');
         });
 
-        // Ferme le menu mobile automatiquement lors d'un clic sur un lien
         navMenu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
             navMenu.classList.remove('active');
@@ -248,3 +243,4 @@
 
 </body>
 </html>
+
