@@ -24,7 +24,7 @@
   --font-body:    'Plus Jakarta Sans', sans-serif;
 
   --container:    1200px;
-  --radius-card:  20px;
+  --radius-card:  16px;
   --header-h:     80px;
 }
 
@@ -88,7 +88,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   font-size: 0.95rem;
 }
 
-/* 4. HEADER & NAVIGATION (FIXE EN HAUT) */
+/* 4. HEADER & NAVIGATION */
 .site-header {
   position: fixed;
   top: 0;
@@ -125,7 +125,6 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   object-fit: contain;
 }
 
-/* Zone actions mobile / desktop */
 .header-actions {
   display: flex;
   align-items: center;
@@ -174,7 +173,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   transform: translateY(-8.5px) rotate(-45deg);
 }
 
-/* 5. BOUTONS */
+/* 5. BOUTONS GENERAUX */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -197,7 +196,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   background: var(--primary-hover);
 }
 
-/* 6. HERO SECTION (PHOTO TOUT EN HAUT DE L'ÉCRAN) */
+/* 6. HERO SECTION */
 .hero {
   position: relative;
   height: 85vh;
@@ -207,7 +206,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   justify-content: center;
   text-align: center;
   color: var(--white);
-  padding-top: var(--header-h); /* Ajuste le contenu sous le header sans couper la photo */
+  padding-top: var(--header-h);
 }
 
 .hero-media {
@@ -256,7 +255,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
 }
 
-/* 7. CARTES SERVICES / UNIVERS */
+/* 7. SECTION SERVICES & UNIVERSS */
 .services-section {
   padding: 70px 0;
   background: var(--bg-light);
@@ -264,8 +263,8 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
 }
 
 .service-card-link {
@@ -284,8 +283,8 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 }
 
 .service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
 .service-card-bg {
@@ -338,7 +337,218 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: #f0f0f0;
 }
 
-/* 8. LIVRAISON */
+/* 8. GRILLE DU CATALOGUE & CARTES PRODUITS ENCADRÉES */
+.products-section {
+  padding: 60px 0;
+  background: var(--bg-light);
+}
+
+#productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 30px; /* Séparation nette entre les cartes */
+  margin-top: 30px;
+}
+
+/* Conteneur de la carte avec encadrement */
+.gallery-item {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--grey-mid); /* Encadrement visible */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Effet d'élévation */
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.product-card {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.product-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Badge Livrable */
+.badge-livrable {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(46, 91, 56, 0.92);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(4px);
+}
+
+.badge-livrable.sur-mesure {
+  background: rgba(122, 14, 26, 0.92);
+}
+
+/* Overlay & Détails */
+.gallery-overlay {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 70%);
+  padding: 20px 16px 16px 16px;
+  width: 100%;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-title {
+  color: var(--white);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.product-price {
+  color: var(--accent-gold);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+/* Bouton Découvrir */
+.btn-discover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--accent-gold);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  transition: background-color 0.2s ease;
+  width: fit-content;
+}
+
+.btn-discover:hover {
+  background-color: #b8952d;
+}
+
+/* 9. PAGE DÉTAIL & PERSONNALISATION */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 30px 0 20px 0;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.btn-back:hover {
+  color: var(--primary-hover);
+}
+
+.product-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+  align-items: start;
+}
+
+.product-detail-img img {
+  width: 100%;
+  max-height: 480px;
+  border-radius: var(--radius-card);
+  object-fit: cover;
+  border: 1px solid var(--grey-mid);
+}
+
+.customize-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #fdfbf7;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--grey-mid);
+}
+
+.customize-form label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.customize-form select, 
+.customize-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.customize-form select:focus, 
+.customize-form textarea:focus {
+  border-color: var(--primary-color);
+}
+
+.customize-form textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.btn-order-whatsapp {
+  background-color: #25D366;
+  color: var(--white);
+  border: none;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-order-whatsapp:hover {
+  background-color: #1eb956;
+}
+
+/* 10. SECTION LIVRAISON & AVIS CLIENTS */
 .section-livraison {
   padding: 80px 0;
   background-color: var(--white);
@@ -376,7 +586,6 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   line-height: 1.6;
 }
 
-/* 9. AVIS CLIENTS */
 .section-reviews {
   padding: 80px 0;
   background-color: #fdfbf7;
@@ -418,7 +627,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: var(--ink);
 }
 
-/* 10. FOOTER */
+/* 11. FOOTER */
 .site-footer {
   background: var(--ink);
   color: var(--white);
@@ -465,7 +674,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: #777;
 }
 
-/* 11. GESTION DU MENU MOBILE ET RESPONSIVE */
+/* 12. RESPONSIVE ET MENU MOBILE */
 @media (max-width: 767px) {
   .nav-menu {
     display: none;
@@ -481,7 +690,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   }
 
   .nav-menu.active {
-    display: flex;
+    display: flex !important;
   }
 
   .nav-menu a {
@@ -500,6 +709,14 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     gap: 20px !important;
   }
 
+  #productsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
   .service-card {
     height: 220px !important;
   }
@@ -507,7 +724,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 
 @media (min-width: 768px) {
   .menu-toggle {
-    display: none; /* Cache le bouton 3 traits sur PC */
+    display: none;
   }
 
   .nav-menu {
@@ -526,156 +743,3 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     color: var(--primary-color);
   }
 }
-/* Styling du prix et du badge livrable sur la galerie */
-.gallery-item {
-  position: relative;
-}
-
-/* Badge Livrable en haut à gauche */
-.badge-livrable {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(46, 91, 56, 0.9); /* Vert Jardin Agro */
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  backdrop-filter: blur(4px);
-}
-
-.badge-livrable.sur-mesure {
-  background: rgba(122, 14, 26, 0.9); /* Rouge foncé */
-}
-
-/* Overlay et détails du produit */
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%);
-  display: flex;
-  align-items: flex-end;
-  padding: 15px;
-  z-index: 2;
-}
-
-.product-details {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  width: 100%;
-}
-
-.product-title {
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.product-price {
-  color: var(--accent-gold, #d4af37);
-  font-weight: 700;
-  font-size: 1.1rem;
-     }
-
-/* Bouton retour */
-.btn-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 20px 0;
-  color: #2e5b38;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-/* Page Détail Layout */
-.product-detail-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 50px;
-}
-
-@media (max-width: 768px) {
-  .product-detail-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-.product-detail-img img {
-  width: 100%;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-.customize-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.customize-form select, .customize-form textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.btn-order-whatsapp {
-  background-color: #25D366;
-  color: white;
-  border: none;
-  padding: 14px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-/* Rendre toute la carte cliquable */
-.gallery-card-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-}
-
-/* Bouton tag personnaliser */
-.btn-customize-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: var(--accent-gold, #d4af37);
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-top: 6px;
-  font-weight: 600;
-}
-
-/* Affichage du menu mobile quand actif */
-.nav-menu.active, .nav-links.active {
-  display: flex !important;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  padding: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  z-index: 1000;
-   }
