@@ -15,38 +15,38 @@
 
   <!-- HEADER -->
   <header class="site-header">
-  <div class="container header-inner">
-    
-    <!-- Logo -->
-    <a href="index.html" class="logo">
-      <img src="image/logi.png" alt="Logo Jardin Agro" onerror="this.style.display='none'">
-    </a>
-
-    <!-- Bouton Hamburger (Visible seulement sur mobile) -->
-    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <!-- Navigation -->
-    <nav class="nav-menu" id="navMenu">
-      <a href="index.html">Accueil</a>
-      <a href="products.html">Catalogue & Services</a>
-      <a href="#livraison">Livraison</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <!-- Actions (Panier) -->
-    <div class="header-actions">
-      <a href="cart.html" class="icon-btn" aria-label="Panier">
-        <i class="fa-solid fa-bag-shopping"></i> <span>0</span>
+    <div class="container header-inner">
+      
+      <!-- Logo -->
+      <a href="index.html" class="logo">
+        <img src="image/logi.png" alt="Logo Jardin Agro" onerror="this.style.display='none'">
+        <span>Jardin Agro</span>
       </a>
-    </div>
 
-  </div>
+      <!-- Bouton Hamburger (Placé à droite avant le panier sur mobile) -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Navigation (Redirection vers #univers et #contact) -->
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html">Accueil</a>
+        <a href="#univers">Catalogue & Services</a>
+        <a href="#livraison">Livraison</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <!-- Actions (Panier) -->
+      <div class="header-actions">
+        <a href="cart.html" class="icon-btn" aria-label="Panier">
+          <i class="fa-solid fa-bag-shopping"></i> <span>0</span>
+        </a>
+      </div>
+
+    </div>
   </header>
-  
 
   <!-- HERO SECTION -->
   <section class="hero">
@@ -58,13 +58,13 @@
       <h1 class="hero-title">Offrez plus que des fleurs, offrez une émotion.</h1>
       <p class="hero-subtitle">Des créations florales uniques adaptées à chaque univers et événement.</p>
       <div style="display:flex; gap:15px; justify-content:center;">
-        <a href="products.html" class="btn btn-primary">Voir tout le catalogue</a>
+        <a href="#univers" class="btn btn-primary">Découvrir nos univers</a>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES / CATEGORIES SECTION -->
-  <section class="services-section" style="padding: 70px 0; background: var(--bg-light, #f9f9f9);">
+  <!-- SERVICES / CATEGORIES SECTION (Ancre id="univers") -->
+  <section id="univers" class="services-section" style="padding: 70px 0; background: var(--bg-light, #f9f9f9);">
     <div class="container">
       <div class="section-title" style="text-align: center; margin-bottom: 50px;">
         <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem;">Nos Univers & Services</h2>
@@ -136,9 +136,9 @@
             </div>
           </div>
         </a>
-      </div> <!-- Fin .services-grid -->
-    </div> <!-- Fin .container -->
-  </section> <!-- Fin .services-section -->
+      </div>
+    </div>
+  </section>
 
   <!-- SECTION LIVRAISON -->
   <section id="livraison" class="section-livraison">
@@ -208,10 +208,11 @@
         <h4>Navigation</h4>
         <ul>
           <li><a href="index.html">Accueil</a></li>
-          <li><a href="products.html">Catalogue</a></li>
+          <li><a href="#univers">Catalogue</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+      <!-- Ancre pour la section Contact -->
+      <div class="footer-col" id="contact">
         <h4>Contact</h4>
         <p><i class="fa-solid fa-phone"></i> +243 000 000 000</p>
         <p><i class="fa-solid fa-envelope"></i> contact@jardinagro.com</p>
@@ -221,21 +222,28 @@
       <p>© 2026 Jardin Agro. Tous droits réservés.</p>
     </div>
   </footer>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
 
-    if (menuToggle && navMenu) {
-      menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        // Optionnel : ajouter une classe active au bouton pour animation
-        menuToggle.classList.toggle('active');
-      });
-    }
-  });
-</script>
-  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+          navMenu.classList.toggle('active');
+          menuToggle.classList.toggle('active');
+        });
+
+        // Ferme le menu mobile automatiquement lors d'un clic sur un lien
+        navMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+
 </body>
-  </html>
-              
+</html>
