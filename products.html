@@ -66,31 +66,6 @@
 
     </div>
   </section>
-  // Dans js/products.js (à l'intérieur du foreach)
-filtered.forEach(product => {
-  const item = document.createElement('div');
-  item.className = 'gallery-item';
-  
-  const deliverableBadge = product.deliverable 
-    ? `<span class="badge-livrable"><i class="fa-solid fa-truck-fast"></i> Livrable</span>` 
-    : `<span class="badge-livrable sur-mesure"><i class="fa-solid fa-location-dot"></i> Sur place</span>`;
-
-  item.innerHTML = `
-    <a href="product-detail.html?id=${product.id}" class="product-card-link">
-      <img src="${product.image}" alt="${product.title}">
-      ${deliverableBadge}
-      <div class="gallery-overlay">
-        <div class="product-details">
-          <span class="product-title">${product.title}</span>
-          <span class="product-price">${product.price}</span>
-          <span class="btn-customize"><i class="fa-solid fa-sliders"></i> Personnaliser</span>
-        </div>
-      </div>
-    </a>
-  `;
-  productsGrid.appendChild(item);
-});
-
 
   <!-- FOOTER -->
   <footer class="site-footer" style="margin-top: 80px;">
