@@ -1,20 +1,20 @@
 // Base de données des produits par univers
 const products = [
   // HÔTEL
-  { id: 1, title: "Composition Reception VIP", category: "hotel", image: "image/hotel.jpg" },
-  { id: 2, title: "Bouquet Hall d'Accueil", category: "hotel", image: "image/couverture.jpg" },
+  { id: 1, title: "Composition Reception VIP", category: "hotel", price: "45 $", deliverable: true, image: "image/hotel.jpg" },
+  { id: 2, title: "Bouquet Hall d'Accueil", category: "hotel", price: "60 $", deliverable: true, image: "image/couverture.jpg" },
   
   // ENTREPRISES & BANQUES
-  { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprise", image: "image/bureau.jpg" },
+  { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprise", price: "35 $", deliverable: true, image: "image/bureau.jpg" },
   
   // CONFÉRENCES & CÉRÉMONIES
-  { id: 4, title: "Décoration Pupitre & Scène", category: "conference", image: "image/evenement.jpg" },
+  { id: 4, title: "Décoration Pupitre & Scène", category: "conference", price: "80 $", deliverable: false, image: "image/evenement.jpg" },
   
   // MARIAGE & FÊTES
-  { id: 5, title: "Bouquet Nuptial Élégance", category: "mariage", image: "image/mariage.jpg" },
+  { id: 5, title: "Bouquet Nuptial Élégance", category: "mariage", price: "50 $", deliverable: true, image: "image/mariage.jpg" },
   
   // FUNÉRAIRE
-  { id: 6, title: "Couronne d'Hommage Royale", category: "funeraire", image: "image/finerail.jpg" }
+  { id: 6, title: "Couronne d'Hommage Royale", category: "funeraire", price: "70 $", deliverable: true, image: "image/finerail.jpg" }
 ];
 
 const categoryNames = {
@@ -31,11 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryTitle = document.getElementById('categoryTitle');
   const filterBtns = document.querySelectorAll('.filter-btn');
 
-  // 1. Récupérer la catégorie depuis l'URL (ex: products.html?category=hotel)
   const urlParams = new URLSearchParams(window.location.search);
   const currentCategory = urlParams.get('category') || 'all';
 
-  // 2. Fonction d'affichage des articles
   function renderProducts(category) {
     productsGrid.innerHTML = '';
     
@@ -44,28 +42,36 @@ document.addEventListener('DOMContentLoaded', () => {
       : products.filter(p => p.category === category);
 
     if (filtered.length === 0) {
-      productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">Aucun produit disponible dans cette catégorie pour le moment.</p>`;
+      productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">Aucun produit disponible dans cette catégorie.</p>`;
       return;
     }
 
     filtered.forEach(product => {
       const item = document.createElement('div');
       item.className = 'gallery-item';
+      
+      // Badge livrable ou sur-mesure
+      const deliverableBadge = product.deliverable 
+        ? `<span class="badge-livrable"><i class="fa-solid fa-truck-fast"></i> Livrable</span>` 
+        : `<span class="badge-livrable sur-mesure"><i class="fa-solid fa-location-dot"></i> Sur place</span>`;
+
       item.innerHTML = `
         <img src="${product.image}" alt="${product.title}">
+        ${deliverableBadge}
         <div class="gallery-overlay">
-          <span>${product.title}</span>
+          <div class="product-details">
+            <span class="product-title">${product.title}</span>
+            <span class="product-price">${product.price}</span>
+          </div>
         </div>
       `;
       productsGrid.appendChild(item);
     });
 
-    // Mettre à jour le titre
     if (categoryTitle && categoryNames[category]) {
       categoryTitle.textContent = categoryNames[category];
     }
 
-    // Activer le bon bouton de filtre
     filterBtns.forEach(btn => {
       if (btn.dataset.category === category) {
         btn.classList.add('active');
@@ -75,18 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initialisation
   renderProducts(currentCategory);
 
-  // 3. Gestion du clic sur les boutons de filtre
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const selectedCategory = btn.dataset.category;
-      
-      // Mettre à jour l'URL sans recharger la page
       const newUrl = window.location.pathname + '?category=' + selectedCategory;
       window.history.pushState({ path: newUrl }, '', newUrl);
-      
       renderProducts(selectedCategory);
     });
   });
