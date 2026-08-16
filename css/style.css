@@ -526,3 +526,60 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     color: var(--primary-color);
   }
 }
+/* Styling du prix et du badge livrable sur la galerie */
+.gallery-item {
+  position: relative;
+}
+
+/* Badge Livrable en haut à gauche */
+.badge-livrable {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(46, 91, 56, 0.9); /* Vert Jardin Agro */
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  backdrop-filter: blur(4px);
+}
+
+.badge-livrable.sur-mesure {
+  background: rgba(122, 14, 26, 0.9); /* Rouge foncé */
+}
+
+/* Overlay et détails du produit */
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 15px;
+  z-index: 2;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.product-title {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.product-price {
+  color: var(--accent-gold, #d4af37);
+  font-weight: 700;
+  font-size: 1.1rem;
+     }
+
