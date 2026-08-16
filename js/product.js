@@ -1,93 +1,93 @@
-// NUMÉRO WHATSAPP OFFICIEL
-const WHATSAPP_NUMBER = "243998096713"; 
+// Base de données des produits par univers
+const products = [
+  // HÔTEL
+  { id: 1, title: "Composition Reception VIP", category: "hotel", image: "image/hotel.jpg" },
+  { id: 2, title: "Bouquet Hall d'Accueil", category: "hotel", image: "image/couverture.jpg" },
+  
+  // ENTREPRISES & BANQUES
+  { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprise", image: "image/bureau.jpg" },
+  
+  // CONFÉRENCES & CÉRÉMONIES
+  { id: 4, title: "Décoration Pupitre & Scène", category: "conference", image: "image/evenement.jpg" },
+  
+  // MARIAGE & FÊTES
+  { id: 5, title: "Bouquet Nuptial Élégance", category: "mariage", image: "image/mariage.jpg" },
+  
+  // FUNÉRAIRE
+  { id: 6, title: "Couronne d'Hommage Royale", category: "funeraire", image: "image/finerail.jpg" }
+];
+
+const categoryNames = {
+  all: "Tous nos Produits",
+  hotel: "Fleurs pour Hôtels",
+  entreprise: "Entreprises & Banques",
+  conference: "Conférences & Cérémonies",
+  mariage: "Mariage & Fêtes",
+  funeraire: "Cérémonies Funéraires"
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. RÉCUPÉRATION DE L'ID DU PRODUIT DEPUIS L'URL (?id=1)
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
+  const productsGrid = document.getElementById('productsGrid');
+  const categoryTitle = document.getElementById('categoryTitle');
+  const filterBtns = document.querySelectorAll('.filter-btn');
 
-    // On cherche le produit correspondant dans la liste "products" (définie dans data.js)
-    const product = (typeof products !== 'undefined') 
-        ? products.find(p => p.id == productId) || products[0] 
-        : null;
+  // 1. Récupérer la catégorie depuis l'URL (ex: products.html?category=hotel)
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentCategory = urlParams.get('category') || 'all';
 
-    if (!product) return;
+  // 2. Fonction d'affichage des articles
+  function renderProducts(category) {
+    productsGrid.innerHTML = '';
+    
+    const filtered = category === 'all' 
+      ? products 
+      : products.filter(p => p.category === category);
 
-    // Variables d'état du produit sélectionné
-    let currentQuantity = 1;
-    let selectedSize = product.sizes ? product.sizes[0] : null;
-
-    // 2. INJECTION DES DONNÉES DANS LA PAGE PRODUCT.HTML
-    const titleEl = document.getElementById('product-title');
-    const priceEl = document.getElementById('product-price');
-    const descEl = document.getElementById('product-description');
-    const mainImgEl = document.getElementById('product-main-img');
-
-    if (titleEl) titleEl.textContent = product.name;
-    if (priceEl) priceEl.textContent = `${product.price} $`;
-    if (descEl) descEl.textContent = product.description;
-    if (mainImgEl) mainImgEl.src = product.image;
-
-    // 3. GALERIE DE PHOTOS (Changement de l'image principale au clic)
-    const thumbnails = document.querySelectorAll('.product-thumb');
-    thumbnails.forEach(thumb => {
-        thumb.addEventListener('click', (e) => {
-            if (mainImgEl) mainImgEl.src = e.target.src;
-            // Mise à jour de la bordure active
-            thumbnails.forEach(t => t.classList.remove('border-brand-primary'));
-            e.target.classList.add('border-brand-primary');
-        });
-    });
-
-    // 4. CHOIX DE LA TAILLE / TAILLE DU BOUQUET (Si disponible)
-    const sizeButtons = document.querySelectorAll('.size-btn');
-    sizeButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            sizeButtons.forEach(b => b.classList.remove('bg-brand-primary', 'text-white'));
-            btn.classList.add('bg-brand-primary', 'text-white');
-            selectedSize = btn.dataset.size || btn.textContent.trim();
-        });
-    });
-
-    // 5. BOUTONS QUANTITÉ (+ / -)
-    const qtyMinus = document.getElementById('qty-minus');
-    const qtyPlus = document.getElementById('qty-plus');
-    const qtyDisplay = document.getElementById('qty-display');
-
-    if (qtyMinus && qtyPlus && qtyDisplay) {
-        qtyMinus.addEventListener('click', () => {
-            if (currentQuantity > 1) {
-                currentQuantity--;
-                qtyDisplay.textContent = currentQuantity;
-            }
-        });
-
-        qtyPlus.addEventListener('click', () => {
-            currentQuantity++;
-            qtyDisplay.textContent = currentQuantity;
-        });
+    if (filtered.length === 0) {
+      productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">Aucun produit disponible dans cette catégorie pour le moment.</p>`;
+      return;
     }
 
-    // 6. ENVOI DE LA COMMANDE PAR WHATSAPP
-    const btnOrderWhatsApp = document.getElementById('btn-order-whatsapp');
-    if (btnOrderWhatsApp) {
-        btnOrderWhatsApp.addEventListener('click', () => {
-            const totalPrice = product.price * currentQuantity;
-            
-            // Construction du message WhatsApp propre et détaillé
-            let message = `Bonjour Jardin Agro ! 👋\nJe souhaite passer une commande :\n\n`;
-            message += `🌸 *Produit :* ${product.name}\n`;
-            if (selectedSize) {
-                message += `📏 *Taille :* ${selectedSize}\n`;
-            }
-            message += `🔢 *Quantité :* ${currentQuantity}\n`;
-            message += `💰 *Prix total :* ${totalPrice} $\n\n`;
-            message += `Pouvez-vous me confirmer la disponibilité et la livraison ? Merci !`;
+    filtered.forEach(product => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `
+        <img src="${product.image}" alt="${product.title}">
+        <div class="gallery-overlay">
+          <span>${product.title}</span>
+        </div>
+      `;
+      productsGrid.appendChild(item);
+    });
 
-            // Encodage et ouverture de WhatsApp
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
-        });
+    // Mettre à jour le titre
+    if (categoryTitle && categoryNames[category]) {
+      categoryTitle.textContent = categoryNames[category];
     }
+
+    // Activer le bon bouton de filtre
+    filterBtns.forEach(btn => {
+      if (btn.dataset.category === category) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Initialisation
+  renderProducts(currentCategory);
+
+  // 3. Gestion du clic sur les boutons de filtre
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedCategory = btn.dataset.category;
+      
+      // Mettre à jour l'URL sans recharger la page
+      const newUrl = window.location.pathname + '?category=' + selectedCategory;
+      window.history.pushState({ path: newUrl }, '', newUrl);
+      
+      renderProducts(selectedCategory);
+    });
+  });
 });
-                       
