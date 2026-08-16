@@ -165,3 +165,15 @@ function renderProducts(category) {
     }
   });
         }
+// Gestion du Menu Burger / 3 points en haut
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.querySelector('.menu-toggle') || document.querySelector('.nav-toggle');
+  const navMenu = document.querySelector('.nav-menu') || document.querySelector('.nav-links');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.classList.toggle('open');
+    });
+  }
+});
