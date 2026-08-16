@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catalogue & Services — Jardin Agro</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Tous nos Produits - Jardin Agro</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -17,83 +13,125 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo">
-        <img src="image/logi.png" alt="Logo Jardin Agro" onerror="this.style.display='none'">
+        <img src="image/logo.png" alt="Jardin Agro Logo">
         <span>Jardin Agro</span>
       </a>
-
-      <nav class="nav-menu" id="navMenu">
-        <a href="index.html">Accueil</a>
-        <a href="products.html" class="active">Catalogue & Services</a>
-        <a href="index.html#livraison">Livraison</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
-
       <div class="header-actions">
-        <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
+        <button class="icon-btn"><i class="fa-solid fa-bag-shopping"></i></button>
+        <button class="menu-toggle" id="menuToggle">
           <span></span><span></span><span></span>
         </button>
-        <a href="cart.html" class="icon-btn" aria-label="Panier">
-          <i class="fa-solid fa-bag-shopping"></i> <span>0</span>
-        </a>
       </div>
     </div>
   </header>
 
-  <!-- SECTION CATALOGUE -->
-  <section class="flower-section" style="padding-top: 120px;">
+  <!-- SECTION NOS UNIVERS FLORAUX -->
+  <main class="products-section" style="padding-top: 100px;">
     <div class="container">
       
       <div class="section-header">
-        <span class="sub-title">Nos Univers Floraux</span>
-        <h2 id="categoryTitle">Tous nos Produits</h2>
+        <p style="color: var(--primary-color); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Nos Univers Floraux</p>
+        <h2>Tous nos Produits</h2>
         <p>Découvrez nos compositions adaptées à vos besoins et événements.</p>
       </div>
 
-      <!-- Filtres par Catégorie -->
-      <div class="filter-buttons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
-        <button class="btn btn-outline filter-btn active" data-category="all">Tous</button>
-        <button class="btn btn-outline filter-btn" data-category="hotel">Hôtels</button>
-        <button class="btn btn-outline filter-btn" data-category="entreprise">Entreprises & Banques</button>
-        <button class="btn btn-outline filter-btn" data-category="conference">Conférences</button>
-        <button class="btn btn-outline filter-btn" data-category="mariage">Mariage & Fêtes</button>
-        <button class="btn btn-outline filter-btn" data-category="funeraire">Funéraire</button>
+      <!-- FILTRES DE CATÉGORIES -->
+      <div class="category-filters" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 40px;">
+        <button class="filter-btn active" data-category="all">Tous</button>
+        <button class="filter-btn" data-category="hotels">Hôtels</button>
+        <button class="filter-btn" data-category="entreprises">Entreprises & Banques</button>
+        <button class="filter-btn" data-category="conferences">Conférences</button>
+        <button class="filter-btn" data-category="mariage">Mariage & Fêtes</button>
+        <button class="filter-btn" data-category="funeraire">Funéraire</button>
       </div>
 
-      <!-- Grille des Produits / Photos -->
-      <div class="gallery-grid" id="productsGrid">
-        <!-- Les produits seront générés dynamiquement par le script JS -->
-      </div>
+      <!-- CONTENEUR OÙ SONT INJECTÉS LES PRODUITS -->
+      <div id="productsGrid"></div>
 
     </div>
-  </section>
+  </main>
 
-  <!-- FOOTER -->
-  <footer class="site-footer" style="margin-top: 80px;">
-    <div class="container footer-grid">
-      <div class="footer-col">
-        <h3 class="footer-logo">Jardin Agro</h3>
-        <p>Haute fleuristerie et décorations événementielles sur-mesure.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="products.html">Catalogue</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p><i class="fa-solid fa-phone"></i> +243 000 000 000</p>
-        <p><i class="fa-solid fa-envelope"></i> contact@jardinagro.com</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 Jardin Agro. Tous droits réservés.</p>
-    </div>
-  </footer>
-
-  <!-- SCRIPT DE FILTRAGE DYNAMIQUE -->
+  <!-- SCRIPTS -->
   <script src="js/products.js"></script>
+  <script>
+    // Script d'affichage et de filtrage dynamique
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('productsGrid');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      // Fonction d'affichage des cartes produits
+      function displayProducts(items) {
+        if (!grid) return;
+        if (items.length === 0) {
+          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit trouvé dans cette catégorie.</p>';
+          return;
+        }
+
+        grid.innerHTML = items.map(p => `
+          <div class="gallery-item">
+            <div class="product-card">
+              <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
+                <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
+                ${p.surMesure ? 'Sur mesure' : 'Livrable'}
+              </span>
+              <img src="${p.image}" alt="${p.title}">
+              <div class="gallery-overlay">
+                <div class="product-details">
+                  <span class="product-title">${p.title}</span>
+                  <span class="product-price">${p.price}</span>
+                  <a href="product-detail.html?id=${p.id}" class="btn-discover">
+                    Découvrir <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Initialisation avec tous les produits si `products` existe dans js/products.js
+      if (typeof products !== 'undefined') {
+        displayProducts(products);
+      } else {
+        grid.innerHTML = '<p style="text-align: center; color: red; grid-column: 1/-1;">Erreur : Le fichier js/products.js est introuvable ou mal configuré.</p>';
+      }
+
+      // Gestion des clics sur les boutons de filtre
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const category = btn.dataset.category;
+          if (category === 'all') {
+            displayProducts(products);
+          } else {
+            const filtered = products.filter(p => p.category === category);
+            displayProducts(filtered);
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- STYLE DES BOUTONS DE FILTRES -->
+  <style>
+    .filter-btn {
+      background: #eef2ef;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      color: #2e5b38;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #2e5b38;
+      color: #ffffff;
+    }
+  </style>
+
 </body>
-   </html>
-   
+</html>
