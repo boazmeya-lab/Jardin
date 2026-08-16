@@ -642,3 +642,85 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     font-size: 0.85rem;
   }
 }
+/* --- Style par défaut (Mobile First) --- */
+
+/* Le bouton 3 traits */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1000;
+}
+
+.menu-toggle span {
+  width: 100%;
+  height: 3px;
+  background-color: #333; /* Couleur des traits */
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Animation en X quand le menu est ouvert */
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Navigation mobile (cachée par défaut) */
+.nav-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.nav-menu.active {
+  display: flex; /* S'affiche quand actif */
+}
+
+.nav-menu a {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: #333;
+}
+
+/* --- Style Ordinateur / Tablette (Écrans larges) --- */
+@media (min-width: 768px) {
+  /* Masquer le bouton 3 traits sur grand écran */
+  .menu-toggle {
+    display: none;
+  }
+
+  /* Afficher le menu normalement en ligne */
+  .nav-menu {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    gap: 20px;
+    padding: 0;
+    box-shadow: none;
+    width: auto;
+  }
+
+  .nav-menu a {
+    border-bottom: none;
+    padding: 0;
+  }
+   }
