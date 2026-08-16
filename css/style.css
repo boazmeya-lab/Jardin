@@ -2,12 +2,11 @@
    JARDIN AGRO — Design System (Corrigé & Harmonisé)
    =========================================================== */
 
-/* 1. IMPORTS & POLICES (DOIT ETRE EN HAUT DU FICHIER) */
+/* 1. IMPORTS & POLICES */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* 2. VARIABLES GLOBALES */
 :root {
-  /* Palette Jardin Agro */
   --red:           #B11A29;
   --red-dark:      #7A0E1A;
   --red-light:     #D94456;
@@ -21,17 +20,15 @@
   --ink:           #1A1616;
   --ink-soft:      #6E6865;
 
-  /* Typographies */
   --font-display: 'Playfair Display', serif;
   --font-body:    'Plus Jakarta Sans', sans-serif;
 
-  /* Layout */
   --container:    1200px;
   --radius-card:  20px;
   --header-h:     80px;
 }
 
-/* 3. REINITIALISATION GLOBALE & BASE */
+/* 3. REINITIALISATION & BASE */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -66,7 +63,6 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   font-family: var(--font-display);
 }
 
-/* Redéfinition unique et stricte du conteneur principal */
 .container {
   width: 100%;
   max-width: var(--container);
@@ -92,7 +88,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   font-size: 0.95rem;
 }
 
-/* 4. HEADER & NAVIGATION */
+/* 4. HEADER & NAVIGATION (FIXE EN HAUT) */
 .site-header {
   position: fixed;
   top: 0;
@@ -102,7 +98,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   z-index: 1000;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--grey-mid);
 }
@@ -124,28 +120,12 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 }
 
 .logo img {
-  height: 40px;
+  height: 45px;
   width: auto;
   object-fit: contain;
 }
 
-.nav-desktop {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  list-style: none;
-}
-
-.nav-desktop a {
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.nav-desktop a:hover {
-  color: var(--primary-color);
-}
-
+/* Zone actions mobile / desktop */
 .header-actions {
   display: flex;
   align-items: center;
@@ -160,6 +140,38 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--ink);
+}
+
+/* Bouton Hamburger */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.menu-toggle span {
+  width: 100%;
+  height: 3px;
+  background-color: var(--ink);
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
 }
 
 /* 5. BOUTONS */
@@ -185,28 +197,17 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   background: var(--primary-hover);
 }
 
-.btn-outline {
-  border: 1.5px solid var(--primary-color);
-  color: var(--primary-color);
-  background: transparent;
-}
-
-.btn-outline:hover, .btn-outline.active {
-  background: var(--primary-color);
-  color: var(--white);
-}
-
-/* 6. HERO SECTION */
+/* 6. HERO SECTION (PHOTO TOUT EN HAUT DE L'ÉCRAN) */
 .hero {
   position: relative;
-  height: 75vh;
-  min-height: 500px;
+  height: 85vh;
+  min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: var(--white);
-  margin-top: var(--header-h);
+  padding-top: var(--header-h); /* Ajuste le contenu sous le header sans couper la photo */
 }
 
 .hero-media {
@@ -219,12 +220,13 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.65) 100%);
   z-index: 1;
 }
 
@@ -239,20 +241,11 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   align-items: center;
 }
 
-.eyebrow {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent-gold);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 10px;
-}
-
 .hero-title {
-  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
   line-height: 1.15;
   margin-bottom: 16px;
+  color: var(--white);
 }
 
 .hero-subtitle {
@@ -345,123 +338,16 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: #f0f0f0;
 }
 
-/* 8. GALERIE & CATALOGUE */
-.flower-section {
-  padding: 80px 0;
-}
-
-.sub-title {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 2rem;
-}
-
-.gallery-item {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  background-color: var(--grey-mid);
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.gallery-item:hover img {
-  transform: scale(1.08);
-}
-
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%);
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
-}
-
-.gallery-overlay span {
-  color: var(--white);
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.product-card {
-  background: var(--white);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s ease;
-  border: 1px solid var(--grey-mid);
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-}
-
-.product-image-wrap {
-  height: 220px;
-  overflow: hidden;
-}
-
-.product-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.product-card:hover .product-image-wrap img {
-  transform: scale(1.05);
-}
-
-.product-info {
-  padding: 20px;
-}
-
-.product-name {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  margin-bottom: 6px;
-}
-
-.product-price {
-  font-weight: 700;
-  color: var(--primary-color);
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-}
-
-/* 9. LIVRAISON */
+/* 8. LIVRAISON */
 .section-livraison {
   padding: 80px 0;
   background-color: var(--white);
-  width: 100%;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
-  width: 100%;
 }
 
 .feature-card {
@@ -490,19 +376,17 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   line-height: 1.6;
 }
 
-/* 10. AVIS CLIENTS */
+/* 9. AVIS CLIENTS */
 .section-reviews {
   padding: 80px 0;
   background-color: #fdfbf7;
   border-top: 1px solid var(--grey-mid);
-  width: 100%;
 }
 
 .reviews-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
-  width: 100%;
 }
 
 .review-card {
@@ -526,7 +410,6 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: #444;
   font-style: italic;
   margin-bottom: 20px;
-  line-height: 1.5;
 }
 
 .review-author {
@@ -535,12 +418,11 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: var(--ink);
 }
 
-/* 11. FOOTER */
+/* 10. FOOTER */
 .site-footer {
   background: var(--ink);
   color: var(--white);
   padding-top: 60px;
-  width: 100%;
 }
 
 .footer-grid {
@@ -569,14 +451,9 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   margin-bottom: 8px;
 }
 
-.footer-col a {
+.footer-col a, .footer-col p {
   color: #aaa;
   font-size: 0.85rem;
-}
-
-.footer-col p {
-  font-size: 0.85rem;
-  color: #aaa;
   margin-bottom: 8px;
 }
 
@@ -588,34 +465,34 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: #777;
 }
 
-/* 12. RESPONSIVE MOBILE UNIFIÉ ET STABLE */
-@media (max-width: 992px) {
-  .gallery-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-desktop, .header-cta {
-    display: none !important;
-  }
-
-  .container {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+/* 11. GESTION DU MENU MOBILE ET RESPONSIVE */
+@media (max-width: 767px) {
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    z-index: 999;
   }
 
-  .hero-title {
-    font-size: 1.8rem !important;
+  .nav-menu.active {
+    display: flex;
   }
 
-  .section-header h2 {
-    font-size: 1.5rem !important;
+  .nav-menu a {
+    padding: 12px 0;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    color: var(--ink);
+    font-weight: 500;
   }
 
   .services-grid,
-  .flower-grid,
-  .gallery-grid,
   .features-grid,
   .reviews-grid,
   .footer-grid {
@@ -628,171 +505,24 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   }
 }
 
-@media (max-width: 600px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-  }
-  
-  .gallery-overlay {
-    padding: 10px;
-  }
-  
-  .gallery-overlay span {
-    font-size: 0.85rem;
-  }
-}
-/* --- Style par défaut (Mobile First) --- */
-
-/* Le bouton 3 traits */
-.menu-toggle {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 21px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 1000;
-}
-
-.menu-toggle span {
-  width: 100%;
-  height: 3px;
-  background-color: #333; /* Couleur des traits */
-  border-radius: 2px;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Animation en X quand le menu est ouvert */
-.menu-toggle.active span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
-}
-.menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-.menu-toggle.active span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
-}
-
-/* Navigation mobile (cachée par défaut) */
-.nav-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: #ffffff;
-  flex-direction: column;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.nav-menu.active {
-  display: flex; /* S'affiche quand actif */
-}
-
-.nav-menu a {
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
-  text-decoration: none;
-  color: #333;
-}
-
-/* --- Style Ordinateur / Tablette (Écrans larges) --- */
 @media (min-width: 768px) {
-  /* Masquer le bouton 3 traits sur grand écran */
   .menu-toggle {
-    display: none;
+    display: none; /* Cache le bouton 3 traits sur PC */
   }
 
-  /* Afficher le menu normalement en ligne */
   .nav-menu {
     display: flex !important;
-    position: static;
     flex-direction: row;
-    gap: 20px;
-    padding: 0;
-    box-shadow: none;
-    width: auto;
+    gap: 24px;
   }
 
   .nav-menu a {
-    border-bottom: none;
-    padding: 0;
-  }
-   }
-/* Alignement du Header sur Mobile */
-.site-header {
-  position: relative;
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-/* Bouton 3 traits collé à droite sur mobile */
-.menu-toggle {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 28px;
-  height: 20px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  margin-left: auto; /* Pousse les 3 traits vers la droite, à côté du panier */
-  z-index: 1001;
-}
-
-.menu-toggle span {
-  width: 100%;
-  height: 3px;
-  background-color: #333;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-/* Menu mobile déroulant */
-@media (max-width: 767px) {
-  .nav-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #ffffff;
-    flex-direction: column;
-    padding: 20px;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-    z-index: 1000;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
   }
 
-  .nav-menu.active {
-    display: flex;
-  }
-
-  .nav-menu a {
-    padding: 10px 0;
-    text-align: center;
-    border-bottom: 1px solid #f0f0f0;
+  .nav-menu a:hover {
+    color: var(--primary-color);
   }
 }
-
-/* Affichage sur PC / Tablette */
-@media (min-width: 768px) {
-  .menu-toggle {
-    display: none;
-  }
-
-  .nav-menu {
-    display: flex !important;
-    gap: 20px;
-  }
-     }
