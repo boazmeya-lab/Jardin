@@ -1,315 +1,99 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Détail du Produit</title>
-  <style>
-    :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --accent: #22c55e;
-      --text-main: #1f2937;
-      --text-muted: #6b7280;
-      --bg-gray: #f9fafb;
-      --border-color: #e5e7eb;
-      --radius: 12px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-gray);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .product-container {
-      background: #ffffff;
-      max-width: 1000px;
-      width: 100%;
-      border-radius: var(--radius);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      padding: 32px;
-    }
-
-    /* Media Queries pour Mobile */
-    @media (max-width: 768px) {
-      .product-container {
-        grid-template-columns: 1fr;
-        padding: 20px;
-        gap: 24px;
-      }
-    }
-
-    /* Section Image */
-    .product-gallery {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .main-image {
-      width: 100%;
-      height: 380px;
-      border-radius: var(--radius);
-      object-fit: cover;
-      background-color: #f3f4f6;
-    }
-
-    .thumbnail-list {
-      display: flex;
-      gap: 12px;
-    }
-
-    .thumbnail {
-      width: 70px;
-      height: 70px;
-      border-radius: 8px;
-      object-fit: cover;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s ease;
-    }
-
-    .thumbnail.active, .thumbnail:hover {
-      border-color: var(--primary);
-    }
-
-    /* Section Info */
-    .product-details {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .product-badge {
-      display: inline-block;
-      align-self: flex-start;
-      background-color: #dbeafe;
-      color: var(--primary);
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 12px;
-    }
-
-    .product-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .product-price {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .price-old {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      text-decoration: line-through;
-      font-weight: 400;
-    }
-
-    .product-description {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-
-    /* Controls (Options & Quantité) */
-    .control-group {
-      margin-bottom: 20px;
-    }
-
-    .control-label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-    }
-
-    .options-grid {
-      display: flex;
-      gap: 10px;
-    }
-
-    .option-btn {
-      padding: 8px 16px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      background: #fff;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-    }
-
-    .option-btn.selected, .option-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    .quantity-picker {
-      display: flex;
-      align-items: center;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      width: fit-content;
-    }
-
-    .qty-btn {
-      background: none;
-      border: none;
-      padding: 8px 14px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-
-    .qty-input {
-      width: 40px;
-      border: none;
-      text-align: center;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    /* Actions */
-    .actions-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 14px 20px;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: background 0.2s ease;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background-color: var(--primary-hover);
-    }
-
-    .btn-whatsapp {
-      background-color: var(--accent);
-      color: white;
-    }
-
-    .btn-whatsapp:hover {
-      background-color: #16a34a;
-    }
-  </style>
+  <title>Catalogue & Services — Jardin Agro</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div class="product-container">
-    <!-- Galerie d'images -->
-    <div class="product-gallery">
-      <img id="mainImage" class="main-image" src="https://via.placeholder.com/600x600/2563eb/ffffff?text=Produit+Principal" alt="Produit">
-      <div class="thumbnail-list">
-        <img class="thumbnail active" src="https://via.placeholder.com/600x600/2563eb/ffffff?text=Vue+1" onclick="changeImage(this.src)" alt="Miniature 1">
-        <img class="thumbnail" src="https://via.placeholder.com/600x600/22c55e/ffffff?text=Vue+2" onclick="changeImage(this.src)" alt="Miniature 2">
-        <img class="thumbnail" src="https://via.placeholder.com/600x600/f59e0b/ffffff?text=Vue+3" onclick="changeImage(this.src)" alt="Miniature 3">
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logi.png" alt="Logo Jardin Agro" onerror="this.style.display='none'">
+        <span>Jardin Agro</span>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html">Accueil</a>
+        <a href="products.html" class="active">Catalogue & Services</a>
+        <a href="index.html#livraison">Livraison</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
+          <span></span><span></span><span></span>
+        </button>
+        <a href="cart.html" class="icon-btn" aria-label="Panier">
+          <i class="fa-solid fa-bag-shopping"></i> <span>0</span>
+        </a>
       </div>
     </div>
+  </header>
 
-    <!-- Informations du Produit -->
-    <div class="product-details">
-      <span class="product-badge">En Stock</span>
-      <h1 class="product-title">Nom du Produit Premium</h1>
+  <!-- SECTION CATALOGUE -->
+  <section class="flower-section" style="padding-top: 120px;">
+    <div class="container">
       
-      <div class="product-price">
-        <span>$49.99</span>
-        <span class="price-old">$69.99</span>
+      <div class="section-header">
+        <span class="sub-title">Nos Univers Floraux</span>
+        <h2 id="categoryTitle">Tous nos Produits</h2>
+        <p>Découvrez nos compositions adaptées à vos besoins et événements.</p>
       </div>
 
-      <p class="product-description">
-        Voici une description concise et attractive de votre produit. Vous pouvez mettre en avant les caractéristiques principales, les matériaux ou les avantages.
-      </p>
-
-      <!-- Variante/Taille -->
-      <div class="control-group">
-        <label class="control-label">Taille / Option</label>
-        <div class="options-grid">
-          <button class="option-btn selected">Standard</button>
-          <button class="option-btn">Grand</button>
-          <button class="option-btn">XL</button>
-        </div>
+      <!-- Filtres par Catégorie -->
+      <div class="filter-buttons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
+        <button class="btn btn-outline filter-btn active" data-category="all">Tous</button>
+        <button class="btn btn-outline filter-btn" data-category="hotel">Hôtels</button>
+        <button class="btn btn-outline filter-btn" data-category="entreprise">Entreprises & Banques</button>
+        <button class="btn btn-outline filter-btn" data-category="conference">Conférences</button>
+        <button class="btn btn-outline filter-btn" data-category="mariage">Mariage & Fêtes</button>
+        <button class="btn btn-outline filter-btn" data-category="funeraire">Funéraire</button>
       </div>
 
-      <!-- Quantité -->
-      <div class="control-group">
-        <label class="control-label">Quantité</label>
-        <div class="quantity-picker">
-          <button class="qty-btn" onclick="updateQty(-1)">-</button>
-          <input type="text" id="qtyInput" class="qty-input" value="1" readonly>
-          <button class="qty-btn" onclick="updateQty(1)">+</button>
-        </div>
+      <!-- Grille des Produits / Photos -->
+      <div class="gallery-grid" id="productsGrid">
+        <!-- Les produits seront générés dynamiquement par le script JS -->
       </div>
 
-      <!-- Boutons d'action -->
-      <div class="actions-group">
-        <button class="btn btn-primary">Ajouter au Panier</button>
-        <!-- Option d'achat direct WhatsApp -->
-        <a href="#" id="whatsappBtn" class="btn btn-whatsapp">Commander via WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" style="margin-top: 80px;">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-logo">Jardin Agro</h3>
+        <p>Haute fleuristerie et décorations événementielles sur-mesure.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="products.html">Catalogue</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p><i class="fa-solid fa-phone"></i> +243 000 000 000</p>
+        <p><i class="fa-solid fa-envelope"></i> contact@jardinagro.com</p>
       </div>
     </div>
-  </div>
+    <div class="footer-bottom">
+      <p>© 2026 Jardin Agro. Tous droits réservés.</p>
+    </div>
+  </footer>
 
-  <script>
-    // Changer l'image principale
-    function changeImage(src) {
-      document.getElementById('mainImage').src = src;
-      document.querySelectorAll('.thumbnail').forEach(thumb => {
-        thumb.classList.remove('active');
-        if (thumb.src === src) thumb.classList.add('active');
-      });
-    }
-
-    // Gestion de la quantité
-    function updateQty(change) {
-      const input = document.getElementById('qtyInput');
-      let currentVal = parseInt(input.value) || 1;
-      currentVal += change;
-      if (currentVal < 1) currentVal = 1;
-      input.value = currentVal;
-    }
-  </script>
-
+  <!-- SCRIPT DE FILTRAGE DYNAMIQUE -->
+  <script src="js/products.js"></script>
 </body>
-</html>
+   </html>
+   
