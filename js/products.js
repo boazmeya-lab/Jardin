@@ -21,9 +21,9 @@ const categoryNames = {
   all: "Tous nos Produits",
   hotel: "Fleurs pour Hôtels",
   entreprise: "Entreprises & Banques",
-  conference: "Conférences & Cérémonies",
+  conference: "Conférences & CÉRÉMONIES",
   mariage: "Mariage & Fêtes",
-  funeraire: "Cérémonies Funéraires"
+  funeraire: "CÉRÉMONIES Funéraires"
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,10 +31,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryTitle = document.getElementById('categoryTitle');
   const filterBtns = document.querySelectorAll('.filter-btn');
 
+  // Gestion du Menu Burger / 3 points en haut
+  const menuToggle = document.querySelector('.menu-toggle') || document.querySelector('.nav-toggle');
+  const navMenu = document.querySelector('.nav-menu') || document.querySelector('.nav-links');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.classList.toggle('open');
+    });
+  }
+
+  // Récupération de la catégorie depuis l'URL
   const urlParams = new URLSearchParams(window.location.search);
   const currentCategory = urlParams.get('category') || 'all';
 
   function renderProducts(category) {
+    if (!productsGrid) return;
     productsGrid.innerHTML = '';
     
     const filtered = category === 'all' 
@@ -50,18 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const item = document.createElement('div');
       item.className = 'gallery-item';
       
-      // Badge livrable ou sur-mesure
       const deliverableBadge = product.deliverable 
         ? `<span class="badge-livrable"><i class="fa-solid fa-truck-fast"></i> Livrable</span>` 
         : `<span class="badge-livrable sur-mesure"><i class="fa-solid fa-location-dot"></i> Sur place</span>`;
 
+      // Structure propre avec un bouton Découvrir
       item.innerHTML = `
-        <img src="${product.image}" alt="${product.title}">
-        ${deliverableBadge}
-        <div class="gallery-overlay">
-          <div class="product-details">
-            <span class="product-title">${product.title}</span>
-            <span class="product-price">${product.price}</span>
+        <div class="product-card">
+          <img src="${product.image}" alt="${product.title}">
+          ${deliverableBadge}
+          <div class="gallery-overlay">
+            <div class="product-details">
+              <span class="product-title">${product.title}</span>
+              <span class="product-price">${product.price}</span>
+              <a href="product-detail.html?id=${product.id}" class="btn-discover">
+                Découvrir <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
           </div>
         </div>
       `;
@@ -81,8 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Premier affichage au chargement
   renderProducts(currentCategory);
 
+  // Événements sur les boutons de filtre
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const selectedCategory = btn.dataset.category;
@@ -91,89 +111,4 @@ document.addEventListener('DOMContentLoaded', () => {
       renderProducts(selectedCategory);
     });
   });
-});
-// Dans js/products.js (à l'intérieur du foreach)
-filtered.forEach(product => {
-  const item = document.createElement('div');
-  item.className = 'gallery-item';
-  
-  const deliverableBadge = product.deliverable 
-    ? `<span class="badge-livrable"><i class="fa-solid fa-truck-fast"></i> Livrable</span>` 
-    : `<span class="badge-livrable sur-mesure"><i class="fa-solid fa-location-dot"></i> Sur place</span>`;
-
-  item.innerHTML = `
-    <a href="product-detail.html?id=${product.id}" class="product-card-link">
-      <img src="${product.image}" alt="${product.title}">
-      ${deliverableBadge}
-      <div class="gallery-overlay">
-        <div class="product-details">
-          <span class="product-title">${product.title}</span>
-          <span class="product-price">${product.price}</span>
-          <span class="btn-customize"><i class="fa-solid fa-sliders"></i> Personnaliser</span>
-        </div>
-      </div>
-    </a>
-  `;
-  productsGrid.appendChild(item);
-});
-function renderProducts(category) {
-  productsGrid.innerHTML = '';
-  
-  const filtered = category === 'all' 
-    ? products 
-    : products.filter(p => p.category === category);
-
-  if (filtered.length === 0) {
-    productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">Aucun produit disponible dans cette catégorie.</p>`;
-    return;
-  }
-
-  filtered.forEach(product => {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    
-    const deliverableBadge = product.deliverable 
-      ? `<span class="badge-livrable"><i class="fa-solid fa-truck-fast"></i> Livrable</span>` 
-      : `<span class="badge-livrable sur-mesure"><i class="fa-solid fa-location-dot"></i> Sur place</span>`;
-
-    // Le lien englobe toute la carte pour rendre la zone cliquable entièrement
-    item.innerHTML = `
-      <a href="product-detail.html?id=${product.id}" class="gallery-card-link">
-        <img src="${product.image}" alt="${product.title}">
-        ${deliverableBadge}
-        <div class="gallery-overlay">
-          <div class="product-details">
-            <span class="product-title">${product.title}</span>
-            <span class="product-price">${product.price}</span>
-            <span class="btn-customize-tag"><i class="fa-solid fa-sliders"></i> Personnaliser</span>
-          </div>
-        </div>
-      </a>
-    `;
-    productsGrid.appendChild(item);
-  });
-
-  if (categoryTitle && categoryNames[category]) {
-    categoryTitle.textContent = categoryNames[category];
-  }
-
-  filterBtns.forEach(btn => {
-    if (btn.dataset.category === category) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
-        }
-// Gestion du Menu Burger / 3 points en haut
-document.addEventListener('DOMContentLoaded', () => {
-  const menuToggle = document.querySelector('.menu-toggle') || document.querySelector('.nav-toggle');
-  const navMenu = document.querySelector('.nav-menu') || document.querySelector('.nav-links');
-
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      menuToggle.classList.toggle('open');
-    });
-  }
 });
