@@ -116,3 +116,52 @@ filtered.forEach(product => {
   `;
   productsGrid.appendChild(item);
 });
+function renderProducts(category) {
+  productsGrid.innerHTML = '';
+  
+  const filtered = category === 'all' 
+    ? products 
+    : products.filter(p => p.category === category);
+
+  if (filtered.length === 0) {
+    productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">Aucun produit disponible dans cette catégorie.</p>`;
+    return;
+  }
+
+  filtered.forEach(product => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    
+    const deliverableBadge = product.deliverable 
+      ? `<span class="badge-livrable"><i class="fa-solid fa-truck-fast"></i> Livrable</span>` 
+      : `<span class="badge-livrable sur-mesure"><i class="fa-solid fa-location-dot"></i> Sur place</span>`;
+
+    // Le lien englobe toute la carte pour rendre la zone cliquable entièrement
+    item.innerHTML = `
+      <a href="product-detail.html?id=${product.id}" class="gallery-card-link">
+        <img src="${product.image}" alt="${product.title}">
+        ${deliverableBadge}
+        <div class="gallery-overlay">
+          <div class="product-details">
+            <span class="product-title">${product.title}</span>
+            <span class="product-price">${product.price}</span>
+            <span class="btn-customize-tag"><i class="fa-solid fa-sliders"></i> Personnaliser</span>
+          </div>
+        </div>
+      </a>
+    `;
+    productsGrid.appendChild(item);
+  });
+
+  if (categoryTitle && categoryNames[category]) {
+    categoryTitle.textContent = categoryNames[category];
+  }
+
+  filterBtns.forEach(btn => {
+    if (btn.dataset.category === category) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+        }
