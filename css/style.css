@@ -1131,3 +1131,160 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     grid-template-columns: 1fr;
   }
 }
+.customizer-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+.stock-badge {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  margin: 20px 0 10px 0;
+  color: #1a1a1a;
+}
+
+/* CARROUSEL DÉFILANT HORIZONTALEMENT */
+.horizontal-slider {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 15px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-slider::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-slider::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.slide-card {
+  flex: 0 0 82%; /* Affiche l'image principale et laisse dépasser la suivante pour inciter à défiler */
+  scroll-snap-align: center;
+  border: 2px solid #eee;
+  border-radius: 16px;
+  padding: 12px;
+  background: #fff;
+  position: relative;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.slide-card.selected {
+  border-color: #2e5b38;
+  background: #f4f8f5;
+  box-shadow: 0 4px 12px rgba(46, 91, 56, 0.15);
+}
+
+.slide-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.check-mark {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.4rem;
+  color: #2e5b38;
+  display: none;
+}
+
+.slide-card.selected .check-mark {
+  display: block;
+}
+
+.slide-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.slide-info h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.slide-info .price {
+  font-weight: bold;
+  color: #2e5b38;
+  margin: 0;
+}
+
+.btn-select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #eef2ef;
+  color: #2e5b38;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.slide-card.selected .btn-select {
+  background: #2e5b38;
+  color: #fff;
+}
+
+/* SECTION COMMANDE & WHATSAPP */
+.order-box {
+  margin-top: 30px;
+  background: #fcfbf9;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #eee;
+}
+
+.order-box textarea {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 8px;
+  font-family: inherit;
+}
+
+.total-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  margin: 20px 0;
+}
+
+.total-display strong {
+  color: #2e5b38;
+}
+
+.btn-whatsapp-large {
+  width: 100%;
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
