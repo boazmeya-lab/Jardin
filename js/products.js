@@ -2,7 +2,7 @@
 const products = [
   // HÔTEL
   { id: 1, title: "Composition Reception VIP", category: "hotels", price: "45 $", surMesure: false, image: "image/hotel.jpg" },
-  { id: 2, title: "Bouquet Hall d'Accueil", category: "hotels", price: "60 $", surMesure: false, image: "image/couverture.jpg" },
+  { id: 2, title: "rose", category: "hotels", price: "05 $", surMesure: false, image: "image/rose1.jpg" },
   
   // ENTREPRISES & BANQUES
   { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprises", price: "35 $", surMesure: false, image: "image/bureau.jpg" },
