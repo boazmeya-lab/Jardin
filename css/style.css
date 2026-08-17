@@ -854,4 +854,25 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     color: var(--primary-color);
   }
    }
-   
+   .filter-btn {
+  background: var(--white);
+  border: 1px solid var(--grey-mid);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
