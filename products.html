@@ -1,137 +1,64 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tous nos Produits - Jardin Agro</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('productsGrid');
+  const filterBtns = document.querySelectorAll('.filter-btn');
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="image/logo.png" alt="Jardin Agro Logo">
-        <span>Jardin Agro</span>
-      </a>
-      <div class="header-actions">
-        <button class="icon-btn"><i class="fa-solid fa-bag-shopping"></i></button>
-        <button class="menu-toggle" id="menuToggle">
-          <span></span><span></span><span></span>
-        </button>
+  // Récupérer la catégorie transmise dans l'URL (ex: ?cat=hotels)
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedCat = urlParams.get('cat') || 'all';
+
+  function displayProducts(items) {
+    if (!grid) return;
+    if (!items || items.length === 0) {
+      grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit dans cette catégorie.</p>';
+      return;
+    }
+
+    grid.innerHTML = items.map(p => `
+      <div class="product-card">
+        <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
+          <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
+          ${p.surMesure ? 'Sur mesure' : 'Livrable'}
+        </span>
+        <img src="${p.image}" alt="${p.title}">
+        <div class="product-details">
+          <h3>${p.title}</h3>
+          <p class="price">${p.price}</p>
+          <a href="product-detail.html?id=${p.id}" class="btn-discover">
+            Découvrir <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
       </div>
-    </div>
-  </header>
+    `).join('');
+  }
 
-  <!-- SECTION NOS UNIVERS FLORAUX -->
-  <main class="products-section" style="padding-top: 100px;">
-    <div class="container">
-      
-      <div class="section-header">
-        <p style="color: var(--primary-color); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Nos Univers Floraux</p>
-        <h2>Tous nos Produits</h2>
-        <p>Découvrez nos compositions adaptées à vos besoins et événements.</p>
-      </div>
+  // Filtrage initial basé sur l'URL
+  if (typeof products !== 'undefined') {
+    if (selectedCat === 'all') {
+      displayProducts(products);
+    } else {
+      const filtered = products.filter(p => p.category === selectedCat);
+      displayProducts(filtered);
 
-      <!-- FILTRES DE CATÉGORIES -->
-      <div class="category-filters" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 40px;">
-        <button class="filter-btn active" data-category="all">Tous</button>
-        <button class="filter-btn" data-category="hotels">Hôtels</button>
-        <button class="filter-btn" data-category="entreprises">Entreprises & Banques</button>
-        <button class="filter-btn" data-category="conferences">Conférences</button>
-        <button class="filter-btn" data-category="mariage">Mariage & Fêtes</button>
-        <button class="filter-btn" data-category="funeraire">Funéraire</button>
-      </div>
+      // Mettre à jour l'état actif du bouton
+      filterBtns.forEach(b => {
+        if (b.dataset.category === selectedCat) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    }
+  }
 
-      <!-- CONTENEUR OÙ SONT INJECTÉS LES PRODUITS -->
-      <div id="productsGrid"></div>
+  // Gestion des clics manuels sur les boutons
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
-    </div>
-  </main>
-
-  <!-- SCRIPTS -->
-  <script src="js/products.js"></script>
-  <script>
-    // Script d'affichage et de filtrage dynamique
-    document.addEventListener('DOMContentLoaded', () => {
-      const grid = document.getElementById('productsGrid');
-      const filterBtns = document.querySelectorAll('.filter-btn');
-
-      // Fonction d'affichage des cartes produits
-      function displayProducts(items) {
-        if (!grid) return;
-        if (items.length === 0) {
-          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit trouvé dans cette catégorie.</p>';
-          return;
-        }
-
-        grid.innerHTML = items.map(p => `
-          <div class="gallery-item">
-            <div class="product-card">
-              <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
-                <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
-                ${p.surMesure ? 'Sur mesure' : 'Livrable'}
-              </span>
-              <img src="${p.image}" alt="${p.title}">
-              <div class="gallery-overlay">
-                <div class="product-details">
-                  <span class="product-title">${p.title}</span>
-                  <span class="product-price">${p.price}</span>
-                  <a href="product-detail.html?id=${p.id}" class="btn-discover">
-                    Découvrir <i class="fa-solid fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      // Initialisation avec tous les produits si `products` existe dans js/products.js
-      if (typeof products !== 'undefined') {
+      const cat = btn.dataset.category;
+      if (cat === 'all') {
         displayProducts(products);
       } else {
-        grid.innerHTML = '<p style="text-align: center; color: red; grid-column: 1/-1;">Erreur : Le fichier js/products.js est introuvable ou mal configuré.</p>';
+        displayProducts(products.filter(p => p.category === cat));
       }
-
-      // Gestion des clics sur les boutons de filtre
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          const category = btn.dataset.category;
-          if (category === 'all') {
-            displayProducts(products);
-          } else {
-            const filtered = products.filter(p => p.category === category);
-            displayProducts(filtered);
-          }
-        });
-      });
     });
-  </script>
-
-  <!-- STYLE DES BOUTONS DE FILTRES -->
-  <style>
-    .filter-btn {
-      background: #eef2ef;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 30px;
-      color: #2e5b38;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-    .filter-btn.active, .filter-btn:hover {
-      background: #2e5b38;
-      color: #ffffff;
-    }
-  </style>
-
-</body>
-</html>
+  });
+});
