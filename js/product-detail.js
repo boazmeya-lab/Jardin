@@ -39,6 +39,7 @@ const PRODUCT_DATA = {
       id: "royal",
       name: "Élégance Royal",
       basePrice: 45.0,
+      description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux et romantique.",
       images: [
         placeholder("#1F3D2B", "#E8B4BC", "Vue 1"),
         placeholder("#1F3D2B", "#B5495B", "Vue 2"),
@@ -49,6 +50,7 @@ const PRODUCT_DATA = {
       id: "printaniere",
       name: "Douceur Printanière",
       basePrice: 38.0,
+      description: "Un mélange léger de fleurs de saison aux teintes pastel, pour une ambiance fraîche et lumineuse.",
       images: [
         placeholder("#2E4A33", "#F2CBD3", "Vue 1"),
         placeholder("#2E4A33", "#F2CBD3", "Vue 2"),
@@ -59,6 +61,7 @@ const PRODUCT_DATA = {
       id: "prestige",
       name: "Bouquet Prestige",
       basePrice: 62.0,
+      description: "Une composition ample et raffinée avec des fleurs premium, idéale pour les grandes occasions.",
       images: [
         placeholder("#3A2E23", "#D9A441", "Vue 1"),
         placeholder("#3A2E23", "#D9A441", "Vue 2"),
@@ -103,14 +106,26 @@ function currentModel() { return PRODUCT_DATA.models.find(m => m.id === state.mo
 function currentColor() { return PRODUCT_DATA.colors.find(c => c.id === state.colorId); }
 function currentVase()  { return PRODUCT_DATA.vases.find(v => v.id === state.vaseId); }
 
+/* Rejoue TOUT l'affichage pour le modèle actuellement sélectionné.
+   Appelée à chaque clic sur un modèle pour être sûr que titre, description,
+   photo et prix affichent bien les vraies infos de ce modèle précis. */
+function refreshForSelectedModel() {
+  renderHeader();
+  renderGallery();
+  renderPricing();
+}
+
 /* -------------------------------------------------------------------------
    RENDU
    ---------------------------------------------------------------------- */
 function money(n) { return "$" + n.toFixed(2); }
 
 function renderHeader() {
-  document.getElementById("productTitle").textContent = PRODUCT_DATA.title;
-  document.getElementById("productSubtitle").textContent = PRODUCT_DATA.subtitle;
+  // Le titre et la description suivent maintenant le MODÈLE sélectionné,
+  // pas juste le produit générique — c'est ce qui manquait avant.
+  const model = currentModel();
+  document.getElementById("productTitle").textContent = model.name;
+  document.getElementById("productSubtitle").textContent = model.description || PRODUCT_DATA.subtitle;
 }
 
 function renderGallery() {
@@ -169,8 +184,7 @@ function renderModels() {
     card.addEventListener("click", () => {
       state.modelId = model.id;
       renderModels();
-      renderGallery();
-      renderPricing();
+      refreshForSelectedModel();
     });
     scroll.appendChild(card);
   });
@@ -309,12 +323,10 @@ function bindWhatsAppButton() {
    INIT
    ---------------------------------------------------------------------- */
 function init() {
-  renderHeader();
   renderModels();
-  renderGallery();
+  refreshForSelectedModel();
   renderColors();
   renderVases();
-  renderPricing();
   bindQuantity();
   bindMessage();
   bindWhatsAppButton();
