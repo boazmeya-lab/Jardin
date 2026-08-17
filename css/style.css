@@ -1105,4 +1105,36 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     font-size: 1.8rem;
   }
    }
+/* CORRECTION TAILLE CARTE CÉRÉMONIES FUNÉRAIRES */
+.services-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 20px !important;
+}
+
+/* Annule l'étalement de la dernière carte */
+.services-grid .service-card,
+.services-grid > div,
+.services-grid .service-card:last-child {
+  grid-column: auto !important;
+  width: 100% !important;
+  height: 280px !important;
+}
+
+/* Centre la 5ème carte proprement sur la 3ème ligne sans l'agrandir */
+.services-grid .service-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1 !important;
+  max-width: Calc(50% - 10px) !important;
+  justify-self: center !important;
+}
+
+/* Version Mobile */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .services-grid .service-card:last-child:nth-child(odd) {
+    max-width: 100% !important;
+  }
+   }
 
