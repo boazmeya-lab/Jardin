@@ -1,11 +1,14 @@
 /* =========================================================================
    PRODUCT-DETAILS.JS — Jardin Agro
    ========================================================================= */
-// 1. Récupération de l'ID depuis l'URL (ex: product-detail.html?id=2)
-const urlParams = new URLSearchParams(window.location.search);
-const selectedProductId = parseInt(urlParams.get('id')) || 1; // 1 par défaut si pas d'id
 
-// 2. Base de données synchronisée avec les identifiants de products.js
+const WHATSAPP_NUMBER = "15551234567"; // Remplacez par votre numéro (ex: 243000000000)
+
+// 1. LIRE L'ID DANS L'URL (Ex: product-details.html?id=2)
+const urlParams = new URLSearchParams(window.location.search);
+const selectedProductId = parseInt(urlParams.get('id')) || 1; 
+
+// 2. BASE DE DONNÉES SYNCHRONISÉE AVEC PRODUCTS.JS
 const PRODUCT_DATA = {
   models: [
     {
@@ -63,97 +66,12 @@ const PRODUCT_DATA = {
   ]
 };
 
-// 3. Sélection automatique du produit selon l'URL
+// 3. SÉLECTION DU PRODUIT DE L'URL
 const initialModel = PRODUCT_DATA.models.find(m => m.id === selectedProductId) || PRODUCT_DATA.models[0];
 
-// 4. Initialisation de l'état avec le bon produit
+// 4. ÉTAT DE LA SÉLECTION
 const state = {
   modelId: initialModel.id,
-  colorId: PRODUCT_DATA.colors[0].id,
-  vaseId: PRODUCT_DATA.vases[0].id,
-  quantity: 1,
-  activeImage: 0,
-  message: ""
-};
-
-const WHATSAPP_NUMBER = "15551234567";
-
-// 1. LIRE L'ID DANS L'URL (Ex: product-details.html?id=printaniere)
-const urlParams = new URLSearchParams(window.location.search);
-const selectedProductId = urlParams.get('id'); 
-
-// 2. BASE DE DONNÉES DE TOUS VOS PRODUITS
-const PRODUCT_DATA = {
-  models: [
-    {
-      id: "hall-accueil",
-      name: "Bouquet Hall d'Accueil",
-      basePrice: 45.0,
-      description: "Composition majestueuse de roses, lys étoilés et gypsophile, idéal pour marquer les esprits dès l'entrée.",
-      images: [
-        "image/rose1.jpg",
-        "image/rose2.jpg",
-        "image/rose3.jpg"
-      ]
-    },
-    {
-      id: "printaniere",
-      name: "Douceur Printanière",
-      basePrice: 38.0,
-      description: "Un mélange léger de fleurs de saison aux teintes pastel, pour une ambiance fraîche et lumineuse.",
-      images: [
-        "image/printemps1.jpg",
-        "image/printemps2.jpg",
-        "image/printemps3.jpg"
-      ]
-    },
-    {
-      id: "prestige",
-      name: "Bouquet Prestige",
-      basePrice: 62.0,
-      description: "Une composition ample et raffinée avec des fleurs premium, idéale pour les grandes occasions.",
-      images: [
-        "image/prestige1.jpg",
-        "image/prestige2.jpg",
-        "image/prestige3.jpg"
-      ]
-    }
-  ],
-
-  colors: [
-    { id: "rose", name: "Rose", image: "image/color-rose.jpg" },
-    { id: "blanc", name: "Blanc", image: "image/color-blanc.jpg" }
-  ],
-
-  vases: [
-    { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
-    { id: "verre", name: "Vase transparent", price: 8, included: false }
-  ]
-};
-
-// 3. SELECTIONNER LE BON PRODUIT (si l'ID existe dans l'URL, sinon prends le premier par défaut)
-const initialModel = PRODUCT_DATA.models.find(m => m.id === selectedProductId) || PRODUCT_DATA.models[0];
-
-/* -------------------------------------------------------------------------
-   ÉTAT INITIAL
-   ---------------------------------------------------------------------- */
-const state = {
-  modelId: initialModel.id, // Sélectionne le produit de l'URL
-  colorId: PRODUCT_DATA.colors[0].id,
-  vaseId: PRODUCT_DATA.vases[0].id,
-  quantity: 1,
-  activeImage: 0,
-  message: ""
-};
-
-// ... Gardez le reste de votre code (fonctions currentModel, renderHeader, init, etc.)
-
-
-/* -------------------------------------------------------------------------
-   ÉTAT DE LA SÉLECTION
-   ---------------------------------------------------------------------- */
-const state = {
-  modelId: PRODUCT_DATA.models[0].id,
   colorId: PRODUCT_DATA.colors[0].id,
   vaseId: PRODUCT_DATA.vases[0].id,
   quantity: 1,
@@ -166,7 +84,7 @@ function currentColor() { return PRODUCT_DATA.colors.find(c => c.id === state.co
 function currentVase()  { return PRODUCT_DATA.vases.find(v => v.id === state.vaseId); }
 
 /* -------------------------------------------------------------------------
-   FONCTIONS DE RAFRAÎCHISSEMENT D'AFFICHAGE
+   FONCTIONS D'AFFICHAGE DYNAMIQUE
    ---------------------------------------------------------------------- */
 function money(n) { return "$" + n.toFixed(2); }
 
@@ -178,15 +96,16 @@ function refreshForSelectedModel() {
 
 function renderHeader() {
   const model = currentModel();
-  // Mise à jour stricte du nom et de la description spécifiques au modèle cliqué
-  document.getElementById("productTitle").textContent = model.name;
-  document.getElementById("productSubtitle").textContent = model.description;
+  const titleEl = document.getElementById("productTitle");
+  const subEl = document.getElementById("productSubtitle");
+  
+  if (titleEl) titleEl.textContent = model.name;
+  if (subEl) subEl.textContent = model.description;
 }
 
 function renderGallery() {
   const model = currentModel();
   
-  // Galerie principale
   model.images.forEach((src, i) => {
     const mainImg = document.getElementById("galleryMain" + i);
     if (mainImg) mainImg.src = src;
@@ -194,7 +113,6 @@ function renderGallery() {
   
   setActiveImage(0);
 
-  // Indicators / Points de navigation
   const dots = document.getElementById("galleryDots");
   if (dots) {
     dots.innerHTML = "";
@@ -205,7 +123,6 @@ function renderGallery() {
     });
   }
 
-  // Miniatures
   const thumbs = document.getElementById("thumbs");
   if (thumbs) {
     thumbs.innerHTML = "";
@@ -247,7 +164,6 @@ function renderModels() {
         <div class="mc-price">${money(model.basePrice)}</div>
       </div>`;
     
-    // Clic sur un modèle : Mise à jour de l'état + Rafraîchissement complet
     card.addEventListener("click", () => {
       state.modelId = model.id;
       renderModels();
@@ -257,7 +173,8 @@ function renderModels() {
     scroll.appendChild(card);
   });
 
-  document.getElementById("modelSelectedLabel").textContent = currentModel().name;
+  const label = document.getElementById("modelSelectedLabel");
+  if (label) label.textContent = currentModel().name;
 }
 
 function renderColors() {
@@ -275,7 +192,9 @@ function renderColors() {
     });
     wrap.appendChild(el);
   });
-  document.getElementById("colorSelectedLabel").textContent = currentColor().name;
+  
+  const label = document.getElementById("colorSelectedLabel");
+  if (label) label.textContent = currentColor().name;
 }
 
 function renderVases() {
@@ -300,7 +219,9 @@ function renderVases() {
     });
     grid.appendChild(card);
   });
-  document.getElementById("vaseSelectedLabel").textContent = currentVase().name;
+  
+  const label = document.getElementById("vaseSelectedLabel");
+  if (label) label.textContent = currentVase().name;
 }
 
 function renderPricing() {
@@ -312,23 +233,30 @@ function renderPricing() {
   const basePriceDisp = document.getElementById("basePriceDisplay");
   if (basePriceDisp) basePriceDisp.textContent = money(model.basePrice);
 
-  document.getElementById("brModelLabel").textContent = model.name;
-  document.getElementById("brModelPrice").textContent = money(model.basePrice);
+  const brModelLabel = document.getElementById("brModelLabel");
+  if (brModelLabel) brModelLabel.textContent = model.name;
 
-  document.getElementById("brVaseLabel").textContent = vase.name;
-  document.getElementById("brVasePrice").textContent = vase.included ? "Inclus" : "+" + money(vase.price);
+  const brModelPrice = document.getElementById("brModelPrice");
+  if (brModelPrice) brModelPrice.textContent = money(model.basePrice);
 
-  document.getElementById("brQtyLabel").textContent = "Quantité";
-  document.getElementById("brQtyValue").textContent = "× " + state.quantity;
+  const brVaseLabel = document.getElementById("brVaseLabel");
+  if (brVaseLabel) brVaseLabel.textContent = vase.name;
 
-  document.getElementById("brTotal").textContent = money(total);
+  const brVasePrice = document.getElementById("brVasePrice");
+  if (brVasePrice) brVasePrice.textContent = vase.included ? "Inclus" : "+" + money(vase.price);
+
+  const brQtyValue = document.getElementById("brQtyValue");
+  if (brQtyValue) brQtyValue.textContent = "× " + state.quantity;
+
+  const brTotal = document.getElementById("brTotal");
+  if (brTotal) brTotal.textContent = money(total);
   
   const stickyTotal = document.getElementById("stickyTotal");
   if (stickyTotal) stickyTotal.textContent = money(total);
 }
 
 /* -------------------------------------------------------------------------
-   ÉVÉNEMENTS (QUANTITÉ / MESSAGE / WHATSAPP)
+   COMMANDE WHATSAPP ET FORMULAIRE
    ---------------------------------------------------------------------- */
 function bindQuantity() {
   const input = document.getElementById("qtyInput");
@@ -375,7 +303,7 @@ function buildWhatsAppMessage() {
   let lines = [
     `Bonjour Jardin Agro 🌸 je souhaite commander :`,
     ``,
-    `• Produit : ${model.name}`, // Affiche uniquement le nom du produit sélectionné
+    `• Produit : ${model.name}`,
     `• Couleur : ${color.name}`,
     `• Vase : ${vase.name}${vase.included ? "" : " (+" + money(vase.price) + ")"}`,
     `• Quantité : ${state.quantity}`,
@@ -401,7 +329,7 @@ function bindWhatsAppButton() {
 }
 
 /* -------------------------------------------------------------------------
-   INITIALISATION
+   INIT
    ---------------------------------------------------------------------- */
 function init() {
   renderModels();
