@@ -20,10 +20,10 @@ const PRODUCT_DATA = {
     },
     {
       id: 2,
-      name: "Bouquet Hall d'Accueil",
+      name: "rose",
       basePrice: 60.0,
       description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux.",
-      images: ["image/couverture.jpg", "image/rose2.jpg", "image/rose3.jpg"]
+      images: ["image/rose1.jpg", "image/rose2.jpg", "image/rose3.jpg"]
     },
     {
       id: 3,
