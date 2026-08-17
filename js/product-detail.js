@@ -19,7 +19,7 @@ const PRODUCT_DATA = {
       images: ["image/hotel.jpg", "image/hotel-2.jpg", "image/hotel-3.jpg"]
     },
     {
-      id: product-detail.html?id=2,
+      id: 2,
       name: "Bouquet Hall d'Accueil",
       basePrice: 60.0,
       description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux.",
