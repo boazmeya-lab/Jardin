@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="product-details">
           <h3>${p.title}</h3>
           <p class="price">${p.price}</p>
-          <a href="product-detail.html?id=${p.id}" class="btn-discover">
+          <a href="products-detail.html?id=${p.id}" class="btn-discover">
             Découvrir <i class="fa-solid fa-arrow-right"></i>
           </a>
         </div>
