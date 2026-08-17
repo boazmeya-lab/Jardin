@@ -1,6 +1,80 @@
 /* =========================================================================
    PRODUCT-DETAILS.JS — Jardin Agro
    ========================================================================= */
+// 1. Récupération de l'ID depuis l'URL (ex: product-detail.html?id=2)
+const urlParams = new URLSearchParams(window.location.search);
+const selectedProductId = parseInt(urlParams.get('id')) || 1; // 1 par défaut si pas d'id
+
+// 2. Base de données synchronisée avec les identifiants de products.js
+const PRODUCT_DATA = {
+  models: [
+    {
+      id: 1,
+      name: "Composition Reception VIP",
+      basePrice: 45.0,
+      description: "Composition florale haut de gamme pour accueils de prestige.",
+      images: ["image/hotel.jpg", "image/hotel-2.jpg", "image/hotel-3.jpg"]
+    },
+    {
+      id: 2,
+      name: "Bouquet Hall d'Accueil",
+      basePrice: 60.0,
+      description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux.",
+      images: ["image/couverture.jpg", "image/rose2.jpg", "image/rose3.jpg"]
+    },
+    {
+      id: 3,
+      name: "Abonnement Bureau Exécutif",
+      basePrice: 35.0,
+      description: "Arrangement floral épuré conçu spécialement pour les espaces de travail.",
+      images: ["image/bureau.jpg", "image/bureau-2.jpg", "image/bureau-3.jpg"]
+    },
+    {
+      id: 4,
+      name: "Décoration Pupitre & Scène",
+      basePrice: 80.0,
+      description: "Décoration florale sur-mesure pour scènes, conférences et séminaires.",
+      images: ["image/evenement.jpg", "image/evenement-2.jpg", "image/evenement-3.jpg"]
+    },
+    {
+      id: 5,
+      name: "Bouquet Nuptial Élégance",
+      basePrice: 50.0,
+      description: "Bouquet de mariée élégant aux teintes douces et raffinées.",
+      images: ["image/mariage.jpg", "image/mariage-2.jpg", "image/mariage-3.jpg"]
+    },
+    {
+      id: 6,
+      name: "Couronne d'Hommage Royale",
+      basePrice: 70.0,
+      description: "Composition solennelle pour exprimer vos condoléances avec respect.",
+      images: ["image/finerail.jpg", "image/finerail-2.jpg", "image/finerail-3.jpg"]
+    }
+  ],
+
+  colors: [
+    { id: "rose", name: "Rose", image: "image/color-rose.jpg" },
+    { id: "blanc", name: "Blanc", image: "image/color-blanc.jpg" }
+  ],
+
+  vases: [
+    { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+    { id: "verre", name: "Vase transparent", price: 8, included: false }
+  ]
+};
+
+// 3. Sélection automatique du produit selon l'URL
+const initialModel = PRODUCT_DATA.models.find(m => m.id === selectedProductId) || PRODUCT_DATA.models[0];
+
+// 4. Initialisation de l'état avec le bon produit
+const state = {
+  modelId: initialModel.id,
+  colorId: PRODUCT_DATA.colors[0].id,
+  vaseId: PRODUCT_DATA.vases[0].id,
+  quantity: 1,
+  activeImage: 0,
+  message: ""
+};
 
 const WHATSAPP_NUMBER = "15551234567";
 
