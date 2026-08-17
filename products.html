@@ -1,64 +1,145 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('productsGrid');
-  const filterBtns = document.querySelectorAll('.filter-btn');
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nos Produits - Jardin Agro</title>
+  
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- FontAwesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+</head>
+<body>
 
-  // Récupérer la catégorie transmise dans l'URL (ex: ?cat=hotels)
-  const urlParams = new URLSearchParams(window.location.search);
-  const selectedCat = urlParams.get('cat') || 'all';
+  <!-- EN-TÊTE / NAVBAR -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="image/logo.png" alt="Jardin Agro" onerror="this.src='image/logo.jpg'">
+        <span>Jardin Agro</span>
+      </a>
 
-  function displayProducts(items) {
-    if (!grid) return;
-    if (!items || items.length === 0) {
-      grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit dans cette catégorie.</p>';
-      return;
-    }
+      <nav class="nav-menu">
+        <a href="index.html">Accueil</a>
+        <a href="products.html" class="active">Catalogue</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
 
-    grid.innerHTML = items.map(p => `
-      <div class="product-card">
-        <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
-          <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
-          ${p.surMesure ? 'Sur mesure' : 'Livrable'}
-        </span>
-        <img src="${p.image}" alt="${p.title}">
-        <div class="product-details">
-          <h3>${p.title}</h3>
-          <p class="price">${p.price}</p>
-          <a href="product-detail.html?id=${p.id}" class="btn-discover">
-            Découvrir <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
+      <div class="header-actions">
+        <a href="products.html" class="cart-icon"><i class="fa-solid fa-bag-shopping"></i></a>
+        <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
       </div>
-    `).join('');
-  }
+    </div>
+  </header>
 
-  // Filtrage initial basé sur l'URL
-  if (typeof products !== 'undefined') {
-    if (selectedCat === 'all') {
-      displayProducts(products);
-    } else {
-      const filtered = products.filter(p => p.category === selectedCat);
-      displayProducts(filtered);
+  <!-- SECTION EN-TÊTE PAGE -->
+  <section class="products-hero">
+    <span class="sub-title">NOS UNIVERS FLORAUX</span>
+    <h1>Tous nos Produits</h1>
+    <p>Découvrez nos compositions adaptées à vos besoins et événements.</p>
+  </section>
 
-      // Mettre à jour l'état actif du bouton
-      filterBtns.forEach(b => {
-        if (b.dataset.category === selectedCat) b.classList.add('active');
-        else b.classList.remove('active');
-      });
-    }
-  }
+  <!-- SECTION FILTRES DE CATÉGORIES -->
+  <section class="filters-container">
+    <div class="filters-scroll">
+      <button class="filter-btn active" data-category="all">Tous</button>
+      <button class="filter-btn" data-category="hotels">Hôtels</button>
+      <button class="filter-btn" data-category="entreprises">Entreprises & Banques</button>
+      <button class="filter-btn" data-category="conferences">Conférences</button>
+      <button class="filter-btn" data-category="mariage">Mariage & Fêtes</button>
+      <button class="filter-btn" data-category="funeraire">Funéraire</button>
+    </div>
+  </section>
 
-  // Gestion des clics manuels sur les boutons
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  <!-- GRILLE DES PRODUITS -->
+  <section class="products-section">
+    <div class="products-grid" id="productsGrid">
+      <!-- Les cartes de bouquets sont chargées dynamiquement par JavaScript -->
+    </div>
+  </section>
 
-      const cat = btn.dataset.category;
-      if (cat === 'all') {
-        displayProducts(products);
-      } else {
-        displayProducts(products.filter(p => p.category === cat));
+  <!-- FOOTER -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Jardin Agro. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- CHARGEMENT DES SCRIPTS JS -->
+  <script src="js/products.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('productsGrid');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      // Récupérer la catégorie passée dans l'URL (ex: products.html?cat=hotels)
+      const urlParams = new URLSearchParams(window.location.search);
+      const selectedCat = urlParams.get('cat') || 'all';
+
+      function displayProducts(items) {
+        if (!grid) return;
+        if (!items || items.length === 0) {
+          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit dans cette catégorie pour le moment.</p>';
+          return;
+        }
+
+        grid.innerHTML = items.map(p => `
+          <div class="product-card">
+            <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
+              <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
+              ${p.surMesure ? 'Sur mesure' : 'Livrable'}
+            </span>
+            <img src="${p.image}" alt="${p.title}">
+            <div class="product-details">
+              <h3>${p.title}</h3>
+              <p class="price">${p.price}</p>
+              <a href="product-detail.html?id=${p.id}" class="btn-discover">
+                Découvrir <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        `).join('');
       }
+
+      // Affichage initial selon la catégorie reçue
+      if (typeof products !== 'undefined') {
+        if (selectedCat === 'all') {
+          displayProducts(products);
+        } else {
+          const filtered = products.filter(p => p.category === selectedCat);
+          displayProducts(filtered);
+
+          // Activation du bon bouton de filtre
+          filterBtns.forEach(b => {
+            if (b.dataset.category === selectedCat) b.classList.add('active');
+            else b.classList.remove('active');
+          });
+        }
+      }
+
+      // Filtrage dynamique au clic
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const cat = btn.dataset.category;
+          if (cat === 'all') {
+            displayProducts(products);
+          } else {
+            displayProducts(products.filter(p => p.category === cat));
+          }
+        });
+      });
     });
-  });
-});
+  </script>
+</body>
+</html>
