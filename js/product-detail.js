@@ -36,14 +36,14 @@ const PRODUCT_DATA = {
 
   models: [
     {
-      id: "royal",
-      name: "Élégance Royal",
+      id: "bouquet hall d'Acceuil",
+      name: "bouquet hall d'Acceuil",
       basePrice: 45.0,
       description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux et romantique.",
       images: [
-        placeholder("#1F3D2B", "#E8B4BC", "Vue 1"),
-        placeholder("#1F3D2B", "#B5495B", "Vue 2"),
-        placeholder("#1F3D2B", "#DCE5D6", "Vue 3"),
+        "image/rose1.jpg"("#1F3D2B", "#E8B4BC", "Vue 1"),
+        "image/rose2.jpg("#1F3D2B", "#B5495B", "Vue 2"),
+        "image/rose3.jpg("#1F3D2B", "#DCE5D6", "Vue 3"),
       ],
     },
     {
