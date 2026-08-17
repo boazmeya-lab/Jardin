@@ -2,28 +2,13 @@
    PRODUCT-DETAILS.JS — Jardin Agro
    ========================================================================= */
 
-const WHATSAPP_NUMBER = "15551234567"; // Numéro WhatsApp (ex: 33612345678)
+const WHATSAPP_NUMBER = "15551234567";
 
-/* Génère un visuel SVG de remplacement pour les produits sans photo */
-function placeholder(bg, accent, label) {
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
-      <defs>
-        <radialGradient id="g" cx="50%" cy="35%" r="75%">
-          <stop offset="0%" stop-color="${accent}"/>
-          <stop offset="100%" stop-color="${bg}"/>
-        </radialGradient>
-      </defs>
-      <rect width="600" height="600" fill="url(#g)"/>
-      <text x="50%" y="52%" font-family="Georgia, serif" font-size="26" fill="#ffffffcc"
-            text-anchor="middle" dominant-baseline="middle">${label}</text>
-    </svg>`;
-  return "data:image/svg+xml;base64," + btoa(svg);
-}
+// 1. LIRE L'ID DANS L'URL (Ex: product-details.html?id=printaniere)
+const urlParams = new URLSearchParams(window.location.search);
+const selectedProductId = urlParams.get('id'); 
 
-/* -------------------------------------------------------------------------
-   DONNÉES PRODUIT (Chaque modèle contient ses propres informations)
-   ---------------------------------------------------------------------- */
+// 2. BASE DE DONNÉES DE TOUS VOS PRODUITS
 const PRODUCT_DATA = {
   models: [
     {
@@ -35,7 +20,7 @@ const PRODUCT_DATA = {
         "image/rose1.jpg",
         "image/rose2.jpg",
         "image/rose3.jpg"
-      ],
+      ]
     },
     {
       id: "printaniere",
@@ -43,10 +28,10 @@ const PRODUCT_DATA = {
       basePrice: 38.0,
       description: "Un mélange léger de fleurs de saison aux teintes pastel, pour une ambiance fraîche et lumineuse.",
       images: [
-        placeholder("#2E4A33", "#F2CBD3", "Vue 1"),
-        placeholder("#2E4A33", "#F2CBD3", "Vue 2"),
-        placeholder("#2E4A33", "#F2CBD3", "Vue 3"),
-      ],
+        "image/printemps1.jpg",
+        "image/printemps2.jpg",
+        "image/printemps3.jpg"
+      ]
     },
     {
       id: "prestige",
@@ -54,27 +39,41 @@ const PRODUCT_DATA = {
       basePrice: 62.0,
       description: "Une composition ample et raffinée avec des fleurs premium, idéale pour les grandes occasions.",
       images: [
-        placeholder("#3A2E23", "#D9A441", "Vue 1"),
-        placeholder("#3A2E23", "#D9A441", "Vue 2"),
-        placeholder("#3A2E23", "#D9A441", "Vue 3"),
-      ],
-    },
+        "image/prestige1.jpg",
+        "image/prestige2.jpg",
+        "image/prestige3.jpg"
+      ]
+    }
   ],
 
   colors: [
-    { id: "rose",     name: "Rose",     image: placeholder("#E8B4BC", "#F6DEE2", "") },
-    { id: "blanc",    name: "Blanc",    image: placeholder("#F7F4EE", "#FFFFFF", "") },
-    { id: "bordeaux", name: "Bordeaux", image: placeholder("#7A2438", "#B5495B", "") },
-    { id: "pastel",   name: "Pastel",   image: placeholder("#F0D9C4", "#F7E4D3", "") },
+    { id: "rose", name: "Rose", image: "image/color-rose.jpg" },
+    { id: "blanc", name: "Blanc", image: "image/color-blanc.jpg" }
   ],
 
   vases: [
-    { id: "none",      name: "Sans vase (bouquet seul)", price: 0,  included: true,  image: placeholder("#DCE5D6", "#B7C9AE", "Sans vase") },
-    { id: "verre",     name: "Vase transparent",         price: 8,  included: false, image: placeholder("#CFE0E8", "#8FB4C4", "Verre") },
-    { id: "ceramique", name: "Vase céramique blanc",     price: 14, included: false, image: placeholder("#EDE7DD", "#C9B99A", "Céramique") },
-    { id: "noir",      name: "Vase noir mat",            price: 16, included: false, image: placeholder("#2A2A2A", "#5A5A5A", "Noir mat") },
-  ],
+    { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+    { id: "verre", name: "Vase transparent", price: 8, included: false }
+  ]
 };
+
+// 3. SELECTIONNER LE BON PRODUIT (si l'ID existe dans l'URL, sinon prends le premier par défaut)
+const initialModel = PRODUCT_DATA.models.find(m => m.id === selectedProductId) || PRODUCT_DATA.models[0];
+
+/* -------------------------------------------------------------------------
+   ÉTAT INITIAL
+   ---------------------------------------------------------------------- */
+const state = {
+  modelId: initialModel.id, // Sélectionne le produit de l'URL
+  colorId: PRODUCT_DATA.colors[0].id,
+  vaseId: PRODUCT_DATA.vases[0].id,
+  quantity: 1,
+  activeImage: 0,
+  message: ""
+};
+
+// ... Gardez le reste de votre code (fonctions currentModel, renderHeader, init, etc.)
+
 
 /* -------------------------------------------------------------------------
    ÉTAT DE LA SÉLECTION
