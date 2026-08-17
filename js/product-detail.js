@@ -1,15 +1,10 @@
 /* =========================================================================
    PRODUCT-DETAILS.JS — Jardin Agro
-   -------------------------------------------------------------------------
-   Toutes les données produit sont dans PRODUCT_DATA en bas de ce bloc.
-   Remplace les "images" par tes vraies photos (chemins ou URLs) et
-   WHATSAPP_NUMBER par ton numéro réel (format international, sans +).
    ========================================================================= */
 
-const WHATSAPP_NUMBER = "15551234567"; // <-- remplace par ton numéro (format: indicatif+numéro, sans +, sans espace)
+const WHATSAPP_NUMBER = "15551234567"; // Numéro WhatsApp (ex: 33612345678)
 
-/* Génère une image de remplacement en SVG (à retirer quand tu as tes vraies photos).
-   Utilise `images: ["photo1.jpg","photo2.jpg","photo3.jpg"]` dans un modèle pour tes vraies images. */
+/* Génère un visuel SVG de remplacement pour les produits sans photo */
 function placeholder(bg, accent, label) {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
@@ -27,23 +22,19 @@ function placeholder(bg, accent, label) {
 }
 
 /* -------------------------------------------------------------------------
-   DONNÉES PRODUIT
-   Remplace "images" par tes vraies photos. Chaque modèle a ses 3 vues.
+   DONNÉES PRODUIT (Chaque modèle contient ses propres informations)
    ---------------------------------------------------------------------- */
 const PRODUCT_DATA = {
-  title: "Bouquet Élégance Royal",
-  subtitle: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux et romantique.",
-
   models: [
     {
-      id: "bouquet hall d'Acceuil",
-      name: "bouquet hall d'Acceuil",
+      id: "hall-accueil",
+      name: "Bouquet Hall d'Accueil",
       basePrice: 45.0,
-      description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux et romantique.",
+      description: "Composition majestueuse de roses, lys étoilés et gypsophile, idéal pour marquer les esprits dès l'entrée.",
       images: [
-        "image/rose1.jpg"("#1F3D2B", "#E8B4BC", "Vue 1"),
-        "image/rose2.jpg("#1F3D2B", "#B5495B", "Vue 2"),
-        "image/rose3.jpg("#1F3D2B", "#DCE5D6", "Vue 3"),
+        "image/rose1.jpg",
+        "image/rose2.jpg",
+        "image/rose3.jpg"
       ],
     },
     {
@@ -71,7 +62,6 @@ const PRODUCT_DATA = {
   ],
 
   colors: [
-    // "image" = petite photo de la couleur (remplace par tes vraies photos, ex: "images/couleur-rose.jpg")
     { id: "rose",     name: "Rose",     image: placeholder("#E8B4BC", "#F6DEE2", "") },
     { id: "blanc",    name: "Blanc",    image: placeholder("#F7F4EE", "#FFFFFF", "") },
     { id: "bordeaux", name: "Bordeaux", image: placeholder("#7A2438", "#B5495B", "") },
@@ -79,19 +69,15 @@ const PRODUCT_DATA = {
   ],
 
   vases: [
-    { id: "none",  name: "Sans vase (bouquet seul)", price: 0,  included: true,
-      image: placeholder("#DCE5D6", "#B7C9AE", "Sans vase") },
-    { id: "verre", name: "Vase transparent",         price: 8,  included: false,
-      image: placeholder("#CFE0E8", "#8FB4C4", "Verre") },
-    { id: "ceramique", name: "Vase céramique blanc", price: 14, included: false,
-      image: placeholder("#EDE7DD", "#C9B99A", "Céramique") },
-    { id: "noir",  name: "Vase noir mat",            price: 16, included: false,
-      image: placeholder("#2A2A2A", "#5A5A5A", "Noir mat") },
+    { id: "none",      name: "Sans vase (bouquet seul)", price: 0,  included: true,  image: placeholder("#DCE5D6", "#B7C9AE", "Sans vase") },
+    { id: "verre",     name: "Vase transparent",         price: 8,  included: false, image: placeholder("#CFE0E8", "#8FB4C4", "Verre") },
+    { id: "ceramique", name: "Vase céramique blanc",     price: 14, included: false, image: placeholder("#EDE7DD", "#C9B99A", "Céramique") },
+    { id: "noir",      name: "Vase noir mat",            price: 16, included: false, image: placeholder("#2A2A2A", "#5A5A5A", "Noir mat") },
   ],
 };
 
 /* -------------------------------------------------------------------------
-   ÉTAT
+   ÉTAT DE LA SÉLECTION
    ---------------------------------------------------------------------- */
 const state = {
   modelId: PRODUCT_DATA.models[0].id,
@@ -106,54 +92,58 @@ function currentModel() { return PRODUCT_DATA.models.find(m => m.id === state.mo
 function currentColor() { return PRODUCT_DATA.colors.find(c => c.id === state.colorId); }
 function currentVase()  { return PRODUCT_DATA.vases.find(v => v.id === state.vaseId); }
 
-/* Rejoue TOUT l'affichage pour le modèle actuellement sélectionné.
-   Appelée à chaque clic sur un modèle pour être sûr que titre, description,
-   photo et prix affichent bien les vraies infos de ce modèle précis. */
+/* -------------------------------------------------------------------------
+   FONCTIONS DE RAFRAÎCHISSEMENT D'AFFICHAGE
+   ---------------------------------------------------------------------- */
+function money(n) { return "$" + n.toFixed(2); }
+
 function refreshForSelectedModel() {
   renderHeader();
   renderGallery();
   renderPricing();
 }
 
-/* -------------------------------------------------------------------------
-   RENDU
-   ---------------------------------------------------------------------- */
-function money(n) { return "$" + n.toFixed(2); }
-
 function renderHeader() {
-  // Le titre et la description suivent maintenant le MODÈLE sélectionné,
-  // pas juste le produit générique — c'est ce qui manquait avant.
   const model = currentModel();
+  // Mise à jour stricte du nom et de la description spécifiques au modèle cliqué
   document.getElementById("productTitle").textContent = model.name;
-  document.getElementById("productSubtitle").textContent = model.description || PRODUCT_DATA.subtitle;
+  document.getElementById("productSubtitle").textContent = model.description;
 }
 
 function renderGallery() {
   const model = currentModel();
+  
+  // Galerie principale
   model.images.forEach((src, i) => {
-    document.getElementById("galleryMain" + i).src = src;
+    const mainImg = document.getElementById("galleryMain" + i);
+    if (mainImg) mainImg.src = src;
   });
+  
   setActiveImage(0);
 
-  // dots
+  // Indicators / Points de navigation
   const dots = document.getElementById("galleryDots");
-  dots.innerHTML = "";
-  model.images.forEach((_, i) => {
-    const d = document.createElement("span");
-    if (i === state.activeImage) d.classList.add("active");
-    dots.appendChild(d);
-  });
+  if (dots) {
+    dots.innerHTML = "";
+    model.images.forEach((_, i) => {
+      const d = document.createElement("span");
+      if (i === state.activeImage) d.classList.add("active");
+      dots.appendChild(d);
+    });
+  }
 
-  // thumbnails
+  // Miniatures
   const thumbs = document.getElementById("thumbs");
-  thumbs.innerHTML = "";
-  model.images.forEach((src, i) => {
-    const b = document.createElement("button");
-    b.className = i === state.activeImage ? "active" : "";
-    b.innerHTML = `<img src="${src}" alt="Miniature ${i + 1}">`;
-    b.addEventListener("click", () => setActiveImage(i));
-    thumbs.appendChild(b);
-  });
+  if (thumbs) {
+    thumbs.innerHTML = "";
+    model.images.forEach((src, i) => {
+      const b = document.createElement("button");
+      b.className = i === state.activeImage ? "active" : "";
+      b.innerHTML = `<img src="${src}" alt="Miniature ${i + 1}">`;
+      b.addEventListener("click", () => setActiveImage(i));
+      thumbs.appendChild(b);
+    });
+  }
 }
 
 function setActiveImage(index) {
@@ -171,6 +161,8 @@ function setActiveImage(index) {
 
 function renderModels() {
   const scroll = document.getElementById("modelScroll");
+  if (!scroll) return;
+  
   scroll.innerHTML = "";
   PRODUCT_DATA.models.forEach(model => {
     const card = document.createElement("button");
@@ -181,19 +173,24 @@ function renderModels() {
         <div class="mc-name">${model.name}</div>
         <div class="mc-price">${money(model.basePrice)}</div>
       </div>`;
+    
+    // Clic sur un modèle : Mise à jour de l'état + Rafraîchissement complet
     card.addEventListener("click", () => {
       state.modelId = model.id;
       renderModels();
       refreshForSelectedModel();
     });
+    
     scroll.appendChild(card);
   });
+
   document.getElementById("modelSelectedLabel").textContent = currentModel().name;
-  document.getElementById("modelEyebrow").textContent = "Modèle sélectionné";
 }
 
 function renderColors() {
   const wrap = document.getElementById("swatches");
+  if (!wrap) return;
+  
   wrap.innerHTML = "";
   PRODUCT_DATA.colors.forEach(color => {
     const el = document.createElement("button");
@@ -210,6 +207,8 @@ function renderColors() {
 
 function renderVases() {
   const grid = document.getElementById("vaseGrid");
+  if (!grid) return;
+
   grid.innerHTML = "";
   PRODUCT_DATA.vases.forEach(vase => {
     const card = document.createElement("button");
@@ -237,7 +236,8 @@ function renderPricing() {
   const unitPrice = model.basePrice + vase.price;
   const total = unitPrice * state.quantity;
 
-  document.getElementById("basePriceDisplay").textContent = money(model.basePrice);
+  const basePriceDisp = document.getElementById("basePriceDisplay");
+  if (basePriceDisp) basePriceDisp.textContent = money(model.basePrice);
 
   document.getElementById("brModelLabel").textContent = model.name;
   document.getElementById("brModelPrice").textContent = money(model.basePrice);
@@ -249,43 +249,49 @@ function renderPricing() {
   document.getElementById("brQtyValue").textContent = "× " + state.quantity;
 
   document.getElementById("brTotal").textContent = money(total);
-  document.getElementById("stickyTotal").textContent = money(total);
+  
+  const stickyTotal = document.getElementById("stickyTotal");
+  if (stickyTotal) stickyTotal.textContent = money(total);
 }
 
 /* -------------------------------------------------------------------------
-   QUANTITÉ
+   ÉVÉNEMENTS (QUANTITÉ / MESSAGE / WHATSAPP)
    ---------------------------------------------------------------------- */
 function bindQuantity() {
   const input = document.getElementById("qtyInput");
-  document.getElementById("qtyMinus").addEventListener("click", () => {
-    if (state.quantity > 1) {
-      state.quantity--;
-      input.value = state.quantity;
-      renderPricing();
-    }
-  });
-  document.getElementById("qtyPlus").addEventListener("click", () => {
-    if (state.quantity < 99) {
-      state.quantity++;
-      input.value = state.quantity;
-      renderPricing();
-    }
-  });
+  const minus = document.getElementById("qtyMinus");
+  const plus = document.getElementById("qtyPlus");
+
+  if (minus && input) {
+    minus.addEventListener("click", () => {
+      if (state.quantity > 1) {
+        state.quantity--;
+        input.value = state.quantity;
+        renderPricing();
+      }
+    });
+  }
+
+  if (plus && input) {
+    plus.addEventListener("click", () => {
+      if (state.quantity < 99) {
+        state.quantity++;
+        input.value = state.quantity;
+        renderPricing();
+      }
+    });
+  }
 }
 
-/* -------------------------------------------------------------------------
-   MESSAGE SUR LA CARTE
-   ---------------------------------------------------------------------- */
 function bindMessage() {
   const textarea = document.getElementById("cardMessage");
-  textarea.addEventListener("input", (e) => {
-    state.message = e.target.value;
-  });
+  if (textarea) {
+    textarea.addEventListener("input", (e) => {
+      state.message = e.target.value;
+    });
+  }
 }
 
-/* -------------------------------------------------------------------------
-   COMMANDE WHATSAPP
-   ---------------------------------------------------------------------- */
 function buildWhatsAppMessage() {
   const model = currentModel();
   const color = currentColor();
@@ -296,8 +302,7 @@ function buildWhatsAppMessage() {
   let lines = [
     `Bonjour Jardin Agro 🌸 je souhaite commander :`,
     ``,
-    `• Produit : ${PRODUCT_DATA.title}`,
-    `• Modèle : ${model.name}`,
+    `• Produit : ${model.name}`, // Affiche uniquement le nom du produit sélectionné
     `• Couleur : ${color.name}`,
     `• Vase : ${vase.name}${vase.included ? "" : " (+" + money(vase.price) + ")"}`,
     `• Quantité : ${state.quantity}`,
@@ -312,15 +317,18 @@ function buildWhatsAppMessage() {
 }
 
 function bindWhatsAppButton() {
-  document.getElementById("whatsappBtn").addEventListener("click", () => {
-    const text = encodeURIComponent(buildWhatsAppMessage());
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-    window.open(url, "_blank");
-  });
+  const btn = document.getElementById("whatsappBtn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const text = encodeURIComponent(buildWhatsAppMessage());
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+      window.open(url, "_blank");
+    });
+  }
 }
 
 /* -------------------------------------------------------------------------
-   INIT
+   INITIALISATION
    ---------------------------------------------------------------------- */
 function init() {
   renderModels();
@@ -332,9 +340,6 @@ function init() {
   bindWhatsAppButton();
 }
 
-/* Lance init() immédiatement si le DOM est déjà prêt (évite un écran vide
-   si ce script se charge après coup sur certains hébergeurs), sinon
-   attend l'événement normal. */
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);
 } else {
