@@ -288,6 +288,7 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
    7. SECTION SERVICES & UNIVERS
    (grille unique, plus de règles concurrentes)
    =========================================================== */
+/* 7. SECTION SERVICES & UNIVERS (AJUSTÉ POUR PC ET MOBILE) */
 .services-section {
   padding: 70px 0;
   background: var(--bg-light);
@@ -295,25 +296,21 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 25px;
-}
-
-/* Centre proprement une carte isolée en fin de grille impaire,
-   sans forcer le nombre de colonnes de toute la grille */
-.services-grid .service-card:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
-  max-width: calc(50% - 12.5px);
-  justify-self: center;
+  grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur PC */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .service-card-link {
   display: block;
+  width: 100%;
 }
 
 .service-card {
   position: relative;
-  height: 280px;
+  height: 340px; /* Plus haute pour mieux respirer */
+  width: 100%;
   border-radius: var(--radius-card);
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
@@ -351,31 +348,70 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 .service-card-content {
   position: relative;
   z-index: 2;
-  padding: 20px;
+  padding: 24px;
   color: var(--white);
   width: 100%;
 }
 
 .service-card-icon {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: var(--accent-gold);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .service-card-title {
   font-family: var(--font-body);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   color: var(--white);
 }
 
 .service-card-desc {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   opacity: 0.9;
   color: #f0f0f0;
 }
+
+/* Centrage propre des 2 cartes de la 2nde ligne sur PC */
+@media (min-width: 992px) {
+  .services-grid > .service-card-link:nth-child(4) {
+    grid-column: 1 / 2;
+    margin-left: 50%; /* Décale la 4ème carte pour équilibrer la ligne */
+  }
+  .services-grid > .service-card-link:nth-child(5) {
+    grid-column: 3 / 4;
+    margin-left: -50%; /* Rapproche la 5ème carte */
+  }
+}
+
+/* Ajustements pour Tablettes */
+@media (max-width: 991px) and (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .services-grid > .service-card-link:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 15px);
+    justify-self: center;
+  }
+}
+
+/* Ajustements pour Mobile */
+@media (max-width: 767px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .service-card {
+    height: 240px;
+  }
+  .services-grid > .service-card-link:last-child:nth-child(odd) {
+    max-width: 100%;
+  }
+     }
+
 
 /* 8. GRILLE DU CATALOGUE & CARTES PRODUITS */
 .products-section {
