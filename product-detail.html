@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Bouquet Élégance Royal — Jardin Agro</title>
+<title>Détails du Produit — Jardin Agro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -30,13 +30,13 @@
     -webkit-tap-highlight-color:transparent;
   }
   body{
-    padding-bottom:104px; /* room for sticky bar */
+    padding-bottom:104px;
   }
   a{color:inherit;text-decoration:none;}
   button{font-family:inherit;border:none;background:none;cursor:pointer;}
   ::selection{background:var(--blush);}
 
-  /* ---------- Top bar ---------- */
+  /* Top bar */
   .topbar{
     position:sticky;top:0;z-index:20;
     display:flex;align-items:center;gap:12px;
@@ -58,7 +58,7 @@
     display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:11px;color:var(--charcoal-soft);
   }
 
-  /* ---------- Gallery ---------- */
+  /* Gallery */
   .gallery{
     position:relative;
     background:var(--forest);
@@ -108,7 +108,7 @@
   .thumbs button.active{border-color:var(--forest);opacity:1;}
   .thumbs img{width:100%;height:100%;object-fit:cover;display:block;}
 
-  /* ---------- Content ---------- */
+  /* Content */
   .content{padding:20px 18px 0;}
   .eyebrow{
     font-size:12px;font-weight:600;color:var(--rose);letter-spacing:.04em;text-transform:uppercase;
@@ -131,7 +131,7 @@
     font-size:12px;color:var(--charcoal-soft);
   }
 
-  /* ---------- Sections ---------- */
+  /* Options */
   section.option{
     margin-top:28px;
   }
@@ -146,7 +146,7 @@
     font-size:12.5px;color:var(--rose);font-weight:600;
   }
 
-  /* Colors — small photo swatches (image = actual color/flower photo) */
+  /* Colors */
   .swatches{display:flex;gap:12px;flex-wrap:wrap;}
   .swatch{
     display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -177,7 +177,7 @@
   .swatch.active .dot::after{opacity:1;}
   .swatch .label{font-size:11px;color:var(--charcoal-soft);}
 
-  /* Vases — cards with image */
+  /* Vases */
   .vase-grid{display:flex;gap:10px;overflow-x:auto;margin:0 -18px;padding:0 18px 4px;}
   .vase-grid::-webkit-scrollbar{display:none;}
   .vase-card{
@@ -196,7 +196,7 @@
   .vase-card .vc-price{font-size:11px;margin-top:3px;color:var(--rose);font-weight:600;}
   .vase-card .vc-price.included{color:#3E8E5A;}
 
-  /* Quantity */
+  /* Stepper */
   .qty-row{
     display:flex;align-items:center;justify-content:space-between;
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);
@@ -214,7 +214,7 @@
     font-variant-numeric:tabular-nums;background:transparent;
   }
 
-  /* Message card */
+  /* Message */
   .message-box{margin-top:24px;}
   .message-box label{font-size:13.5px;font-weight:600;color:var(--forest-dark);}
   .message-box textarea{
@@ -243,7 +243,7 @@
     font-size:15px;font-weight:700;color:var(--forest-dark);
   }
 
-  /* ---------- Sticky bottom bar ---------- */
+  /* Sticky Bottom Bar */
   .order-bar{
     position:fixed;left:0;right:0;bottom:0;z-index:30;
     background:var(--card);
@@ -281,18 +281,20 @@
     <div class="brand">Jardin Agro<small>Personnalisation du bouquet</small></div>
   </header>
 
-  <!-- Galerie photo : nombre de photos flexible, changées via miniatures -->
+  <!-- Galerie photo dynamisée -->
   <div class="gallery">
     <span class="gallery-badge">En stock</span>
-    <div id="galleryImages"></div>
+    <img id="galleryMain0" class="gallery-img active" src="" alt="Produit">
+    <img id="galleryMain1" class="gallery-img" src="" alt="Produit">
+    <img id="galleryMain2" class="gallery-img" src="" alt="Produit">
     <div class="gallery-dots" id="galleryDots"></div>
   </div>
   <div class="thumbs" id="thumbs"></div>
 
   <main class="content">
-    <p class="eyebrow">Bouquet</p>
-    <h1 id="productTitle">—</h1>
-    <p class="subtitle" id="productSubtitle">—</p>
+    <p class="eyebrow">Composition Floral</p>
+    <h1 id="productTitle">Chargement...</h1>
+    <p class="subtitle" id="productSubtitle">Chargement...</p>
 
     <div class="price-row">
       <span class="from">Prix</span>
@@ -341,14 +343,14 @@
     <!-- Détail du prix -->
     <div class="breakdown">
       <h3>Détail du prix</h3>
-      <div class="line"><span>Prix de base</span><span id="brModelPrice">$0.00</span></div>
+      <div class="line"><span id="brModelLabel">Prix de base</span><span id="brModelPrice">$0.00</span></div>
       <div class="line"><span id="brVaseLabel">Vase</span><span id="brVasePrice">$0.00</span></div>
       <div class="line"><span id="brQtyLabel">Quantité</span><span id="brQtyValue">× 1</span></div>
       <div class="line total"><span>Total</span><span id="brTotal">$0.00</span></div>
     </div>
   </main>
 
-  <!-- Barre fixe en bas : prix total + commande WhatsApp -->
+  <!-- Barre fixe en bas -->
   <div class="order-bar">
     <div class="total-block">
       <div class="total-label">Total</div>
@@ -360,298 +362,7 @@
     </button>
   </div>
 
-  <script>
-  /* Le JS est intégré directement ici pour éviter tout problème de chemin
-     de fichier lors de la mise en ligne (fichier .js séparé introuvable, etc.).
-     Une copie identique existe aussi dans product-details.js si tu préfères
-     un fichier externe — utilise l'un OU l'autre, pas les deux. */
-/* =========================================================================
-   PRODUCT-DETAILS.JS — Jardin Agro
-   -------------------------------------------------------------------------
-   Toutes les données produit sont dans PRODUCT_DATA plus bas.
-   Les chemins d'images pointent déjà vers ton dossier "image" sur GitHub
-   (ex: image/rose1.jpg). Si ton fichier product-details.html n'est pas au
-   même niveau que le dossier "image", adapte le préfixe du chemin.
-   Remplace aussi WHATSAPP_NUMBER par ton vrai numéro (format international,
-   sans +, sans espace).
-   ========================================================================= */
-
-const WHATSAPP_NUMBER = "15551234567"; // <-- remplace par ton numéro
-
-/* Génère une image de remplacement en SVG — utilisée uniquement là où tu
-   n'as pas encore de vraie photo (ex: couleurs). Remplace par un chemin
-   "image/xxx.jpg" dès que tu as la photo correspondante. */
-function placeholder(bg, accent, label) {
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
-      <defs>
-        <radialGradient id="g" cx="50%" cy="35%" r="75%">
-          <stop offset="0%" stop-color="${accent}"/>
-          <stop offset="100%" stop-color="${bg}"/>
-        </radialGradient>
-      </defs>
-      <rect width="600" height="600" fill="url(#g)"/>
-      <text x="50%" y="52%" font-family="Georgia, serif" font-size="26" fill="#ffffffcc"
-            text-anchor="middle" dominant-baseline="middle">${label}</text>
-    </svg>`;
-  return "data:image/svg+xml;base64," + btoa(svg);
-}
-
-/* -------------------------------------------------------------------------
-   DONNÉES PRODUIT — un seul bouquet, avec ses vraies photos
-   ---------------------------------------------------------------------- */
-const PRODUCT_DATA = {
-  title: "Bouquet Élégance Royal",
-  description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux et romantique.",
-  basePrice: 45.0,
-
-  // Tes 4 vraies photos du bouquet (dossier "image" sur GitHub)
-  images: [
-    "image/rose1.jpg",
-    "image/rose2.jpg",
-    "image/rose3.jpg",
-    "image/rose4.jpg",
-  ],
-
-  colors: [
-    // Pas encore de vraies photos de couleur -> remplace "image: ..." par
-    // "image/couleur-rose.jpg" etc. dès que tu les as.
-    { id: "rose",     name: "Rose",     image: placeholder("#E8B4BC", "#F6DEE2", "") },
-    { id: "blanc",    name: "Blanc",    image: placeholder("#F7F4EE", "#FFFFFF", "") },
-    { id: "bordeaux", name: "Bordeaux", image: placeholder("#7A2438", "#B5495B", "") },
-    { id: "pastel",   name: "Pastel",   image: placeholder("#F0D9C4", "#F7E4D3", "") },
-  ],
-
-  vases: [
-    // "Sans vase" réutilise ta 1ère photo du bouquet — pas de prix ajouté.
-    { id: "none",  name: "Sans vase (bouquet seul)", price: 0,  included: true,
-      image: "image/rose1.jpg" },
-    { id: "vase2", name: "Vase — option 2", price: 8,  included: false,
-      image: "image/vase2.jpg" },
-    { id: "vase3", name: "Vase — option 3", price: 12, included: false,
-      image: "image/vase3.jpg" },
-    { id: "vase4", name: "Vase — option 4", price: 16, included: false,
-      image: "image/vase4.jpg" },
-  ],
-};
-/* Astuce : renomme "Vase — option 2/3/4" et ajuste les prix (price)
-   pour correspondre à tes vrais modèles de vase. */
-
-/* -------------------------------------------------------------------------
-   ÉTAT
-   ---------------------------------------------------------------------- */
-const state = {
-  colorId: PRODUCT_DATA.colors[0].id,
-  vaseId: PRODUCT_DATA.vases[0].id,
-  quantity: 1,
-  activeImage: 0,
-  message: "",
-};
-
-function currentColor() { return PRODUCT_DATA.colors.find(c => c.id === state.colorId); }
-function currentVase()  { return PRODUCT_DATA.vases.find(v => v.id === state.vaseId); }
-
-/* -------------------------------------------------------------------------
-   RENDU
-   ---------------------------------------------------------------------- */
-function money(n) { return "$" + n.toFixed(2); }
-
-function renderHeader() {
-  document.getElementById("productTitle").textContent = PRODUCT_DATA.title;
-  document.getElementById("productSubtitle").textContent = PRODUCT_DATA.description;
-  document.getElementById("basePriceDisplay").textContent = money(PRODUCT_DATA.basePrice);
-}
-
-function renderGallery() {
-  const images = PRODUCT_DATA.images;
-
-  // images principales
-  const wrap = document.getElementById("galleryImages");
-  wrap.innerHTML = "";
-  images.forEach((src, i) => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = `${PRODUCT_DATA.title} — vue ${i + 1}`;
-    img.className = i === 0 ? "gallery-img active" : "gallery-img";
-    wrap.appendChild(img);
-  });
-
-  // points de pagination
-  const dots = document.getElementById("galleryDots");
-  dots.innerHTML = "";
-  images.forEach((_, i) => {
-    const d = document.createElement("span");
-    if (i === 0) d.classList.add("active");
-    dots.appendChild(d);
-  });
-
-  // miniatures
-  const thumbs = document.getElementById("thumbs");
-  thumbs.innerHTML = "";
-  images.forEach((src, i) => {
-    const b = document.createElement("button");
-    b.className = i === 0 ? "active" : "";
-    b.innerHTML = `<img src="${src}" alt="Miniature ${i + 1}">`;
-    b.addEventListener("click", () => setActiveImage(i));
-    thumbs.appendChild(b);
-  });
-
-  setActiveImage(0);
-}
-
-function setActiveImage(index) {
-  state.activeImage = index;
-  document.querySelectorAll(".gallery-img").forEach((img, i) => {
-    img.classList.toggle("active", i === index);
-  });
-  document.querySelectorAll("#galleryDots span").forEach((d, i) => {
-    d.classList.toggle("active", i === index);
-  });
-  document.querySelectorAll("#thumbs button").forEach((b, i) => {
-    b.classList.toggle("active", i === index);
-  });
-}
-
-function renderColors() {
-  const wrap = document.getElementById("swatches");
-  wrap.innerHTML = "";
-  PRODUCT_DATA.colors.forEach(color => {
-    const el = document.createElement("button");
-    el.className = "swatch" + (color.id === state.colorId ? " active" : "");
-    el.innerHTML = `<span class="dot"><img src="${color.image}" alt="${color.name}"></span><span class="label">${color.name}</span>`;
-    el.addEventListener("click", () => {
-      state.colorId = color.id;
-      renderColors();
-    });
-    wrap.appendChild(el);
-  });
-  document.getElementById("colorSelectedLabel").textContent = currentColor().name;
-}
-
-function renderVases() {
-  const grid = document.getElementById("vaseGrid");
-  grid.innerHTML = "";
-  PRODUCT_DATA.vases.forEach(vase => {
-    const card = document.createElement("button");
-    card.className = "vase-card" + (vase.id === state.vaseId ? " active" : "");
-    const priceLabel = vase.included ? "Inclus" : "+" + money(vase.price);
-    card.innerHTML = `
-      <img src="${vase.image}" alt="${vase.name}">
-      <div class="vc-info">
-        <div class="vc-name">${vase.name}</div>
-        <div class="vc-price ${vase.included ? "included" : ""}">${priceLabel}</div>
-      </div>`;
-    card.addEventListener("click", () => {
-      state.vaseId = vase.id;
-      renderVases();
-      renderPricing();
-    });
-    grid.appendChild(card);
-  });
-  document.getElementById("vaseSelectedLabel").textContent = currentVase().name;
-}
-
-function renderPricing() {
-  const vase = currentVase();
-  const unitPrice = PRODUCT_DATA.basePrice + vase.price;
-  const total = unitPrice * state.quantity;
-
-  document.getElementById("brModelPrice").textContent = money(PRODUCT_DATA.basePrice);
-
-  document.getElementById("brVaseLabel").textContent = vase.name;
-  document.getElementById("brVasePrice").textContent = vase.included ? "Inclus" : "+" + money(vase.price);
-
-  document.getElementById("brQtyValue").textContent = "× " + state.quantity;
-
-  document.getElementById("brTotal").textContent = money(total);
-  document.getElementById("stickyTotal").textContent = money(total);
-}
-
-/* -------------------------------------------------------------------------
-   QUANTITÉ
-   ---------------------------------------------------------------------- */
-function bindQuantity() {
-  const input = document.getElementById("qtyInput");
-  document.getElementById("qtyMinus").addEventListener("click", () => {
-    if (state.quantity > 1) {
-      state.quantity--;
-      input.value = state.quantity;
-      renderPricing();
-    }
-  });
-  document.getElementById("qtyPlus").addEventListener("click", () => {
-    if (state.quantity < 99) {
-      state.quantity++;
-      input.value = state.quantity;
-      renderPricing();
-    }
-  });
-}
-
-/* -------------------------------------------------------------------------
-   MESSAGE SUR LA CARTE
-   ---------------------------------------------------------------------- */
-function bindMessage() {
-  const textarea = document.getElementById("cardMessage");
-  textarea.addEventListener("input", (e) => {
-    state.message = e.target.value;
-  });
-}
-
-/* -------------------------------------------------------------------------
-   COMMANDE WHATSAPP
-   ---------------------------------------------------------------------- */
-function buildWhatsAppMessage() {
-  const color = currentColor();
-  const vase = currentVase();
-  const unitPrice = PRODUCT_DATA.basePrice + vase.price;
-  const total = unitPrice * state.quantity;
-
-  let lines = [
-    `Bonjour Jardin Agro 🌸 je souhaite commander :`,
-    ``,
-    `• Produit : ${PRODUCT_DATA.title}`,
-    `• Couleur : ${color.name}`,
-    `• Vase : ${vase.name}${vase.included ? "" : " (+" + money(vase.price) + ")"}`,
-    `• Quantité : ${state.quantity}`,
-    `• Total : ${money(total)}`,
-  ];
-
-  if (state.message.trim()) {
-    lines.push(``, `Message pour la carte : "${state.message.trim()}"`);
-  }
-
-  return lines.join("\n");
-}
-
-function bindWhatsAppButton() {
-  document.getElementById("whatsappBtn").addEventListener("click", () => {
-    const text = encodeURIComponent(buildWhatsAppMessage());
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-    window.open(url, "_blank");
-  });
-}
-
-/* -------------------------------------------------------------------------
-   INIT
-   ---------------------------------------------------------------------- */
-function init() {
-  renderHeader();
-  renderGallery();
-  renderColors();
-  renderVases();
-  renderPricing();
-  bindQuantity();
-  bindMessage();
-  bindWhatsAppButton();
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
-}
-
-  </script>
+  <!-- LIEN VERS LE SCRIPT EXTERNE JS SEULEMENT -->
+  <script src="js/product-details.js"></script>
 </body>
 </html>
