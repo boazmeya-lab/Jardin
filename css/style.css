@@ -875,4 +875,72 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   color: var(--white);
   border-color: var(--primary-color);
 }
+/* --- FIX HEADER & NAVIGATION --- */
+
+/* 1. Aligner tout le contenu de l'en-tête sur une seule ligne */
+.site-header .container,
+.header-inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 100%;
+  width: 100%;
+}
+
+/* 2. Style de la navigation principale */
+.nav-menu {
+  display: flex !important;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: var(--ink, #1A1616);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.nav-menu a:hover {
+  color: var(--primary-color, #2e5b38);
+}
+
+/* 3. Regrouper les icônes (Panier, Hamburger) à droite */
+.header-actions {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 4. Masquer le bouton Hamburger sur grands écrans */
+@media (min-width: 768px) {
+  .menu-toggle {
+    display: none !important;
+  }
+}
+
+/* 5. Gérer le menu déroulant sur écran mobile */
+@media (max-width: 767px) {
+  .nav-menu {
+    display: none !important; /* Masqué par défaut sur mobile */
+    position: absolute;
+    top: var(--header-h, 70px);
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    flex-direction: column !important;
+    padding: 20px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+
+  /* Affiché uniquement quand le bouton hamburger est cliqué */
+  .nav-menu.active {
+    display: flex !important;
+  }
+}
 
