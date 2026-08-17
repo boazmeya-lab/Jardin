@@ -74,89 +74,101 @@
   </footer>
 
   <!-- CHARGEMENT DES SCRIPTS JS -->
-  <script src="js/products.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const grid = document.getElementById('productsGrid');
-      const filterBtns = document.querySelectorAll('.filter-btn');
+     <!-- CHARGEMENT DES SCRIPTS JS -->
+<script src="js/products.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.getElementById('productsGrid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
 
-      // Vérification de la présence des données de produits
-      if (typeof products === 'undefined') {
-        if (grid) {
-          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Erreur de chargement des produits (js/products.js non trouvé ou invalide).</p>';
-        }
+    // Vérification de sécurité
+    if (typeof products === 'undefined' || !Array.isArray(products)) {
+      if (grid) {
+        grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Impossible de charger le catalogue. Vérifiez le fichier js/products.js.</p>';
+      }
+      return;
+    }
+
+    // Récupération de la catégorie transmise dans l'URL (ex: products?cat=hotels)
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawCat = (urlParams.get('cat') || 'all').toLowerCase().trim();
+
+    // Mapping pour aligner les liens de la page d'accueil avec les catégories du JS
+    const categoryMap = {
+      'hotel': 'hotels',
+      'hotels': 'hotels',
+      'entreprise': 'entreprises',
+      'entreprises': 'entreprises',
+      'banque': 'entreprises',
+      'banques': 'entreprises',
+      'conference': 'conferences',
+      'conferences': 'conferences',
+      'mariage': 'mariage',
+      'mariages': 'mariage',
+      'fete': 'mariage',
+      'fetes': 'mariage',
+      'funeraire': 'funeraire',
+      'funeraires': 'funeraire',
+      'deuil': 'funeraire'
+    };
+
+    const targetCategory = categoryMap[rawCat] || rawCat;
+
+    function displayProducts(items) {
+      if (!grid) return;
+      
+      if (!items || items.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit dans cette catégorie pour le moment.</p>';
         return;
       }
 
-      // Normalisation de la catégorie d'URL (pour gérer les alias courants)
-      const urlParams = new URLSearchParams(window.location.search);
-      let rawCat = urlParams.get('cat') || 'all';
-      
-      const categoryMap = {
-        'mariages': 'mariage',
-        'fetes': 'mariage',
-        'deuil': 'funeraire',
-        'deuils': 'funeraire',
-        'banques': 'entreprises'
-      };
-
-      const selectedCat = categoryMap[rawCat] || rawCat;
-
-      function displayProducts(items) {
-        if (!grid) return;
-        if (!items || items.length === 0) {
-          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit disponible dans cette catégorie pour le moment.</p>';
-          return;
-        }
-
-        grid.innerHTML = items.map(p => `
-          <div class="product-card">
-            <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
-              <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
-              ${p.surMesure ? 'Sur mesure' : 'Livrable'}
-            </span>
-            <img src="${p.image}" alt="${p.title}" onerror="this.src='image/placeholder.jpg'">
-            <div class="product-details">
-              <h3>${p.title}</h3>
-              <p class="price">${p.price}</p>
-              <a href="product-detail.html?id=${p.id}" class="btn-discover">
-                Découvrir <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
+      grid.innerHTML = items.map(p => `
+        <div class="product-card">
+          <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
+            <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
+            ${p.surMesure ? 'Sur mesure' : 'Livrable'}
+          </span>
+          <img src="${p.image}" alt="${p.title}" onerror="this.src='image/placeholder.jpg'">
+          <div class="product-details">
+            <h3>${p.title}</h3>
+            <p class="price">${p.price}</p>
+            <a href="product-detail.html?id=${p.id}" class="btn-discover">
+              Découvrir <i class="fa-solid fa-arrow-right"></i>
+            </a>
           </div>
-        `).join('');
-      }
+        </div>
+      `).join('');
+    }
 
-      function applyFilter(category) {
-        // Mise à jour de l'état visuel des boutons
-        filterBtns.forEach(btn => {
-          if (btn.dataset.category === category) {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
-        });
-
-        // Filtrage et affichage
-        if (category === 'all') {
-          displayProducts(products);
-        } else {
-          const filtered = products.filter(p => p.category === category);
-          displayProducts(filtered);
-        }
-      }
-
-      // Initialisation au chargement de la page
-      applyFilter(selectedCat);
-
-      // Gestion des clics sur les boutons de filtre
+    function filterAndRender(category) {
+      // Activer visuellement le bon bouton
       filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const cat = btn.dataset.category;
-          applyFilter(cat);
-        });
+        if (btn.dataset.category === category) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Filtrer les données
+      if (category === 'all') {
+        displayProducts(products);
+      } else {
+        const filtered = products.filter(p => p.category && p.category.toLowerCase().trim() === category);
+        displayProducts(filtered);
+      }
+    }
+
+    // Exécution au chargement de la page
+    filterAndRender(targetCategory);
+
+    // Écoute des clics sur les boutons de filtre
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.category;
+        filterAndRender(cat);
       });
     });
-  </script>
-</body>
-</html>
+  });
+</script>
+    
