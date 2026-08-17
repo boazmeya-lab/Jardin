@@ -21,27 +21,33 @@
 <body>
 
   <!-- EN-TÊTE / NAVBAR -->
-  <header class="main-header">
-    <div class="header-container">
-      <a href="index.html" class="logo">
-        <img src="image/logi.png" alt="Jardin Agro" onerror="this.src='image/logi.jpg'">
-        <span>Jardin Agro</span>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Jardin Agro">
+      <span>Jardin Agro</span>
+    </a>
+    
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-menu" id="navMenu">
+      <a href="index.html">Accueil</a>
+      <a href="products.html" class="active">Catalogue</a>
+      <a href="#livraison">Livraison</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="products.html" class="icon-btn" aria-label="Panier">
+        <i class="fas fa-shopping-bag"></i>
       </a>
-
-      <nav class="nav-menu" id="navMenu">
-        <a href="index.html">Accueil</a>
-        <a href="products.html" class="active">Catalogue</a>
-        <a href="index.html#services">Services</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
-
-      <div class="header-actions">
-        <a href="products.html" class="cart-icon"><i class="fa-solid fa-bag-shopping"></i></a>
-        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
-      </div>
     </div>
+  </div>
   </header>
-
+  
   <!-- SECTION EN-TÊTE PAGE -->
   <section class="products-hero">
     <span class="sub-title">NOS UNIVERS FLORAUX</span>
