@@ -80,14 +80,32 @@
       const grid = document.getElementById('productsGrid');
       const filterBtns = document.querySelectorAll('.filter-btn');
 
-      // Récupérer la catégorie passée dans l'URL (ex: products.html?cat=hotels)
+      // Vérification de la présence des données de produits
+      if (typeof products === 'undefined') {
+        if (grid) {
+          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Erreur de chargement des produits (js/products.js non trouvé ou invalide).</p>';
+        }
+        return;
+      }
+
+      // Normalisation de la catégorie d'URL (pour gérer les alias courants)
       const urlParams = new URLSearchParams(window.location.search);
-      const selectedCat = urlParams.get('cat') || 'all';
+      let rawCat = urlParams.get('cat') || 'all';
+      
+      const categoryMap = {
+        'mariages': 'mariage',
+        'fetes': 'mariage',
+        'deuil': 'funeraire',
+        'deuils': 'funeraire',
+        'banques': 'entreprises'
+      };
+
+      const selectedCat = categoryMap[rawCat] || rawCat;
 
       function displayProducts(items) {
         if (!grid) return;
         if (!items || items.length === 0) {
-          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit dans cette catégorie pour le moment.</p>';
+          grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">Aucun produit disponible dans cette catégorie pour le moment.</p>';
           return;
         }
 
@@ -97,7 +115,7 @@
               <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
               ${p.surMesure ? 'Sur mesure' : 'Livrable'}
             </span>
-            <img src="${p.image}" alt="${p.title}">
+            <img src="${p.image}" alt="${p.title}" onerror="this.src='image/placeholder.jpg'">
             <div class="product-details">
               <h3>${p.title}</h3>
               <p class="price">${p.price}</p>
@@ -109,34 +127,33 @@
         `).join('');
       }
 
-      // Affichage initial selon la catégorie reçue
-      if (typeof products !== 'undefined') {
-        if (selectedCat === 'all') {
+      function applyFilter(category) {
+        // Mise à jour de l'état visuel des boutons
+        filterBtns.forEach(btn => {
+          if (btn.dataset.category === category) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        // Filtrage et affichage
+        if (category === 'all') {
           displayProducts(products);
         } else {
-          const filtered = products.filter(p => p.category === selectedCat);
+          const filtered = products.filter(p => p.category === category);
           displayProducts(filtered);
-
-          // Activation du bon bouton de filtre
-          filterBtns.forEach(b => {
-            if (b.dataset.category === selectedCat) b.classList.add('active');
-            else b.classList.remove('active');
-          });
         }
       }
 
-      // Filtrage dynamique au clic
+      // Initialisation au chargement de la page
+      applyFilter(selectedCat);
+
+      // Gestion des clics sur les boutons de filtre
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
           const cat = btn.dataset.category;
-          if (cat === 'all') {
-            displayProducts(products);
-          } else {
-            displayProducts(products.filter(p => p.category === cat));
-          }
+          applyFilter(cat);
         });
       });
     });
