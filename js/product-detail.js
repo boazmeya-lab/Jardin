@@ -2,13 +2,13 @@
    PRODUCT-DETAILS.JS — Jardin Agro
    ========================================================================= */
 
-const WHATSAPP_NUMBER = "15551234567"; // Remplacez par votre numéro (ex: 243000000000)
+const WHATSAPP_NUMBER = "15551234567"; // Remplacez par votre numéro
 
 // 1. LIRE L'ID DANS L'URL (Ex: product-details.html?id=2)
 const urlParams = new URLSearchParams(window.location.search);
 const selectedProductId = parseInt(urlParams.get('id')) || 1; 
 
-// 2. BASE DE DONNÉES SYNCHRONISÉE AVEC PRODUCTS.JS
+// 2. BASE DE DONNÉES SYNCHRONISÉE
 const PRODUCT_DATA = {
   models: [
     {
@@ -71,7 +71,7 @@ const initialModel = PRODUCT_DATA.models.find(m => m.id === selectedProductId) |
 
 // 4. ÉTAT DE LA SÉLECTION
 const state = {
-  modelId: initialModel.id,
+  modelId: initialModel.id, // Forcé sur le produit de l'URL
   colorId: PRODUCT_DATA.colors[0].id,
   vaseId: PRODUCT_DATA.vases[0].id,
   quantity: 1,
@@ -79,9 +79,15 @@ const state = {
   message: "",
 };
 
-function currentModel() { return PRODUCT_DATA.models.find(m => m.id === state.modelId); }
-function currentColor() { return PRODUCT_DATA.colors.find(c => c.id === state.colorId); }
-function currentVase()  { return PRODUCT_DATA.vases.find(v => v.id === state.vaseId); }
+function currentModel() { 
+  return PRODUCT_DATA.models.find(m => m.id === state.modelId) || PRODUCT_DATA.models[0]; 
+}
+function currentColor() { 
+  return PRODUCT_DATA.colors.find(c => c.id === state.colorId) || PRODUCT_DATA.colors[0]; 
+}
+function currentVase()  { 
+  return PRODUCT_DATA.vases.find(v => v.id === state.vaseId) || PRODUCT_DATA.vases[0]; 
+}
 
 /* -------------------------------------------------------------------------
    FONCTIONS D'AFFICHAGE DYNAMIQUE
@@ -96,19 +102,26 @@ function refreshForSelectedModel() {
 
 function renderHeader() {
   const model = currentModel();
+  
+  // Forcer l'écriture du titre et de la description
   const titleEl = document.getElementById("productTitle");
   const subEl = document.getElementById("productSubtitle");
   
-  if (titleEl) titleEl.textContent = model.name;
-  if (subEl) subEl.textContent = model.description;
+  if (titleEl) titleEl.innerHTML = model.name;
+  if (subEl) subEl.innerHTML = model.description;
 }
 
 function renderGallery() {
   const model = currentModel();
-  
+  if (!model || !model.images) return;
+
+  // Image principale
+  const mainImg = document.getElementById("galleryMain0") || document.getElementById("mainImage");
+  if (mainImg) mainImg.src = model.images[0];
+
   model.images.forEach((src, i) => {
-    const mainImg = document.getElementById("galleryMain" + i);
-    if (mainImg) mainImg.src = src;
+    const imgEl = document.getElementById("galleryMain" + i);
+    if (imgEl) imgEl.src = src;
   });
   
   setActiveImage(0);
@@ -230,9 +243,11 @@ function renderPricing() {
   const unitPrice = model.basePrice + vase.price;
   const total = unitPrice * state.quantity;
 
+  // Prix de base sous le titre
   const basePriceDisp = document.getElementById("basePriceDisplay");
   if (basePriceDisp) basePriceDisp.textContent = money(model.basePrice);
 
+  // Lignes du tableau récapitulatif
   const brModelLabel = document.getElementById("brModelLabel");
   if (brModelLabel) brModelLabel.textContent = model.name;
 
@@ -329,13 +344,21 @@ function bindWhatsAppButton() {
 }
 
 /* -------------------------------------------------------------------------
-   INIT
+   INIT (Exécution ordonnée)
    ---------------------------------------------------------------------- */
 function init() {
-  renderModels();
+  // 1. Synchroniser le state avec l'ID sélectionné
+  state.modelId = initialModel.id;
+
+  // 2. Mettre à jour l'en-tête, les photos et les prix tout de suite
   refreshForSelectedModel();
+
+  // 3. Charger le reste des éléments UI
+  renderModels();
   renderColors();
   renderVases();
+  
+  // 4. Activer les boutons
   bindQuantity();
   bindMessage();
   bindWhatsAppButton();
