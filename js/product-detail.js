@@ -68,10 +68,11 @@ const PRODUCT_DATA = {
   ],
 
   colors: [
-    { id: "rose",     name: "Rose",     hex: "#E8B4BC" },
-    { id: "blanc",    name: "Blanc",    hex: "#F7F4EE" },
-    { id: "bordeaux", name: "Bordeaux", hex: "#7A2438" },
-    { id: "pastel",   name: "Pastel",   hex: "#F0D9C4" },
+    // "image" = petite photo de la couleur (remplace par tes vraies photos, ex: "images/couleur-rose.jpg")
+    { id: "rose",     name: "Rose",     image: placeholder("#E8B4BC", "#F6DEE2", "") },
+    { id: "blanc",    name: "Blanc",    image: placeholder("#F7F4EE", "#FFFFFF", "") },
+    { id: "bordeaux", name: "Bordeaux", image: placeholder("#7A2438", "#B5495B", "") },
+    { id: "pastel",   name: "Pastel",   image: placeholder("#F0D9C4", "#F7E4D3", "") },
   ],
 
   vases: [
@@ -183,7 +184,7 @@ function renderColors() {
   PRODUCT_DATA.colors.forEach(color => {
     const el = document.createElement("button");
     el.className = "swatch" + (color.id === state.colorId ? " active" : "");
-    el.innerHTML = `<span class="dot" style="background:${color.hex}"></span><span class="label">${color.name}</span>`;
+    el.innerHTML = `<span class="dot"><img src="${color.image}" alt="${color.name}"></span><span class="label">${color.name}</span>`;
     el.addEventListener("click", () => {
       state.colorId = color.id;
       renderColors();
@@ -319,5 +320,11 @@ function init() {
   bindWhatsAppButton();
 }
 
-document.addEventListener("DOMContentLoaded", init);
-     
+/* Lance init() immédiatement si le DOM est déjà prêt (évite un écran vide
+   si ce script se charge après coup sur certains hébergeurs), sinon
+   attend l'événement normal. */
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
