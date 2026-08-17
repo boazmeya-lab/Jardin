@@ -1,97 +1,390 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personnalisation du Bouquet - Jardin Agro</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Bouquet Élégance Royal — Jardin Agro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#1F3D2B;
+    --forest-dark:#132318;
+    --ivory:#FBF7F2;
+    --card:#FFFFFF;
+    --blush:#E8B4BC;
+    --rose:#B5495B;
+    --charcoal:#26231F;
+    --charcoal-soft:#6B655D;
+    --sage:#E4EBDE;
+    --line:#E9E3D9;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{
+    background:var(--ivory);
+    color:var(--charcoal);
+    font-family:'Inter',sans-serif;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body{
+    padding-bottom:104px; /* room for sticky bar */
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;border:none;background:none;cursor:pointer;}
+  ::selection{background:var(--blush);}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    display:flex;align-items:center;gap:12px;
+    padding:14px 18px;
+    background:rgba(251,247,242,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .back{
+    width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--card);border:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .topbar .brand{
+    font-family:'Fraunces',serif;font-weight:600;font-size:15px;letter-spacing:0.02em;
+  }
+  .topbar .brand small{
+    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:11px;color:var(--charcoal-soft);
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    position:relative;
+    background:var(--forest);
+    aspect-ratio:1/1;
+    overflow:hidden;
+  }
+  .gallery img{
+    width:100%;height:100%;object-fit:cover;
+    display:none;
+  }
+  .gallery img.active{display:block;animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0;}to{opacity:1;}}
+  .gallery-dots{
+    position:absolute;bottom:14px;left:0;right:0;
+    display:flex;justify-content:center;gap:6px;
+  }
+  .gallery-dots span{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(255,255,255,0.45);
+    transition:all .25s ease;
+  }
+  .gallery-dots span.active{background:#fff;width:18px;border-radius:4px;}
+  .gallery-badge{
+    position:absolute;top:14px;left:14px;
+    background:rgba(251,247,242,0.92);
+    color:var(--forest);
+    font-size:11px;font-weight:600;letter-spacing:.03em;
+    padding:6px 12px;border-radius:100px;
+    display:flex;align-items:center;gap:5px;
+  }
+  .gallery-badge::before{
+    content:'';width:6px;height:6px;border-radius:50%;background:#3E8E5A;
+  }
+  .thumbs{
+    display:flex;gap:8px;padding:10px 18px;
+    overflow-x:auto;
+  }
+  .thumbs::-webkit-scrollbar{display:none;}
+  .thumbs button{
+    width:56px;height:56px;border-radius:var(--radius-sm);
+    overflow:hidden;flex-shrink:0;
+    border:2px solid transparent;
+    opacity:.55;
+    transition:all .2s ease;
+  }
+  .thumbs button.active{border-color:var(--forest);opacity:1;}
+  .thumbs img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* ---------- Content ---------- */
+  .content{padding:20px 18px 0;}
+  .eyebrow{
+    font-size:12px;font-weight:600;color:var(--rose);letter-spacing:.04em;text-transform:uppercase;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:500;font-size:26px;line-height:1.15;
+    margin-top:6px;color:var(--forest-dark);
+  }
+  .subtitle{
+    margin-top:8px;font-size:14px;color:var(--charcoal-soft);line-height:1.5;
+  }
+  .price-row{
+    display:flex;align-items:baseline;gap:10px;margin-top:14px;
+  }
+  .price-row .amount{
+    font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--forest-dark);
+    font-variant-numeric:tabular-nums;
+  }
+  .price-row .from{
+    font-size:12px;color:var(--charcoal-soft);
+  }
+
+  /* ---------- Sections ---------- */
+  section.option{
+    margin-top:28px;
+  }
+  .option-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:12px;
+  }
+  .option-head h2{
+    font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--forest-dark);
+  }
+  .option-head .selected-label{
+    font-size:12.5px;color:var(--rose);font-weight:600;
+  }
+
+  /* Models — horizontal scroll cards */
+  .model-scroll{
+    display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin:0 -18px;padding-left:18px;padding-right:18px;
+  }
+  .model-scroll::-webkit-scrollbar{display:none;}
+  .model-card{
+    flex-shrink:0;width:130px;
+    border-radius:var(--radius-md);
+    background:var(--card);
+    border:1.5px solid var(--line);
+    overflow:hidden;
+    transition:border-color .2s ease, transform .2s ease;
+    text-align:left;
+  }
+  .model-card.active{border-color:var(--forest);box-shadow:0 4px 14px rgba(31,61,43,0.14);}
+  .model-card img{width:100%;height:100px;object-fit:cover;display:block;}
+  .model-card .mc-info{padding:8px 10px 10px;}
+  .model-card .mc-name{font-size:12.5px;font-weight:600;line-height:1.25;}
+  .model-card .mc-price{font-size:11.5px;color:var(--charcoal-soft);margin-top:3px;font-variant-numeric:tabular-nums;}
+
+  /* Colors — swatch circles */
+  .swatches{display:flex;gap:14px;flex-wrap:wrap;}
+  .swatch{
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+  }
+  .swatch .dot{
+    width:38px;height:38px;border-radius:50%;
+    border:2px solid transparent;
+    box-shadow:0 0 0 1px var(--line) inset;
+    position:relative;
+    transition:all .2s ease;
+  }
+  .swatch.active .dot{
+    border-color:var(--card);
+    box-shadow:0 0 0 2px var(--forest);
+  }
+  .swatch .dot::after{
+    content:'✓';
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:14px;opacity:0;transition:opacity .15s ease;
+    text-shadow:0 1px 2px rgba(0,0,0,0.35);
+  }
+  .swatch.active .dot::after{opacity:1;}
+  .swatch .label{font-size:11px;color:var(--charcoal-soft);}
+
+  /* Vases — cards with image */
+  .vase-grid{display:flex;gap:10px;overflow-x:auto;margin:0 -18px;padding:0 18px 4px;}
+  .vase-grid::-webkit-scrollbar{display:none;}
+  .vase-card{
+    flex-shrink:0;width:104px;
+    border-radius:var(--radius-md);
+    border:1.5px solid var(--line);
+    background:var(--card);
+    overflow:hidden;
+    text-align:left;
+    transition:border-color .2s ease;
+  }
+  .vase-card.active{border-color:var(--forest);box-shadow:0 4px 14px rgba(31,61,43,0.14);}
+  .vase-card img{width:100%;height:78px;object-fit:cover;display:block;background:var(--sage);}
+  .vase-card .vc-info{padding:7px 9px 9px;}
+  .vase-card .vc-name{font-size:11.5px;font-weight:600;line-height:1.25;}
+  .vase-card .vc-price{font-size:11px;margin-top:3px;color:var(--rose);font-weight:600;}
+  .vase-card .vc-price.included{color:#3E8E5A;}
+
+  /* Quantity */
+  .qty-row{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:12px 14px;
+  }
+  .qty-row .label{font-size:13.5px;font-weight:500;}
+  .stepper{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:100px;overflow:hidden;}
+  .stepper button{
+    width:32px;height:32px;font-size:16px;color:var(--forest);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .stepper button:active{background:var(--sage);}
+  .stepper input{
+    width:34px;text-align:center;border:none;font-size:14px;font-weight:600;
+    font-variant-numeric:tabular-nums;background:transparent;
+  }
+
+  /* Message card */
+  .message-box{margin-top:24px;}
+  .message-box label{font-size:13.5px;font-weight:600;color:var(--forest-dark);}
+  .message-box textarea{
+    width:100%;margin-top:8px;min-height:76px;resize:vertical;
+    border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:12px 14px;font-family:inherit;font-size:13.5px;background:var(--card);
+    color:var(--charcoal);
+  }
+  .message-box textarea:focus{outline:2px solid var(--forest);outline-offset:1px;}
+  .message-box textarea::placeholder{color:#B4AC9F;}
+
+  /* Breakdown */
+  .breakdown{
+    margin-top:24px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius-md);padding:14px 16px;
+  }
+  .breakdown h3{
+    font-family:'Fraunces',serif;font-size:14.5px;font-weight:600;margin-bottom:10px;color:var(--forest-dark);
+  }
+  .breakdown .line{
+    display:flex;justify-content:space-between;font-size:13px;color:var(--charcoal-soft);
+    padding:5px 0;font-variant-numeric:tabular-nums;
+  }
+  .breakdown .line.total{
+    border-top:1px dashed var(--line);margin-top:6px;padding-top:10px;
+    font-size:15px;font-weight:700;color:var(--forest-dark);
+  }
+
+  /* ---------- Sticky bottom bar ---------- */
+  .order-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:30;
+    background:var(--card);
+    border-top:1px solid var(--line);
+    padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+    display:flex;align-items:center;gap:12px;
+    box-shadow:0 -6px 20px rgba(31,61,43,0.08);
+  }
+  .order-bar .total-block{flex-shrink:0;}
+  .order-bar .total-label{font-size:10.5px;color:var(--charcoal-soft);text-transform:uppercase;letter-spacing:.03em;}
+  .order-bar .total-amount{
+    font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--forest-dark);
+    font-variant-numeric:tabular-nums;
+  }
+  .order-bar .cta{
+    flex:1;
+    background:var(--forest);color:#fff;
+    height:50px;border-radius:100px;
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    font-size:14.5px;font-weight:600;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .order-bar .cta:active{transform:scale(0.97);background:var(--forest-dark);}
+  .order-bar .cta svg{width:19px;height:19px;flex-shrink:0;}
+
+  .section-divider{height:1px;background:var(--line);margin:26px -18px 0;}
+</style>
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="image/logi.png" alt="Jardin Agro Logo">
-        <span>Jardin Agro</span>
-      </a>
-      <a href="products.html" class="btn-back-nav"><i class="fa-solid fa-arrow-left"></i> Catalogue</a>
-    </div>
+  <header class="topbar">
+    <button class="back" aria-label="Retour" onclick="history.back()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="brand">Jardin Agro<small>Personnalisation du bouquet</small></div>
   </header>
 
-  <main class="container product-page-container">
-    <div class="product-grid">
-      
-      <!-- GALERIE PHOTO -->
-      <section class="product-gallery">
-        <div class="main-image-container" id="mainImageContainer">
-          <img id="mainImage" src="image/mariage.jpg" alt="Bouquet Principal">
-          <div class="zoom-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> Survolez pour zoomer</div>
+  <!-- Galerie photo : 3 images, changées via miniatures -->
+  <div class="gallery">
+    <span class="gallery-badge">En stock</span>
+    <img id="galleryMain0" class="gallery-img active" src="" alt="Bouquet — vue 1">
+    <img id="galleryMain1" class="gallery-img" src="" alt="Bouquet — vue 2">
+    <img id="galleryMain2" class="gallery-img" src="" alt="Bouquet — vue 3">
+    <div class="gallery-dots" id="galleryDots"></div>
+  </div>
+  <div class="thumbs" id="thumbs"></div>
+
+  <main class="content">
+    <p class="eyebrow" id="modelEyebrow">Modèle</p>
+    <h1 id="productTitle">—</h1>
+    <p class="subtitle" id="productSubtitle">—</p>
+
+    <div class="price-row">
+      <span class="from">À partir de</span>
+      <span class="amount" id="basePriceDisplay">$0.00</span>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Choix du modèle -->
+    <section class="option">
+      <div class="option-head">
+        <h2>Choisissez votre modèle</h2>
+        <span class="selected-label" id="modelSelectedLabel"></span>
+      </div>
+      <div class="model-scroll" id="modelScroll"></div>
+    </section>
+
+    <!-- Choix de la couleur -->
+    <section class="option">
+      <div class="option-head">
+        <h2>Choisissez la couleur</h2>
+        <span class="selected-label" id="colorSelectedLabel"></span>
+      </div>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <!-- Choix du vase -->
+    <section class="option">
+      <div class="option-head">
+        <h2>Choisissez votre vase</h2>
+        <span class="selected-label" id="vaseSelectedLabel"></span>
+      </div>
+      <div class="vase-grid" id="vaseGrid"></div>
+    </section>
+
+    <!-- Quantité -->
+    <section class="option">
+      <div class="option-head"><h2>Quantité</h2></div>
+      <div class="qty-row">
+        <span class="label">Nombre de bouquets</span>
+        <div class="stepper">
+          <button id="qtyMinus" aria-label="Diminuer">−</button>
+          <input id="qtyInput" type="text" inputmode="numeric" value="1" readonly>
+          <button id="qtyPlus" aria-label="Augmenter">+</button>
         </div>
-        <div class="thumbnails-grid" id="thumbnailsGrid">
-          <!-- Les miniatures sont injectées dynamiquement -->
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- PANNEAU DE PERSONNALISATION -->
-      <section class="product-customizer">
-        <header class="product-header">
-          <span class="stock-badge"><i class="fa-solid fa-check"></i> En stock</span>
-          <h1 id="productTitle">Bouquet Élégance Royal</h1>
-          <p id="productDescription" class="product-description">Un arrangement floral raffiné conçu avec des tiges fraîchement coupées pour immortaliser vos moments uniques.</p>
-        </header>
+    <!-- Message sur la carte -->
+    <div class="message-box">
+      <label for="cardMessage">Message sur la carte (optionnel)</label>
+      <textarea id="cardMessage" placeholder="Écrivez un mot doux à accompagner..." maxlength="200"></textarea>
+    </div>
 
-        <form id="customizerForm" onsubmit="return false;">
-          
-          <!-- ÉTAPE 1: FLEURS -->
-          <fieldset class="step-group">
-            <legend><span class="step-number">1</span> Choisissez vos fleurs</legend>
-            <div class="options-grid" id="flowersGrid"></div>
-          </fieldset>
-
-          <!-- ÉTAPE 2: VASE -->
-          <fieldset class="step-group">
-            <legend><span class="step-number">2</span> Choisissez le vase</legend>
-            <div class="options-grid" id="vasesGrid"></div>
-          </fieldset>
-
-          <!-- ÉTAPE 3: RUBAN -->
-          <fieldset class="step-group">
-            <legend><span class="step-number">3</span> Choisissez le ruban 🎀</legend>
-            <div class="options-grid grid-compact" id="ribbonsGrid"></div>
-          </fieldset>
-
-          <!-- ÉTAPE 4: MESSAGE -->
-          <fieldset class="step-group">
-            <legend><span class="step-number">4</span> Message personnalisé (Optionnel)</legend>
-            <div class="textarea-wrapper">
-              <textarea id="customMessage" maxlength="250" placeholder="Écrivez ici le message qui accompagnera votre bouquet..."></textarea>
-              <div class="char-counter"><span id="charCount">0</span>/250</div>
-            </div>
-          </fieldset>
-
-          <!-- RÉCAPITULATIF PRIX ET BOUTONS -->
-          <div class="pricing-summary">
-            <div class="price-box">
-              <span class="price-label">Prix Total</span>
-              <span class="total-price" id="totalPriceDisplay">$0.00</span>
-            </div>
-
-            <div class="action-buttons">
-              <button type="button" class="btn btn-cart" id="btnAddToCart">
-                <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
-              </button>
-              <button type="button" class="btn btn-whatsapp" id="btnWhatsApp">
-                <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
-              </button>
-            </div>
-          </div>
-
-        </form>
-      </section>
+    <!-- Détail du prix -->
+    <div class="breakdown">
+      <h3>Détail du prix</h3>
+      <div class="line"><span id="brModelLabel">Modèle</span><span id="brModelPrice">$0.00</span></div>
+      <div class="line"><span id="brVaseLabel">Vase</span><span id="brVasePrice">$0.00</span></div>
+      <div class="line"><span id="brQtyLabel">Quantité</span><span id="brQtyValue">× 1</span></div>
+      <div class="line total"><span>Total</span><span id="brTotal">$0.00</span></div>
     </div>
   </main>
 
-  <script src="js/product-detail.js"></script>
+  <!-- Barre fixe en bas : prix total + commande WhatsApp -->
+  <div class="order-bar">
+    <div class="total-block">
+      <div class="total-label">Total</div>
+      <div class="total-amount" id="stickyTotal">$0.00</div>
+    </div>
+    <button class="cta" id="whatsappBtn">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4c-4.33 0-7.85 3.5-7.85 7.82a7.8 7.8 0 0 0 1.05 3.9L4 20l4.4-1.15a7.9 7.9 0 0 0 3.65.9h.003c4.33 0 7.85-3.5 7.85-7.82a7.75 7.75 0 0 0-2.3-5.52zm-5.55 12.03h-.003a6.6 6.6 0 0 1-3.35-.92l-.24-.14-2.5.65.67-2.42-.16-.25a6.5 6.5 0 0 1-1-3.45c0-3.6 2.95-6.53 6.58-6.53a6.55 6.55 0 0 1 4.63 1.92 6.47 6.47 0 0 1 1.92 4.61c0 3.6-2.95 6.53-6.55 6.53zm3.6-4.9c-.2-.1-1.17-.58-1.35-.64-.18-.07-.32-.1-.45.1-.13.19-.5.64-.62.78-.11.13-.23.15-.42.05-.2-.1-.83-.3-1.58-.98-.58-.52-.98-1.16-1.09-1.36-.11-.19-.01-.3.09-.4.09-.09.2-.23.3-.35.1-.11.13-.19.2-.32.06-.13.03-.25-.02-.35-.05-.1-.45-1.08-.61-1.48-.16-.38-.33-.33-.45-.34h-.38c-.13 0-.35.05-.53.25-.18.19-.7.68-.7 1.66 0 .97.71 1.92.81 2.05.1.13 1.4 2.14 3.4 3 .47.2.85.33 1.14.42.48.15.91.13 1.26.08.38-.06 1.17-.48 1.34-.94.16-.46.16-.86.11-.94-.05-.09-.18-.14-.38-.24z"/></svg>
+      Commander sur WhatsApp
+    </button>
+  </div>
+
+  <script src="product-details.js"></script>
 </body>
 </html>
