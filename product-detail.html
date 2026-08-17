@@ -436,6 +436,7 @@ const PRODUCT_DATA = {
       id: "royal",
       name: "Élégance Royal",
       basePrice: 45.0,
+      description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux et romantique.",
       images: [
         placeholder("#1F3D2B", "#E8B4BC", "Vue 1"),
         placeholder("#1F3D2B", "#B5495B", "Vue 2"),
@@ -446,6 +447,7 @@ const PRODUCT_DATA = {
       id: "printaniere",
       name: "Douceur Printanière",
       basePrice: 38.0,
+      description: "Un mélange léger de fleurs de saison aux teintes pastel, pour une ambiance fraîche et lumineuse.",
       images: [
         placeholder("#2E4A33", "#F2CBD3", "Vue 1"),
         placeholder("#2E4A33", "#F2CBD3", "Vue 2"),
@@ -456,6 +458,7 @@ const PRODUCT_DATA = {
       id: "prestige",
       name: "Bouquet Prestige",
       basePrice: 62.0,
+      description: "Une composition ample et raffinée avec des fleurs premium, idéale pour les grandes occasions.",
       images: [
         placeholder("#3A2E23", "#D9A441", "Vue 1"),
         placeholder("#3A2E23", "#D9A441", "Vue 2"),
@@ -500,232 +503,6 @@ function currentModel() { return PRODUCT_DATA.models.find(m => m.id === state.mo
 function currentColor() { return PRODUCT_DATA.colors.find(c => c.id === state.colorId); }
 function currentVase()  { return PRODUCT_DATA.vases.find(v => v.id === state.vaseId); }
 
-/* -------------------------------------------------------------------------
-   RENDU
-   ---------------------------------------------------------------------- */
-function money(n) { return "$" + n.toFixed(2); }
-
-function renderHeader() {
-  document.getElementById("productTitle").textContent = PRODUCT_DATA.title;
-  document.getElementById("productSubtitle").textContent = PRODUCT_DATA.subtitle;
-}
-
-function renderGallery() {
-  const model = currentModel();
-  model.images.forEach((src, i) => {
-    document.getElementById("galleryMain" + i).src = src;
-  });
-  setActiveImage(0);
-
-  // dots
-  const dots = document.getElementById("galleryDots");
-  dots.innerHTML = "";
-  model.images.forEach((_, i) => {
-    const d = document.createElement("span");
-    if (i === state.activeImage) d.classList.add("active");
-    dots.appendChild(d);
-  });
-
-  // thumbnails
-  const thumbs = document.getElementById("thumbs");
-  thumbs.innerHTML = "";
-  model.images.forEach((src, i) => {
-    const b = document.createElement("button");
-    b.className = i === state.activeImage ? "active" : "";
-    b.innerHTML = `<img src="${src}" alt="Miniature ${i + 1}">`;
-    b.addEventListener("click", () => setActiveImage(i));
-    thumbs.appendChild(b);
-  });
-}
-
-function setActiveImage(index) {
-  state.activeImage = index;
-  document.querySelectorAll(".gallery-img").forEach((img, i) => {
-    img.classList.toggle("active", i === index);
-  });
-  document.querySelectorAll("#galleryDots span").forEach((d, i) => {
-    d.classList.toggle("active", i === index);
-  });
-  document.querySelectorAll("#thumbs button").forEach((b, i) => {
-    b.classList.toggle("active", i === index);
-  });
-}
-
-function renderModels() {
-  const scroll = document.getElementById("modelScroll");
-  scroll.innerHTML = "";
-  PRODUCT_DATA.models.forEach(model => {
-    const card = document.createElement("button");
-    card.className = "model-card" + (model.id === state.modelId ? " active" : "");
-    card.innerHTML = `
-      <img src="${model.images[0]}" alt="${model.name}">
-      <div class="mc-info">
-        <div class="mc-name">${model.name}</div>
-        <div class="mc-price">${money(model.basePrice)}</div>
-      </div>`;
-    card.addEventListener("click", () => {
-      state.modelId = model.id;
-      renderModels();
-      renderGallery();
-      renderPricing();
-    });
-    scroll.appendChild(card);
-  });
-  document.getElementById("modelSelectedLabel").textContent = currentModel().name;
-  document.getElementById("modelEyebrow").textContent = "Modèle sélectionné";
-}
-
-function renderColors() {
-  const wrap = document.getElementById("swatches");
-  wrap.innerHTML = "";
-  PRODUCT_DATA.colors.forEach(color => {
-    const el = document.createElement("button");
-    el.className = "swatch" + (color.id === state.colorId ? " active" : "");
-    el.innerHTML = `<span class="dot"><img src="${color.image}" alt="${color.name}"></span><span class="label">${color.name}</span>`;
-    el.addEventListener("click", () => {
-      state.colorId = color.id;
-      renderColors();
-    });
-    wrap.appendChild(el);
-  });
-  document.getElementById("colorSelectedLabel").textContent = currentColor().name;
-}
-
-function renderVases() {
-  const grid = document.getElementById("vaseGrid");
-  grid.innerHTML = "";
-  PRODUCT_DATA.vases.forEach(vase => {
-    const card = document.createElement("button");
-    card.className = "vase-card" + (vase.id === state.vaseId ? " active" : "");
-    const priceLabel = vase.included ? "Inclus" : "+" + money(vase.price);
-    card.innerHTML = `
-      <img src="${vase.image}" alt="${vase.name}">
-      <div class="vc-info">
-        <div class="vc-name">${vase.name}</div>
-        <div class="vc-price ${vase.included ? "included" : ""}">${priceLabel}</div>
-      </div>`;
-    card.addEventListener("click", () => {
-      state.vaseId = vase.id;
-      renderVases();
-      renderPricing();
-    });
-    grid.appendChild(card);
-  });
-  document.getElementById("vaseSelectedLabel").textContent = currentVase().name;
-}
-
-function renderPricing() {
-  const model = currentModel();
-  const vase = currentVase();
-  const unitPrice = model.basePrice + vase.price;
-  const total = unitPrice * state.quantity;
-
-  document.getElementById("basePriceDisplay").textContent = money(model.basePrice);
-
-  document.getElementById("brModelLabel").textContent = model.name;
-  document.getElementById("brModelPrice").textContent = money(model.basePrice);
-
-  document.getElementById("brVaseLabel").textContent = vase.name;
-  document.getElementById("brVasePrice").textContent = vase.included ? "Inclus" : "+" + money(vase.price);
-
-  document.getElementById("brQtyLabel").textContent = "Quantité";
-  document.getElementById("brQtyValue").textContent = "× " + state.quantity;
-
-  document.getElementById("brTotal").textContent = money(total);
-  document.getElementById("stickyTotal").textContent = money(total);
-}
-
-/* -------------------------------------------------------------------------
-   QUANTITÉ
-   ---------------------------------------------------------------------- */
-function bindQuantity() {
-  const input = document.getElementById("qtyInput");
-  document.getElementById("qtyMinus").addEventListener("click", () => {
-    if (state.quantity > 1) {
-      state.quantity--;
-      input.value = state.quantity;
-      renderPricing();
-    }
-  });
-  document.getElementById("qtyPlus").addEventListener("click", () => {
-    if (state.quantity < 99) {
-      state.quantity++;
-      input.value = state.quantity;
-      renderPricing();
-    }
-  });
-}
-
-/* -------------------------------------------------------------------------
-   MESSAGE SUR LA CARTE
-   ---------------------------------------------------------------------- */
-function bindMessage() {
-  const textarea = document.getElementById("cardMessage");
-  textarea.addEventListener("input", (e) => {
-    state.message = e.target.value;
-  });
-}
-
-/* -------------------------------------------------------------------------
-   COMMANDE WHATSAPP
-   ---------------------------------------------------------------------- */
-function buildWhatsAppMessage() {
-  const model = currentModel();
-  const color = currentColor();
-  const vase = currentVase();
-  const unitPrice = model.basePrice + vase.price;
-  const total = unitPrice * state.quantity;
-
-  let lines = [
-    `Bonjour Jardin Agro 🌸 je souhaite commander :`,
-    ``,
-    `• Produit : ${PRODUCT_DATA.title}`,
-    `• Modèle : ${model.name}`,
-    `• Couleur : ${color.name}`,
-    `• Vase : ${vase.name}${vase.included ? "" : " (+" + money(vase.price) + ")"}`,
-    `• Quantité : ${state.quantity}`,
-    `• Total : ${money(total)}`,
-  ];
-
-  if (state.message.trim()) {
-    lines.push(``, `Message pour la carte : "${state.message.trim()}"`);
-  }
-
-  return lines.join("\n");
-}
-
-function bindWhatsAppButton() {
-  document.getElementById("whatsappBtn").addEventListener("click", () => {
-    const text = encodeURIComponent(buildWhatsAppMessage());
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-    window.open(url, "_blank");
-  });
-}
-
-/* -------------------------------------------------------------------------
-   INIT
-   ---------------------------------------------------------------------- */
-function init() {
-  renderHeader();
-  renderModels();
-  renderGallery();
-  renderColors();
-  renderVases();
-  renderPricing();
-  bindQuantity();
-  bindMessage();
-  bindWhatsAppButton();
-}
-
-/* Lance init() immédiatement si le DOM est déjà prêt (évite un écran vide
-   si ce script se charge après coup sur certains hébergeurs), sinon
-   attend l'événement normal. */
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
-}
-
-  </script>
-</body>
-</html>
+/* Rejoue TOUT l'affichage pour le modèle actuellement sélectionné.
+   Appelée à chaque clic sur un modèle pour être sûr que titre, description,
+   p
