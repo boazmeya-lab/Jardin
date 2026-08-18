@@ -30,7 +30,7 @@ const PRODUCT_DATA = {
     {
       id: 2,
       name: "coeur de boaz",
-      basePrice: 05.0,
+      basePrice: 5.0,
       description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux.",
       images: ["image/boaz1.jpg", "image/Boaz2.jpg", "image/Boaz3.jpg"],
       colors: [
