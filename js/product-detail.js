@@ -19,8 +19,8 @@ const PRODUCT_DATA = {
       description: "Composition florale haut de gamme pour accueils de prestige.",
       images: ["image/hotel1.jpg", "image/hotel2.jpg", "image/logi.png"],
       colors: [
-        { id: "rose", name: "rose", image: "image/rose1.jpg" },
-        { id: "blanc", name: "rouge-jaune", image: "image/rose2.jpg" }
+        { id: "rose", name: "rose", image: "image/hotel1.jpg" },
+        { id: "blanc", name: "rouge-jaune", image: "image/hotel2.jpg" }
       ],
       vases: [
         { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
@@ -30,7 +30,7 @@ const PRODUCT_DATA = {
     {
       id: 2,
       name: "coeur de boaz",
-      basePrice: 60.0,
+      basePrice: 05.0,
       description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux.",
       images: ["image/boaz1.jpg", "image/Boaz2.jpg", "image/Boaz3.jpg"],
       colors: [
