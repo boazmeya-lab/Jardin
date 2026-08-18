@@ -9,6 +9,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const selectedProductId = parseInt(urlParams.get('id')) || 1; 
 
 // 2. BASE DE DONNÉES SYNCHRONISÉE
+// -> Chaque produit possède désormais ses PROPRES couleurs et vases.
 const PRODUCT_DATA = {
   models: [
     {
@@ -16,53 +17,91 @@ const PRODUCT_DATA = {
       name: "fleurs xxl",
       basePrice: 45.0,
       description: "Composition florale haut de gamme pour accueils de prestige.",
-      images: ["image/hotel1.jpg", "image/hotel2.jpg", "image/logi.png"]
+      images: ["image/hotel1.jpg", "image/hotel2.jpg", "image/logi.png"],
+      colors: [
+        { id: "rose", name: "rose", image: "image/rose1.jpg" },
+        { id: "blanc", name: "rouge-jaune", image: "image/rose2.jpg" }
+      ],
+      vases: [
+        { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+      ]
     },
     {
       id: 2,
       name: "coeur de boaz",
       basePrice: 60.0,
       description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux.",
-      images: ["image/boaz1.jpg", "image/Boaz2.jpg", "image/Boaz3.jpg"]
+      images: ["image/boaz1.jpg", "image/Boaz2.jpg", "image/Boaz3.jpg"],
+      colors: [
+        { id: "rose", name: "verte", image: "image/boaz1.jpg" },
+        { id: "blanc", name: "verte", image: "image/Boaz2.jpg" }
+      ],
+      vases: [
+        { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+      ]
     },
     {
       id: 3,
       name: "Abonnement Bureau Exécutif",
       basePrice: 35.0,
       description: "Arrangement floral épuré conçu spécialement pour les espaces de travail.",
-      images: ["image/bureau.jpg", "image/bureau-2.jpg", "image/bureau-3.jpg"]
+      images: ["image/bureau.jpg", "image/bureau-2.jpg", "image/bureau-3.jpg"],
+      colors: [
+        { id: "rose", name: "Rose", image: "image/bureau.jpg" },
+        { id: "blanc", name: "Blanc", image: "image/bureau-2.jpg" }
+      ],
+      vases: [
+        { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+      ]
     },
     {
       id: 4,
       name: "Décoration Pupitre & Scène",
       basePrice: 80.0,
       description: "Décoration florale sur-mesure pour scènes, conférences et séminaires.",
-      images: ["image/evenement.jpg", "image/evenement-2.jpg", "image/evenement-3.jpg"]
+      images: ["image/evenement.jpg", "image/evenement-2.jpg", "image/evenement-3.jpg"],
+      colors: [
+        { id: "rose", name: "Rose", image: "image/evenement.jpg" },
+        { id: "blanc", name: "Blanc", image: "image/evenement-2.jpg" }
+      ],
+      vases: [
+        { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+      ]
     },
     {
       id: 5,
       name: "rose",
       basePrice: 50.0,
       description: "Bouquet de mariée élégant aux teintes douces et raffinées.",
-      images: ["image/rose1", "image/rose2.jpg", "image/rose3.jpg"]
+      images: ["image/rose1", "image/rose2.jpg", "image/rose3.jpg"],
+      colors: [
+        { id: "rose", name: "Rose", image: "image/rose1.jpg" },
+        { id: "blanc", name: "Blanc", image: "image/rose2.jpg" }
+      ],
+      vases: [
+        { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+      ]
     },
     {
       id: 6,
       name: "Couronne d'Hommage Royale",
       basePrice: 70.0,
       description: "Composition solennelle pour exprimer vos condoléances avec respect.",
-      images: ["image/finerail.jpg", "image/finerail-2.jpg", "image/finerail-3.jpg"]
+      images: ["image/finerail.jpg", "image/finerail-2.jpg", "image/finerail-3.jpg"],
+      colors: [
+        { id: "rose", name: "Rose", image: "image/finerail.jpg" },
+        { id: "blanc", name: "Blanc", image: "image/finerail-2.jpg" }
+      ],
+      vases: [
+        { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+      ]
     }
-  ],
-
-  colors: [
-    { id: "rose", name: "Rose", image: "image/rose1.jpg" },
-    { id: "blanc", name: "Blanc", image: "image/rose2.jpg" }
-  ],
-
-  vases: [
-    { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
-    { id: "verre", name: "Vase transparent", price: 8, included: false , image: "image/vase1.jpg" }
   ]
 };
 
@@ -72,8 +111,8 @@ const initialModel = PRODUCT_DATA.models.find(m => m.id === selectedProductId) |
 // 4. ÉTAT DE LA SÉLECTION
 const state = {
   modelId: initialModel.id, // Forcé sur le produit de l'URL
-  colorId: PRODUCT_DATA.colors[0].id,
-  vaseId: PRODUCT_DATA.vases[0].id,
+  colorId: initialModel.colors[0].id,
+  vaseId: initialModel.vases[0].id,
   quantity: 1,
   activeImage: 0,
   message: "",
@@ -83,10 +122,12 @@ function currentModel() {
   return PRODUCT_DATA.models.find(m => m.id === state.modelId) || PRODUCT_DATA.models[0]; 
 }
 function currentColor() { 
-  return PRODUCT_DATA.colors.find(c => c.id === state.colorId) || PRODUCT_DATA.colors[0]; 
+  const model = currentModel();
+  return model.colors.find(c => c.id === state.colorId) || model.colors[0]; 
 }
 function currentVase()  { 
-  return PRODUCT_DATA.vases.find(v => v.id === state.vaseId) || PRODUCT_DATA.vases[0]; 
+  const model = currentModel();
+  return model.vases.find(v => v.id === state.vaseId) || model.vases[0]; 
 }
 
 /* -------------------------------------------------------------------------
@@ -97,6 +138,9 @@ function money(n) { return "$" + n.toFixed(2); }
 function refreshForSelectedModel() {
   renderHeader();
   renderGallery();
+  // Les couleurs et vases changent d'un produit à l'autre : on les redessine aussi.
+  renderColors();
+  renderVases();
   renderPricing();
 }
 
@@ -179,6 +223,9 @@ function renderModels() {
     
     card.addEventListener("click", () => {
       state.modelId = model.id;
+      // Nouveau produit -> on réinitialise couleur et vase sur ses propres options par défaut
+      state.colorId = model.colors[0].id;
+      state.vaseId = model.vases[0].id;
       renderModels();
       refreshForSelectedModel();
     });
@@ -193,9 +240,10 @@ function renderModels() {
 function renderColors() {
   const wrap = document.getElementById("swatches");
   if (!wrap) return;
-  
+
+  const model = currentModel();
   wrap.innerHTML = "";
-  PRODUCT_DATA.colors.forEach(color => {
+  model.colors.forEach(color => {
     const el = document.createElement("button");
     el.className = "swatch" + (color.id === state.colorId ? " active" : "");
     el.innerHTML = `<span class="dot"><img src="${color.image}" alt="${color.name}"></span><span class="label">${color.name}</span>`;
@@ -214,8 +262,9 @@ function renderVases() {
   const grid = document.getElementById("vaseGrid");
   if (!grid) return;
 
+  const model = currentModel();
   grid.innerHTML = "";
-  PRODUCT_DATA.vases.forEach(vase => {
+  model.vases.forEach(vase => {
     const card = document.createElement("button");
     card.className = "vase-card" + (vase.id === state.vaseId ? " active" : "");
     const priceLabel = vase.included ? "Inclus" : "+" + money(vase.price);
@@ -349,14 +398,14 @@ function bindWhatsAppButton() {
 function init() {
   // 1. Synchroniser le state avec l'ID sélectionné
   state.modelId = initialModel.id;
+  state.colorId = initialModel.colors[0].id;
+  state.vaseId = initialModel.vases[0].id;
 
-  // 2. Mettre à jour l'en-tête, les photos et les prix tout de suite
+  // 2. Mettre à jour l'en-tête, les photos, les couleurs, les vases et les prix tout de suite
   refreshForSelectedModel();
 
   // 3. Charger le reste des éléments UI
   renderModels();
-  renderColors();
-  renderVases();
   
   // 4. Activer les boutons
   bindQuantity();
