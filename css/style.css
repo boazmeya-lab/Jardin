@@ -1009,3 +1009,10 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   padding-left: 12px;
   padding-right: 12px;
 }
+.menu-toggle {
+  order: 3;
+}
+
+.header-actions {
+  order: 2;
+}
