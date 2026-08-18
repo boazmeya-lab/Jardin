@@ -13,10 +13,10 @@ const PRODUCT_DATA = {
   models: [
     {
       id: 1,
-      name: "Composition Reception VIP",
+      name: "fleurs xxl",
       basePrice: 45.0,
       description: "Composition florale haut de gamme pour accueils de prestige.",
-      images: ["image/hotel.jpg", "image/hotel-2.jpg", "image/hotel-3.jpg"]
+      images: ["image/hotel1.jpg", "image/hotel2.jpg", "image/logi.jpg"]
     },
     {
       id: 2,
