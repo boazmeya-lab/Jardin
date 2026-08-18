@@ -56,13 +56,13 @@ const PRODUCT_DATA = {
   ],
 
   colors: [
-    { id: "rose", name: "Rose", image: "image/color-rose.jpg" },
-    { id: "blanc", name: "Blanc", image: "image/color-blanc.jpg" }
+    { id: "rose", name: "Rose", image: "image/rose1.jpg" },
+    { id: "blanc", name: "Blanc", image: "image/rose2.jpg" }
   ],
 
   vases: [
     { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
-    { id: "verre", name: "Vase transparent", price: 8, included: false }
+    { id: "verre", name: "Vase transparent", price: 8, included: false , image: "image/vase1.jpg" }
   ]
 };
 
