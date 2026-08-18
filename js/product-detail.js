@@ -24,7 +24,7 @@ const PRODUCT_DATA = {
       ],
       vases: [
         { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
-        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase2.jpg" }
       ]
     },
     {
@@ -39,7 +39,7 @@ const PRODUCT_DATA = {
       ],
       vases: [
         { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
-        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase3.jpg" }
       ]
     },
     {
@@ -54,7 +54,7 @@ const PRODUCT_DATA = {
       ],
       vases: [
         { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true },
-        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase1.jpg" }
+        { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase4.jpg" }
       ]
     },
     {
