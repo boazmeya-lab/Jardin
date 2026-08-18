@@ -20,10 +20,10 @@ const PRODUCT_DATA = {
     },
     {
       id: 2,
-      name: "rose",
+      name: "coeur de boaz",
       basePrice: 60.0,
       description: "Roses, lys étoilés et gypsophile, composés à la main pour un rendu généreux.",
-      images: ["image/rose1.jpg", "image/rose2.jpg", "image/rose3.jpg"]
+      images: ["image/Boaz1.jpg", "image/boaz2.jpg", "image/boaz3.jpg"]
     },
     {
       id: 3,
@@ -41,10 +41,10 @@ const PRODUCT_DATA = {
     },
     {
       id: 5,
-      name: "Bouquet Nuptial Élégance",
+      name: "rose",
       basePrice: 50.0,
       description: "Bouquet de mariée élégant aux teintes douces et raffinées.",
-      images: ["image/mariage.jpg", "image/mariage-2.jpg", "image/mariage-3.jpg"]
+      images: ["image/rose1", "image/rose2.jpg", "image/rose3.jpg"]
     },
     {
       id: 6,
