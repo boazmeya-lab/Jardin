@@ -16,7 +16,7 @@ const PRODUCT_DATA = {
       name: "fleurs xxl",
       basePrice: 45.0,
       description: "Composition florale haut de gamme pour accueils de prestige.",
-      images: ["image/hotel1.jpg", "image/hotel2.jpg", "image/logi.jpg"]
+      images: ["image/hotel1.jpg", "image/hotel2.jpg", "image/logi.png"]
     },
     {
       id: 2,
