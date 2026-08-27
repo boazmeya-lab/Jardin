@@ -1016,3 +1016,12 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 .header-actions {
   order: 2;
 }
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+.btn-secondary:hover {
+  background: #fff;
+  color: var(--forest, #1F3D2B);
+}
