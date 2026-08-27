@@ -35,117 +35,45 @@ function grandTotal() {
 }
 
 /* ---------- Rendu ---------- */
-
-function renderFlowerList() {
-  const wrap = document.getElementById("flowerList");
+function renderPicker(containerId, items, stateKey, stageElId, styleProp) {
+  const wrap = document.getElementById(containerId);
   wrap.innerHTML = "";
-  FLOWERS.forEach(flower => {
-    const qty = state.flowerQty[flower.id] || 0;
-    const row = document.createElement("div");
-    row.className = "flower-row";
-    row.innerHTML = `
-      <img src="${flower.image}" alt="${flower.name}">
-      <span>${flower.name}</span>
-      <span>${money(flower.price)} / tige</span>
-      <button class="qty-minus" data-id="${flower.id}">−</button>
-      <span class="qty-value">${qty}</span>
-      <button class="qty-plus" data-id="${flower.id}">+</button>
-    `;
-    wrap.appendChild(row);
-  });
-
-  wrap.querySelectorAll(".qty-plus").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.id;
-      state.flowerQty[id] = (state.flowerQty[id] || 0) + 1;
-      renderAll();
-    });
-  });
-  wrap.querySelectorAll(".qty-minus").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.id;
-      state.flowerQty[id] = Math.max(0, (state.flowerQty[id] || 0) - 1);
-      renderAll();
-    });
-  });
-}
-
-function renderOptionGrid(containerId, items, stateKey, onChange) {
-  const grid = document.getElementById(containerId);
-  grid.innerHTML = "";
   items.forEach(item => {
-    const card = document.createElement("button");
-    card.className = "option-card" + (item.id === state[stateKey] ? " active" : "");
+    const chip = document.createElement("button");
+    chip.className = "picker-chip" + (item.id === state[stateKey] ? " active" : "");
     const priceLabel = item.included ? "Inclus" : "+" + money(item.price);
-    card.innerHTML = `
+    chip.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
-      <div>${item.name}</div>
-      <div>${priceLabel}</div>
+      <span>${item.name}</span>
+      <span class="picker-price">${priceLabel}</span>
     `;
-    card.addEventListener("click", () => {
+    chip.addEventListener("click", () => {
       state[stateKey] = item.id;
-      onChange();
+      applyToStage(stageElId, item.image);
+      renderPicker(containerId, items, stateKey, stageElId, styleProp);
+      renderSummary();
     });
-    grid.appendChild(card);
+    wrap.appendChild(chip);
   });
 }
 
-function renderPreview() {
-  const flowers = selectedFlowers();
-  const wrap = document.getElementById("previewFlowers");
-  const empty = document.getElementById("previewEmpty");
-  wrap.innerHTML = "";
-  if (flowers.length === 0) {
-    empty.style.display = "block";
-  } else {
-    empty.style.display = "none";
-    flowers.forEach(f => {
-      for (let i = 0; i < f.qty; i++) {
-        const img = document.createElement("img");
-        img.src = f.image;
-        img.alt = f.name;
-        img.className = "preview-flower";
-        wrap.appendChild(img);
-      }
-    });
-  }
-}
-
-function renderSummary() {
-  const el = document.getElementById("summaryLines");
-  el.innerHTML = "";
-
-  selectedFlowers().forEach(f => {
-    const line = document.createElement("div");
-    line.textContent = `${f.qty} × ${f.name} — ${money(f.price * f.qty)}`;
-    el.appendChild(line);
-  });
-
-  const extras = [
-    ["Feuillage", currentFoliage()],
-    ["Ruban", currentRibbon()],
-    ["Emballage", currentWrap()],
-    ["Vase", currentVase()]
-  ];
-  extras.forEach(([label, item]) => {
-    const line = document.createElement("div");
-    line.textContent = `${label} : ${item.name} — ${item.included ? "Inclus" : money(item.price)}`;
-    el.appendChild(line);
-  });
-
-  document.getElementById("totalPrice").textContent = money(grandTotal());
+function applyToStage(stageElId, imageUrl) {
+  const el = document.getElementById(stageElId);
+  el.style.backgroundImage = `url('${imageUrl}')`;
+  el.classList.remove("stage-pop");
+  void el.offsetWidth; // relance l'animation
+  el.classList.add("stage-pop");
+  document.getElementById("stageHint").style.display = "none";
 }
 
 function renderAll() {
   renderFlowerList();
-  renderOptionGrid("foliageGrid", FOLIAGES, "foliageId", renderAll);
-  renderOptionGrid("ribbonGrid", RIBBONS, "ribbonId", renderAll);
-  renderOptionGrid("wrapGrid", WRAPS, "wrapId", renderAll);
-  renderOptionGrid("vaseGrid", CUSTOM_VASES, "vaseId", renderAll);
+  renderPicker("ribbonPicker", RIBBONS, "ribbonId", "stageRibbon");
+  renderPicker("wrapPicker", WRAPS, "wrapId", "stageWrap");
+  renderPicker("vasePicker", CUSTOM_VASES, "vaseId", "stageWrap");
   renderPreview();
   renderSummary();
 }
-
 /* ---------- Message + WhatsApp ---------- */
 
 function bindMessage() {
