@@ -16,34 +16,28 @@
   <p id="previewEmpty">Choisissez vos fleurs pour commencer</p>
 </section>
 
-<section>
-  <h2>1. Fleurs et quantités</h2>
-  <div id="flowerList"></div>
-</section>
-
-<section>
-  <h2>2. Feuillage</h2>
-  <div id="foliageGrid"></div>
+<section id="preview">
+  <div id="bouquetStage">
+    <div id="stageFlowers"></div>
+    <div id="stageRibbon"></div>
+    <div id="stageWrap"></div>
+  </div>
+  <span id="stageHint">Touchez un ruban ou un emballage ci-dessous pour l'essayer</span>
 </section>
 
 <section>
   <h2>3. Ruban</h2>
-  <div id="ribbonGrid"></div>
+  <div id="ribbonPicker" class="picker-row"></div>
 </section>
 
 <section>
   <h2>4. Emballage</h2>
-  <div id="wrapGrid"></div>
+  <div id="wrapPicker" class="picker-row"></div>
 </section>
 
 <section>
   <h2>5. Vase</h2>
-  <div id="vaseGrid"></div>
-</section>
-
-<section>
-  <h2>6. Message sur la carte (optionnel)</h2>
-  <textarea id="cardMessage" maxlength="200" placeholder="Écrivez un mot doux..."></textarea>
+  <div id="vasePicker" class="picker-row"></div>
 </section>
 
 <section id="summary">
