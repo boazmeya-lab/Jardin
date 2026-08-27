@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créer mon bouquet — Jardin Agro</title>
+</head>
+<body>
+
+<a href="index.html">&larr; Retour</a>
+<h1>Créer mon bouquet</h1>
+
+<section id="preview">
+  <div id="previewFlowers"></div>
+  <p id="previewEmpty">Choisissez vos fleurs pour commencer</p>
+</section>
+
+<section>
+  <h2>1. Fleurs et quantités</h2>
+  <div id="flowerList"></div>
+</section>
+
+<section>
+  <h2>2. Feuillage</h2>
+  <div id="foliageGrid"></div>
+</section>
+
+<section>
+  <h2>3. Ruban</h2>
+  <div id="ribbonGrid"></div>
+</section>
+
+<section>
+  <h2>4. Emballage</h2>
+  <div id="wrapGrid"></div>
+</section>
+
+<section>
+  <h2>5. Vase</h2>
+  <div id="vaseGrid"></div>
+</section>
+
+<section>
+  <h2>6. Message sur la carte (optionnel)</h2>
+  <textarea id="cardMessage" maxlength="200" placeholder="Écrivez un mot doux..."></textarea>
+</section>
+
+<section id="summary">
+  <h2>Récapitulatif</h2>
+  <div id="summaryLines"></div>
+  <p>Total : <span id="totalPrice">$0.00</span></p>
+</section>
+
+<button id="whatsappBtn">Valider mon bouquet sur WhatsApp</button>
+
+<script src="js/flowers.js"></script>
+<script src="js/creer-bouquet.js"></script>
+</body>
+</html>
