@@ -86,7 +86,6 @@ function construireSwatchPicker(containerId, items, cle) {
 // ---------- Aperçu en direct ----------
 
 function mettreAJourApercu() {
-  const previewFlowers = document.getElementById("previewFlowers");
   const previewEmpty = document.getElementById("previewEmpty");
   const stageFlowers = document.getElementById("stageFlowers");
   const stageRibbon = document.getElementById("stageRibbon");
@@ -97,29 +96,31 @@ function mettreAJourApercu() {
 
   if (idsFleurs.length === 0) {
     if (previewEmpty) previewEmpty.style.display = "block";
-    if (previewFlowers) previewFlowers.innerHTML = "";
     if (stageFlowers) stageFlowers.innerHTML = "";
-    return;
+  } else {
+    if (previewEmpty) previewEmpty.style.display = "none";
+
+    // Une "fleur" (tige + tête colorée) par unité, positionnée en éventail.
+    // Chaque fleur ajoutée apparaît immédiatement dans l'éventail.
+    let html = "";
+    let index = 0;
+    const total = idsFleurs.reduce((acc, id) => acc + bouquet.fleurs[id], 0);
+
+    idsFleurs.forEach((id) => {
+      const fleur = FLOWERS.find((f) => f.id === id);
+      for (let i = 0; i < bouquet.fleurs[id]; i++) {
+        const angle = (index / Math.max(total - 1, 1)) * 70 - 35; // éventail -35° à +35°
+        html += `
+          <div class="flower-unit" style="transform: rotate(${angle}deg) translateY(-${index % 3 * 4}px)">
+            <div class="stem"></div>
+            <div class="head" style="background:${fleur.color}" title="${fleur.name}"></div>
+          </div>`;
+        index++;
+      }
+    });
+
+    if (stageFlowers) stageFlowers.innerHTML = html;
   }
-
-  if (previewEmpty) previewEmpty.style.display = "none";
-
-  // Génère un petit "brin" par fleur x quantité, positionné en éventail
-  let html = "";
-  let index = 0;
-  const total = idsFleurs.reduce((acc, id) => acc + bouquet.fleurs[id], 0);
-
-  idsFleurs.forEach((id) => {
-    const fleur = FLOWERS.find((f) => f.id === id);
-    for (let i = 0; i < bouquet.fleurs[id]; i++) {
-      const angle = (index / Math.max(total - 1, 1)) * 60 - 30; // éventail -30° à +30°
-      html += `<div class="stem" style="background:${fleur.color}; transform: rotate(${angle}deg) translateY(-${40 + (index % 3) * 6}px)"></div>`;
-      index++;
-    }
-  });
-
-  if (previewFlowers) previewFlowers.innerHTML = html;
-  if (stageFlowers) stageFlowers.innerHTML = html;
 
   if (stageRibbon) {
     const ruban = RIBBONS.find((r) => r.id === bouquet.ruban);
