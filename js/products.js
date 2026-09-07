@@ -2,9 +2,23 @@
 const products = [
   // HÔTEL
   { id: 1, title: "fleurs xxl", category: "hotels", price: "45 $", surMesure: false, image: "image/hôtel/maison1.jpg" },
-  { id: 2, title: "------ ", category: "hotels", price: "05 $", surMesure: false, image: "image/hôtel/maison2.jpg" },
-  { id: 2, title: "-----", category: "hotels", price: "05 $", surMesure: false, image: "image/hôtel/maison3.jpg" },
-  
+  { id: 2, title: "------ ", category: "hotels", price: "0 $", surMesure: false, image: "image/hôtel/maison2.jpg" },
+  { id: 3, title: "-----", category: "hotels", price: "0 $", surMesure: false, image: "image/hôtel/maison3.jpg" },
+  { id: 4, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison4.jpg" },
+  { id: 5, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison5.jpg" },
+  { id: 6, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison6.jpg" },
+  { id: 7, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison7.jpg" },
+  { id: 8, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison8.jpg" },
+  { id: 9, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison9.jpg" },
+  { id: 10, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison10.jpg" },
+  { id: 11, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison11.jpg" },
+  { id: 12, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison12.jpg" },
+  { id: 13, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison13.jpg" },
+  { id: 14, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison14.jpg" },
+
+
+ 
+
   // ENTREPRISES & BANQUES
   { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprises", price: "35 $", surMesure: false, image: "image/bureau.jpg" },
   
