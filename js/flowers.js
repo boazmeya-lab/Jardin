@@ -7,10 +7,10 @@
 // ============================================
 
 const FLOWERS = [
-  { id: "rose_rouge",   name: "Rose rouge",   price: 2.50, color: "#c0392b", img: "image/fleurs/rose-rouge.jpg" },
-  { id: "rose_blanche", name: "Rose blanche", price: 2.50, color: "#f5f5f5", img: "image/fleurs/rose-blanche.jpg" },
-  { id: "tulipe",       name: "Tulipe",       price: 1.80, color: "#e67e22", img: "image/fleurs/tulipe.jpg" },
-  { id: "lys",          name: "Lys",          price: 3.00, color: "#f9e79f", img: "image/fleurs/lys.jpg" },
+  { id: "rose_rouge",   name: "Rose rouge",   price: 2.50, color: "#c0392b", img: "image/rose1.jpg" },
+  { id: "rose_blanche", name: "Rose blanche", price: 2.50, color: "#f5f5f5", img: "image/rose2.jpg" },
+  { id: "tulipe",       name: "Tulipe",       price: 1.80, color: "#e67e22", img: "image/rose3.jpg" },
+  { id: "lys",          name: "Lys",          price: 3.00, color: "#f9e79f", img: "image/rose4.jpg" },
   { id: "tournesol",    name: "Tournesol",    price: 2.20, color: "#f1c40f", img: "image/fleurs/tournesol.jpg" },
   { id: "orchidee",     name: "Orchidée",     price: 4.50, color: "#9b59b6", img: "image/fleurs/orchidee.jpg" },
 ];
