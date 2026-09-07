@@ -5,6 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css?v=5.0">
 <title>Créer mon bouquet — Jardin Agro</title>
+<style>
+  /* Style minimal de secours pour les nouveaux éléments du configurateur.
+     Si style.css définit déjà ces classes, ce bloc peut être supprimé
+     ou fusionné dans style.css. */
+  .picker-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .flower-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px; width: 130px; text-align: center; }
+  .flower-swatch { width: 100%; height: 40px; border-radius: 6px; margin-bottom: 6px; }
+  .flower-name { font-weight: bold; font-size: 0.9em; }
+  .flower-price { font-size: 0.85em; color: #555; margin-bottom: 6px; }
+  .flower-qty { display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+  .qty-value { min-width: 20px; }
+
+  .swatch-btn { border: 2px solid #ddd; border-radius: 8px; padding: 8px; width: 110px; background: #fff; cursor: pointer; text-align: center; }
+  .swatch-btn.selected { border-color: #2e7d32; }
+  .swatch-color { display: block; width: 100%; height: 28px; border-radius: 6px; margin-bottom: 4px; border: 1px solid #eee; }
+  .swatch-name { display: block; font-size: 0.85em; }
+  .swatch-price { display: block; font-size: 0.75em; color: #777; }
+
+  #bouquetStage { position: relative; width: 220px; height: 220px; margin: 0 auto; }
+  #stageFlowers { position: absolute; bottom: 0; left: 50%; width: 0; height: 0; }
+  .stem { position: absolute; bottom: 0; left: -4px; width: 8px; height: 90px; border-radius: 4px; transform-origin: bottom center; }
+  #stageRibbon { position: absolute; bottom: 60px; left: 50%; width: 60px; height: 12px; margin-left: -30px; border-radius: 4px; display: none; }
+  #stageWrap { position: absolute; bottom: 0; left: 50%; width: 100px; height: 70px; margin-left: -50px; border-radius: 0 0 40px 40px; display: none; z-index: -1; }
+</style>
 </head>
 <body>
 
@@ -26,17 +52,23 @@
 </section>
 
 <section>
-  <h2>3. Ruban</h2>
+  <h2>1. Fleurs</h2>
+  <p>Ajustez la quantité de chaque fleur avec les boutons + et −.</p>
+  <div id="flowerPicker" class="picker-row"></div>
+</section>
+
+<section>
+  <h2>2. Ruban</h2>
   <div id="ribbonPicker" class="picker-row"></div>
 </section>
 
 <section>
-  <h2>4. Emballage</h2>
+  <h2>3. Emballage</h2>
   <div id="wrapPicker" class="picker-row"></div>
 </section>
 
 <section>
-  <h2>5. Vase</h2>
+  <h2>4. Vase</h2>
   <div id="vasePicker" class="picker-row"></div>
 </section>
 
