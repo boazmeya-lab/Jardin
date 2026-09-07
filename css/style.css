@@ -146,6 +146,8 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   align-items: center;
   justify-content: center;
   color: var(--ink);
+  border: none;
+  cursor: pointer;
 }
 
 /* Menu de navigation (desktop par défaut) */
@@ -200,6 +202,68 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 }
 .menu-toggle.active span:nth-child(3) {
   transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* Widget de recherche (loupe) dans le header */
+.search-widget {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-form {
+  position: absolute;
+  right: 46px;
+  top: 50%;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: right center;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.search-widget.active .search-form {
+  transform: translateY(-50%) scaleX(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-input {
+  width: 220px;
+  max-width: 45vw;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--grey-mid);
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink);
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+}
+
+@media (max-width: 767px) {
+  .search-form {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: var(--header-h);
+    transform: translateY(-8px) scaleX(1);
+    transform-origin: top center;
+  }
+
+  .search-widget.active .search-form {
+    transform: translateY(0) scaleX(1);
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: none;
+  }
 }
 
 /* 5. BOUTONS GENERAUX */
