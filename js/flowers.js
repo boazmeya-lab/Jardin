@@ -1,40 +1,36 @@
-/* ===========================================================
-   JARDIN AGRO — Catalogue "Créer mon bouquet"
-   Fleurs à l'unité, feuillage, ruban, emballage, vase.
-   =========================================================== */
+// ============================================
+// Données du configurateur "Créer mon bouquet"
+// À adapter : remplace les prix et noms par les vrais
+// produits de Jardin Agro. "color" sert juste à
+// dessiner l'aperçu tant que tu n'as pas de vraies photos.
+// Si tu as des images, remplace "color" par "img: 'image/xxx.jpg'"
+// et adapte creer-bouquet.js en conséquence.
+// ============================================
 
 const FLOWERS = [
-  { id: "rose", name: "Roses", price: 3, image: "image/flower-rose.jpg", minQty: 3 },
-  { id: "rose-spray", name: "Roses spray", price: 2.5, image: "image/flower-rose-spray.jpg", minQty: 3 },
-  { id: "hortensia", name: "Hortensias", price: 6, image: "image/flower-hortensia.jpg", minQty: 1 },
-  { id: "lys", name: "Lys", price: 4, image: "image/flower-lys.jpg", minQty: 1 },
-  { id: "tournesol", name: "Tournesols", price: 3.5, image: "image/flower-tournesol.jpg", minQty: 1 },
-  { id: "limonium", name: "Limonium", price: 2, image: "image/flower-limonium.jpg", minQty: 1 },
-  { id: "hypericum", name: "Hypericum", price: 2, image: "image/flower-hypericum.jpg", minQty: 1 },
-  { id: "oeillet", name: "Œillets", price: 2, image: "image/flower-oeillet.jpg", minQty: 3 },
-  { id: "craspedie", name: "Craspédies", price: 2.5, image: "image/flower-craspedie.jpg", minQty: 1 },
-  { id: "gypsophile", name: "Gypsophiles", price: 1.5, image: "image/flower-gypsophile.jpg", minQty: 1 }
-];
-
-const FOLIAGES = [
-  { id: "none", name: "Sans feuillage", price: 0, included: true, image: "image/foliage-none.jpg" },
-  { id: "eucalyptus", name: "Eucalyptus", price: 5, included: false, image: "image/foliage-eucalyptus.jpg" },
-  { id: "ruscus", name: "Ruscus", price: 4, included: false, image: "image/foliage-ruscus.jpg" }
+  { id: "rose_rouge",   name: "Rose rouge",   price: 2.50, color: "#c0392b" },
+  { id: "rose_blanche", name: "Rose blanche", price: 2.50, color: "#f5f5f5" },
+  { id: "tulipe",       name: "Tulipe",       price: 1.80, color: "#e67e22" },
+  { id: "lys",          name: "Lys",          price: 3.00, color: "#f9e79f" },
+  { id: "tournesol",    name: "Tournesol",    price: 2.20, color: "#f1c40f" },
+  { id: "orchidee",     name: "Orchidée",     price: 4.50, color: "#9b59b6" },
 ];
 
 const RIBBONS = [
-  { id: "none", name: "Sans ruban", price: 0, included: true, image: "image/ribbon-none.jpg" },
-  { id: "satin", name: "Ruban satin", price: 3, included: false, image: "image/ribbon-satin.jpg" },
-  { id: "jute", name: "Toile de jute", price: 2, included: false, image: "image/ribbon-jute.jpg" }
+  { id: "ruban_rouge", name: "Rouge",  price: 1.00, color: "#c0392b" },
+  { id: "ruban_or",    name: "Doré",   price: 1.50, color: "#d4af37" },
+  { id: "ruban_blanc", name: "Blanc",  price: 1.00, color: "#ffffff" },
+  { id: "ruban_rose",  name: "Rose",   price: 1.00, color: "#f8b6c8" },
 ];
 
 const WRAPS = [
-  { id: "none", name: "Sans emballage", price: 0, included: true, image: "image/wrap-none.jpg" },
-  { id: "kraft", name: "Papier kraft", price: 4, included: false, image: "image/wrap-kraft.jpg" },
-  { id: "cadeau", name: "Papier cadeau", price: 6, included: false, image: "image/wrap-cadeau.jpg" }
+  { id: "kraft",       name: "Papier kraft",          price: 2.00, color: "#c19a6b" },
+  { id: "cellophane",  name: "Cellophane transparent", price: 1.50, color: "#eaf2f8" },
+  { id: "jute",        name: "Toile de jute",          price: 3.00, color: "#8b7355" },
 ];
 
-const CUSTOM_VASES = [
-  { id: "none", name: "Sans vase (bouquet seul)", price: 0, included: true, image: "image/vase-none.jpg" },
-  { id: "verre", name: "Vase transparent", price: 8, included: false, image: "image/vase2.jpg" }
+const VASES = [
+  { id: "aucun",     name: "Sans vase",       price: 0.00,  color: "transparent" },
+  { id: "verre",     name: "Vase en verre",   price: 8.00,  color: "#d6eaf8" },
+  { id: "ceramique", name: "Vase en céramique", price: 12.00, color: "#eaeded" },
 ];
