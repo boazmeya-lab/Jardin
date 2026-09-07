@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css?v=5.0">
+<title>Personnaliser mon bouquet — Jardin Agro</title>
+<style>
+  .picker-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  #baseImage { width: 100%; max-width: 320px; height: 240px; object-fit: cover; border-radius: 10px; display: block; margin: 0 auto; background: #f2f2f2; }
+  #baseName { text-align: center; font-weight: bold; margin-top: 8px; }
+
+  #badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 12px 0; }
+  .badge { background: #eef7ee; border: 1px solid #2e7d32; color: #2e7d32; border-radius: 20px; padding: 4px 12px; font-size: 0.85em; }
+  #badgesEmpty { text-align: center; color: #777; font-size: 0.9em; }
+
+  .flower-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px; width: 130px; text-align: center; }
+  .flower-swatch { width: 100%; height: 60px; border-radius: 6px; margin-bottom: 6px; background-size: cover; background-position: center; }
+  .flower-name { font-weight: bold; font-size: 0.9em; }
+  .flower-price { font-size: 0.85em; color: #555; margin-bottom: 6px; }
+  .flower-qty { display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+  .qty-value { min-width: 20px; }
+
+  .swatch-btn { border: 2px solid #ddd; border-radius: 8px; padding: 8px; width: 110px; background: #fff; cursor: pointer; text-align: center; }
+  .swatch-btn.selected { border-color: #2e7d32; }
+  .swatch-color { display: block; width: 100%; height: 40px; border-radius: 6px; margin-bottom: 4px; border: 1px solid #eee; background-size: cover; background-position: center; }
+  .swatch-name { display: block; font-size: 0.85em; }
+  .swatch-price { display: block; font-size: 0.75em; color: #777; }
+</style>
+</head>
+<body>
+
+<a href="creer-bouquet.html">&larr; Retour aux bouquets</a>
+<h1>Personnaliser mon bouquet</h1>
+
+<section id="preview">
+  <img id="baseImage" src="" alt="Bouquet choisi">
+  <p id="baseName"></p>
+  <div id="badges"></div>
+</section>
+
+<section>
+  <h2>1. Fleurs</h2>
+  <p>Ajustez la quantité de chaque fleur avec les boutons + et −.</p>
+  <div id="flowerPicker" class="picker-row"></div>
+</section>
+
+<section>
+  <h2>2. Ruban</h2>
+  <div id="ribbonPicker" class="picker-row"></div>
+</section>
+
+<section>
+  <h2>3. Emballage</h2>
+  <div id="wrapPicker" class="picker-row"></div>
+</section>
+
+<section>
+  <h2>4. Vase</h2>
+  <div id="vasePicker" class="picker-row"></div>
+</section>
+
+<section id="summary">
+  <h2>Récapitulatif</h2>
+  <div id="summaryLines"></div>
+  <p>Total : <span id="totalPrice">$0.00</span></p>
+</section>
+
+<button id="whatsappBtn">Valider mon bouquet sur WhatsApp</button>
+
+<script src="js/flowers.js"></script>
+<script src="js/bouquets.js"></script>
+<script src="js/personnaliser-bouquet.js"></script>
+</body>
+</html>
