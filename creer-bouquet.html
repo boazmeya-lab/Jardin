@@ -25,11 +25,22 @@
   .swatch-name { display: block; font-size: 0.85em; }
   .swatch-price { display: block; font-size: 0.75em; color: #777; }
 
-  #bouquetStage { position: relative; width: 220px; height: 220px; margin: 0 auto; }
-  #stageFlowers { position: absolute; bottom: 0; left: 50%; width: 0; height: 0; }
-  .stem { position: absolute; bottom: 0; left: -4px; width: 8px; height: 90px; border-radius: 4px; transform-origin: bottom center; }
-  #stageRibbon { position: absolute; bottom: 60px; left: 50%; width: 60px; height: 12px; margin-left: -30px; border-radius: 4px; display: none; }
-  #stageWrap { position: absolute; bottom: 0; left: 50%; width: 100px; height: 70px; margin-left: -50px; border-radius: 0 0 40px 40px; display: none; z-index: -1; }
+  #bouquetStage { position: relative; width: 220px; height: 240px; margin: 0 auto; }
+  #stageWrap {
+    position: absolute; bottom: 0; left: 50%; width: 150px; height: 110px; margin-left: -75px;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    display: none; z-index: 1;
+  }
+  #stageFlowers { position: absolute; bottom: 30px; left: 50%; width: 0; height: 0; z-index: 2; }
+  .flower-unit { position: absolute; bottom: 0; left: -3px; width: 6px; height: 100px; transform-origin: bottom center; }
+  .flower-unit .stem { width: 6px; height: 75px; background: #3d8b40; margin: 0 auto; border-radius: 3px; }
+  .flower-unit .head { width: 22px; height: 22px; border-radius: 50%; margin: -11px auto 0; border: 2px solid rgba(0,0,0,0.15); }
+  #stageRibbon {
+    position: absolute; bottom: 95px; left: 50%; width: 70px; height: 16px; margin-left: -35px;
+    border-radius: 3px; box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    display: none; z-index: 3;
+  }
+  #previewEmpty { text-align: center; }
 </style>
 </head>
 <body>
@@ -38,16 +49,12 @@
 <h1>Créer mon bouquet</h1>
 
 <section id="preview">
-  <div id="previewFlowers"></div>
-  <p id="previewEmpty">Choisissez vos fleurs pour commencer</p>
-</section>
-
-<section id="preview">
   <div id="bouquetStage">
+    <div id="stageWrap"></div>
     <div id="stageFlowers"></div>
     <div id="stageRibbon"></div>
-    <div id="stageWrap"></div>
   </div>
+  <p id="previewEmpty">Choisissez vos fleurs pour commencer</p>
   <span id="stageHint">Touchez un ruban ou un emballage ci-dessous pour l'essayer</span>
 </section>
 
