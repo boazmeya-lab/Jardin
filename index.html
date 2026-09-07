@@ -31,8 +31,23 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <!-- Zone Actions : Bouton Hamburger + Panier -->
+      <!-- Zone Actions : Recherche + Bouton Hamburger + Panier -->
       <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
+        <div class="search-widget" id="searchWidget">
+          <button class="icon-btn" id="searchToggle" aria-label="Rechercher une fleur">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <form class="search-form" id="searchForm" role="search">
+            <input
+              type="search"
+              id="searchInput"
+              class="search-input"
+              placeholder="Rechercher une fleur..."
+              aria-label="Rechercher une fleur"
+              autocomplete="off"
+            >
+          </form>
+        </div>
         <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
           <span></span>
           <span></span>
@@ -58,7 +73,7 @@
       <div style="display:flex; gap:15px; justify-content:center;">
         <div style="display:flex; gap:15px; justify-content:center;">
   <a href="#univers" class="btn btn-primary">Découvrir nos univers</a>
-  <a href="creer-bouquet.html" class="btn btn-secondary">Créer mon bouquet</a>
+  <a href="products.html" class="btn btn-secondary">Voir tous les bouquets</a>
         </div>
       </div>
     </div>
@@ -226,7 +241,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT JS MOBILE MENU -->
+  <!-- SCRIPT JS MOBILE MENU & RECHERCHE -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const menuToggle = document.getElementById('menuToggle');
@@ -243,6 +258,36 @@
             navMenu.classList.remove('active');
             menuToggle.classList.remove('active');
           });
+        });
+      }
+
+      // Recherche par nom de fleur : ouvre le champ, puis redirige vers le catalogue
+      const searchWidget = document.getElementById('searchWidget');
+      const searchToggle = document.getElementById('searchToggle');
+      const searchForm = document.getElementById('searchForm');
+      const searchInput = document.getElementById('searchInput');
+
+      if (searchWidget && searchToggle && searchForm && searchInput) {
+        searchToggle.addEventListener('click', () => {
+          searchWidget.classList.toggle('active');
+          if (searchWidget.classList.contains('active')) {
+            searchInput.focus();
+          }
+        });
+
+        searchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const query = searchInput.value.trim();
+          if (query.length > 0) {
+            window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+          }
+        });
+
+        // Ferme le champ si on clique en dehors
+        document.addEventListener('click', (e) => {
+          if (!searchWidget.contains(e.target)) {
+            searchWidget.classList.remove('active');
+          }
         });
       }
     });
