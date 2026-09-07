@@ -38,7 +38,7 @@ const products = [
   { id: 4, title: "Décoration Pupitre & Scène", category: "conferences", price: "80 $", surMesure: true, image: "image/evenement.jpg" },
   
   // MARIAGE & FÊTES
-  { id: 5, title: "Bouquet Nuptial Élégance", category: "mariage", price: "50 $", surMesure: false, image: "image/mariage.jpg" },
+  { id: 5, title: "-----", category: "mariage", price: "0 $", surMesure: false, image: "image/fete1.jpg" },
   
   // FUNÉRAIRE
   { id: 6, title: "Couronne d'Hommage Royale", category: "funeraire", price: "70 $", surMesure: false, image: "image/finerail.jpg" }
