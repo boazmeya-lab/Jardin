@@ -17,6 +17,14 @@ function formatPrix(n) {
   return "$" + n.toFixed(2);
 }
 
+// Génère le style CSS : image en fond si disponible, couleur en secours
+// (si l'image ne charge pas, elle est simplement invisible et la couleur reste visible dessous)
+function styleVisuel(item) {
+  const couleur = `background-color:${item.color || "#eee"};`;
+  const image = item.img ? `background-image:url('${item.img}');background-size:cover;background-position:center;` : "";
+  return couleur + image;
+}
+
 // ---------- Construction des pickers ----------
 
 function construireFlowerPicker() {
@@ -28,7 +36,7 @@ function construireFlowerPicker() {
     const card = document.createElement("div");
     card.className = "flower-card";
     card.innerHTML = `
-      <div class="flower-swatch" style="background:${fleur.color}"></div>
+      <div class="flower-swatch" style="${styleVisuel(fleur)}"></div>
       <div class="flower-name">${fleur.name}</div>
       <div class="flower-price">${formatPrix(fleur.price)}</div>
       <div class="flower-qty">
@@ -68,7 +76,7 @@ function construireSwatchPicker(containerId, items, cle) {
     swatch.className = "swatch-btn";
     swatch.dataset.id = item.id;
     swatch.innerHTML = `
-      <span class="swatch-color" style="background:${item.color}"></span>
+      <span class="swatch-color" style="${styleVisuel(item)}"></span>
       <span class="swatch-name">${item.name}</span>
       <span class="swatch-price">${item.price ? "+" + formatPrix(item.price) : "Gratuit"}</span>
     `;
@@ -113,7 +121,7 @@ function mettreAJourApercu() {
         html += `
           <div class="flower-unit" style="transform: rotate(${angle}deg) translateY(-${index % 3 * 4}px)">
             <div class="stem"></div>
-            <div class="head" style="background:${fleur.color}" title="${fleur.name}"></div>
+            <div class="head" style="${styleVisuel(fleur)}" title="${fleur.name}"></div>
           </div>`;
         index++;
       }
@@ -124,13 +132,13 @@ function mettreAJourApercu() {
 
   if (stageRibbon) {
     const ruban = RIBBONS.find((r) => r.id === bouquet.ruban);
-    stageRibbon.style.background = ruban ? ruban.color : "transparent";
+    stageRibbon.style.cssText = ruban ? styleVisuel(ruban) : "";
     stageRibbon.style.display = ruban ? "block" : "none";
   }
 
   if (stageWrap) {
     const emballage = WRAPS.find((w) => w.id === bouquet.emballage);
-    stageWrap.style.background = emballage ? emballage.color : "transparent";
+    stageWrap.style.cssText = emballage ? styleVisuel(emballage) : "";
     stageWrap.style.display = emballage ? "block" : "none";
   }
 
