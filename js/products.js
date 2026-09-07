@@ -20,7 +20,19 @@ const products = [
  
 
   // ENTREPRISES & BANQUES
-  { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprises", price: "35 $", surMesure: false, image: "image/bureau.jpg" },
+  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau1.jpg" },
+  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau2.jpg" },
+  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau3.jpg" },
+  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau4.jpg" },
+  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau5.jpg" },
+  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau6.jpg" },
+  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau7.jpg" },
+  
+  
+  
+  
+  
+  
   
   // CONFÉRENCES & CÉRÉMONIES
   { id: 4, title: "Décoration Pupitre & Scène", category: "conferences", price: "80 $", surMesure: true, image: "image/evenement.jpg" },
