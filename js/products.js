@@ -2,7 +2,8 @@
 const products = [
   // HÔTEL
   { id: 1, title: "fleurs xxl", category: "hotels", price: "45 $", surMesure: false, image: "image/hôtel/maison1.jpg" },
-  { id: 2, title: "cœur de boaz ", category: "hotels", price: "05 $", surMesure: false, image: "image/boaz1.jpg" },
+  { id: 2, title: "------ ", category: "hotels", price: "05 $", surMesure: false, image: "image/hôtel/maison2.jpg" },
+  { id: 2, title: "-----", category: "hotels", price: "05 $", surMesure: false, image: "image/hôtel/maison3.jpg" },
   
   // ENTREPRISES & BANQUES
   { id: 3, title: "Abonnement Bureau Exécutif", category: "entreprises", price: "35 $", surMesure: false, image: "image/bureau.jpg" },
