@@ -3,91 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css?v=5.0">
+<link rel="stylesheet" href="css/style.css?v=5.0">
 <title>Créer mon bouquet — Jardin Agro</title>
 <style>
-  /* Style minimal de secours pour les nouveaux éléments du configurateur.
-     Si style.css définit déjà ces classes, ce bloc peut être supprimé
-     ou fusionné dans style.css. */
-  .picker-row { display: flex; flex-wrap: wrap; gap: 12px; }
-
-  .flower-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px; width: 130px; text-align: center; }
-  .flower-swatch { width: 100%; height: 40px; border-radius: 6px; margin-bottom: 6px; }
-  .flower-name { font-weight: bold; font-size: 0.9em; }
-  .flower-price { font-size: 0.85em; color: #555; margin-bottom: 6px; }
-  .flower-qty { display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ccc; background: #fff; cursor: pointer; }
-  .qty-value { min-width: 20px; }
-
-  .swatch-btn { border: 2px solid #ddd; border-radius: 8px; padding: 8px; width: 110px; background: #fff; cursor: pointer; text-align: center; }
-  .swatch-btn.selected { border-color: #2e7d32; }
-  .swatch-color { display: block; width: 100%; height: 28px; border-radius: 6px; margin-bottom: 4px; border: 1px solid #eee; }
-  .swatch-name { display: block; font-size: 0.85em; }
-  .swatch-price { display: block; font-size: 0.75em; color: #777; }
-
-  #bouquetStage { position: relative; width: 220px; height: 240px; margin: 0 auto; }
-  #stageWrap {
-    position: absolute; bottom: 0; left: 50%; width: 150px; height: 110px; margin-left: -75px;
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    display: none; z-index: 1;
+  .bouquet-grid { display: flex; flex-wrap: wrap; gap: 16px; padding: 8px; }
+  .bouquet-card { width: 160px; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; text-align: center; }
+  .bouquet-card img { width: 100%; height: 140px; object-fit: cover; display: block; background: #f2f2f2; }
+  .bouquet-card h3 { font-size: 0.95em; margin: 8px 6px 4px; }
+  .bouquet-card a.btn-personnaliser {
+    display: block; margin: 8px; padding: 8px; background: #2e7d32; color: #fff;
+    border-radius: 6px; text-decoration: none; font-size: 0.85em;
   }
-  #stageFlowers { position: absolute; bottom: 30px; left: 50%; width: 0; height: 0; z-index: 2; }
-  .flower-unit { position: absolute; bottom: 0; left: -3px; width: 6px; height: 100px; transform-origin: bottom center; }
-  .flower-unit .stem { width: 6px; height: 75px; background: #3d8b40; margin: 0 auto; border-radius: 3px; }
-  .flower-unit .head { width: 22px; height: 22px; border-radius: 50%; margin: -11px auto 0; border: 2px solid rgba(0,0,0,0.15); }
-  #stageRibbon {
-    position: absolute; bottom: 95px; left: 50%; width: 70px; height: 16px; margin-left: -35px;
-    border-radius: 3px; box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
-    display: none; z-index: 3;
-  }
-  #previewEmpty { text-align: center; }
 </style>
 </head>
 <body>
 
 <a href="index.html">&larr; Retour</a>
 <h1>Créer mon bouquet</h1>
+<p>Choisissez un bouquet comme point de départ, puis personnalisez-le à votre goût.</p>
 
-<section id="preview">
-  <div id="bouquetStage">
-    <div id="stageWrap"></div>
-    <div id="stageFlowers"></div>
-    <div id="stageRibbon"></div>
-  </div>
-  <p id="previewEmpty">Choisissez vos fleurs pour commencer</p>
-  <span id="stageHint">Touchez un ruban ou un emballage ci-dessous pour l'essayer</span>
-</section>
+<div id="bouquetGrid" class="bouquet-grid"></div>
 
-<section>
-  <h2>1. Fleurs</h2>
-  <p>Ajustez la quantité de chaque fleur avec les boutons + et −.</p>
-  <div id="flowerPicker" class="picker-row"></div>
-</section>
-
-<section>
-  <h2>2. Ruban</h2>
-  <div id="ribbonPicker" class="picker-row"></div>
-</section>
-
-<section>
-  <h2>3. Emballage</h2>
-  <div id="wrapPicker" class="picker-row"></div>
-</section>
-
-<section>
-  <h2>4. Vase</h2>
-  <div id="vasePicker" class="picker-row"></div>
-</section>
-
-<section id="summary">
-  <h2>Récapitulatif</h2>
-  <div id="summaryLines"></div>
-  <p>Total : <span id="totalPrice">$0.00</span></p>
-</section>
-
-<button id="whatsappBtn">Valider mon bouquet sur WhatsApp</button>
-
-<script src="js/flowers.js"></script>
-<script src="js/creer-bouquet.js"></script>
+<script src="js/bouquets.js"></script>
+<script>
+  const grid = document.getElementById("bouquetGrid");
+  BOUQUETS.forEach((b) => {
+    const card = document.createElement("div");
+    card.className = "bouquet-card";
+    card.innerHTML = `
+      <img src="${b.img}" alt="${b.name}" onerror="this.style.background='#eee'">
+      <h3>${b.name}</h3>
+      <a class="btn-personnaliser" href="personnaliser-bouquet.html?id=${b.id}">Personnaliser ce bouquet</a>
+    `;
+    grid.appendChild(card);
+  });
+</script>
 </body>
 </html>
