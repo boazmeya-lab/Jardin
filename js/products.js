@@ -41,7 +41,10 @@ const products = [
   { id: 5, title: "-----", category: "mariage", price: "0 $", surMesure: false, image: "image/fete1.jpg" },
   
   // FUNÉRAIRE
-  { id: 6, title: "Couronne d'Hommage Royale", category: "funeraire", price: "70 $", surMesure: false, image: "image/finerail.jpg" }
+  { id: 6, title: "------", category: "funeraire", price: "0 $", surMesure: false, image: "image/RIP/finerail1.jpg" },
+  { id: 6, title: "------", category: "funeraire", price: "0 $", surMesure: false, image: "image/RIP/funerail2.jpg" },
+  { id: 6, title: "------", category: "funeraire", price: "0 $", surMesure: false, image: "image/RIP/finerail.jpg" }
+
 ];
 
 const categoryNames = {
