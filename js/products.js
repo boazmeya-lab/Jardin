@@ -1,7 +1,7 @@
 // Base de données des produits par univers
 const products = [
   // HÔTEL
-  { id: 1, title: "fleurs xxl", category: "hotels", price: "45 $", surMesure: false, image: "image/hotel1.jpg" },
+  { id: 1, title: "fleurs xxl", category: "hotels", price: "45 $", surMesure: false, image: "image/hôtel/maison1.jpg" },
   { id: 2, title: "cœur de boaz ", category: "hotels", price: "05 $", surMesure: false, image: "image/boaz1.jpg" },
   
   // ENTREPRISES & BANQUES
