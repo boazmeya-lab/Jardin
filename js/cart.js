@@ -178,4 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mettre à jour l'affichage initial
   updateCartUI();
+
+// ✅ CORRECTION 1 : On attache les fonctions au window pour qu'on puisse les appeler avec onclick="..."
+window.updateQuantity = updateQuantity;
+window.removeFromCart = removeFromCart;
+window.addToCart = addToCart;           // au cas où
+window.openCartDrawer = openCartDrawer;  // au cas où
 });
