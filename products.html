@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2.0">
+  <link rel="stylesheet" href="css/style.css?v=2.0">
   
 </head>
 <body>
@@ -55,9 +55,12 @@
           >
         </form>
       </div>
-      <a href="products.html" class="icon-btn" aria-label="Panier">
+
+      <!-- CORRECTION 404 : Remplacement du link <a> par un bouton connecté au panier JS -->
+      <button type="button" class="icon-btn" id="cartToggle" aria-label="Panier" style="position: relative; background: none; border: none; cursor: pointer;">
         <i class="fas fa-shopping-bag"></i>
-      </a>
+        <span class="cart-count" style="display:none; position: absolute; top: -5px; right: -5px; background: #2e7d32; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; align-items: center; justify-content: center;">0</span>
+      </button>
     </div>
   </div>
   </header>
@@ -93,36 +96,57 @@
     </div>
   </section>
 
+  <!-- COMPOSANTS DU PANIER COULISSANT (DRAWER) -->
+  <div id="cartOverlay" class="cart-overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2>Votre Panier</h2>
+      <button id="cartCloseBtn" class="cart-close" aria-label="Fermer">&times;</button>
+    </div>
+    
+    <div id="cartItems" class="cart-body">
+      <!-- Contenu injecté dynamiquement par cart.js (Message vide avec Ours ou Liste des articles) -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total :</span>
+        <span id="cartTotal">$0</span>
+      </div>
+      <button id="cartWhatsappBtn" class="cart-whatsapp-btn">
+        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+      </button>
+    </div>
+  </aside>
+
   <!-- FOOTER -->
-    <!-- FOOTER -->
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-col">
-      <h3 class="footer-logo">Jardin Agro</h3>
-      <p>Haute fleuristerie et décorations événementielles sur-mesure.</p>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-logo">Jardin Agro</h3>
+        <p>Haute fleuristerie et décorations événementielles sur-mesure.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="products.html">Catalogue</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="contact">
+        <h4>Contact</h4>
+        <p><i class="fa-solid fa-phone"></i> +243 998 096 713</p>
+        <p><i class="fa-solid fa-envelope"></i> contact@jardinagro.com</p>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="products.html">Catalogue</a></li>
-      </ul>
-    </div>
-    <div class="footer-col" id="contact">
-      <h4>Contact</h4>
-      <p><i class="fa-solid fa-phone"></i> +243 000 000 000</p>
-      <p><i class="fa-solid fa-envelope"></i> contact@jardinagro.com</p>
-    </div>
-  </div>
 
-  <!-- Place dehors du .container pour s'étendre sur 100% de la largeur -->
-  <div class="footer-bottom">
-    <p>© 2026 Jardin Agro. Tous droits réservés.</p>
-  </div>
-      </footer>
-      
+    <div class="footer-bottom">
+      <p>© 2026 Jardin Agro. Tous droits réservés.</p>
+    </div>
+  </footer>
 
-  <!-- CHARGEMENT DU SCRIPT UNIQUE (AVEC PARAMÈTRE ANTI-CACHE) -->
+  <!-- CHARGEMENT DES SCRIPTS JS -->
+  <script src="js/cart.js?v=1.0"></script>
   <script src="js/products.js?v=4.0"></script>
   <script src="js/main.js"></script>
 </body>
