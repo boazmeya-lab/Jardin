@@ -75,27 +75,78 @@ const categoryMap = {
   'deuil': 'funeraire'
 };
 
+// Normalise un texte pour une recherche insensible à la casse et aux accents
+function normalizeText(str) {
+  return (str || '')
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const productsGrid = document.getElementById('productsGrid');
   const pageTitle = document.getElementById('pageTitle') || document.getElementById('categoryTitle');
   const filterBtns = document.querySelectorAll('.filter-btn');
+  const searchStatusWrap = document.getElementById('searchStatusWrap');
+  const searchStatus = document.getElementById('searchStatus');
 
-  // Récupération de 'cat' OU 'category' dans l'URL pour éviter tout bug
+  // Widget de recherche dans le header (loupe)
+  const searchWidget = document.getElementById('searchWidget');
+  const searchToggle = document.getElementById('searchToggle');
+  const searchForm = document.getElementById('searchForm');
+  const searchInput = document.getElementById('searchInput');
+
+  // Récupération des paramètres dans l'URL ('cat' OU 'category' pour la catégorie, 'search' pour la recherche)
   const urlParams = new URLSearchParams(window.location.search);
   const rawCategory = urlParams.get('cat') || urlParams.get('category') || 'all';
-  const currentCategory = categoryMap[rawCategory.toLowerCase().trim()] || rawCategory;
+  let currentCategory = categoryMap[rawCategory.toLowerCase().trim()] || rawCategory;
+  let currentSearch = urlParams.get('search') || '';
 
-  function renderProducts(category) {
+  // Pré-remplit le champ de recherche si on arrive avec ?search=...
+  if (searchInput && currentSearch) {
+    searchInput.value = currentSearch;
+  }
+
+  function updateUrl() {
+    const params = new URLSearchParams();
+    if (currentCategory && currentCategory !== 'all') params.set('cat', currentCategory);
+    if (currentSearch) params.set('search', currentSearch);
+    const query = params.toString();
+    const newUrl = window.location.pathname + (query ? '?' + query : '');
+    window.history.pushState({ path: newUrl }, '', newUrl);
+  }
+
+  function renderProducts(category, searchTerm) {
     if (!productsGrid) return;
-    
+
     productsGrid.innerHTML = '';
-    
-    const filtered = category === 'all' 
-      ? products 
+
+    let filtered = category === 'all'
+      ? products
       : products.filter(p => p.category === category);
 
+    const normalizedSearch = normalizeText(searchTerm);
+    if (normalizedSearch) {
+      filtered = filtered.filter(p => normalizeText(p.title).includes(normalizedSearch));
+    }
+
+    // Affiche/masque l'indicateur de recherche active
+    if (searchStatusWrap && searchStatus) {
+      if (normalizedSearch) {
+        searchStatusWrap.style.display = 'block';
+        searchStatus.textContent = `Résultats pour « ${searchTerm} » (${filtered.length})`;
+      } else {
+        searchStatusWrap.style.display = 'none';
+      }
+    }
+
     if (filtered.length === 0) {
-      productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; padding: 40px;">Aucun produit disponible dans cette catégorie.</p>`;
+      const message = normalizedSearch
+        ? `Aucune fleur ne correspond à « ${searchTerm} ».`
+        : 'Aucun produit disponible dans cette catégorie.';
+      productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; padding: 40px;">${message}</p>`;
       return;
     }
 
@@ -117,9 +168,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `).join('');
 
-    // Mise à jour du titre h1
+    // Mise à jour du titre h1 (uniquement quand aucune recherche n'est active)
     if (pageTitle && categoryNames[category]) {
-      pageTitle.textContent = categoryNames[category];
+      pageTitle.textContent = normalizedSearch ? 'Résultats de recherche' : categoryNames[category];
     }
 
     // Activation du bouton correspondant
@@ -133,15 +184,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Affichage initial
-  renderProducts(currentCategory);
+  renderProducts(currentCategory, currentSearch);
 
-  // Gestion du clic sur les boutons de filtre
+  // Gestion du clic sur les boutons de filtre (la recherche en cours est conservée)
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const selectedCategory = btn.dataset.category;
-      const newUrl = window.location.pathname + '?cat=' + selectedCategory;
-      window.history.pushState({ path: newUrl }, '', newUrl);
-      renderProducts(selectedCategory);
+      currentCategory = btn.dataset.category;
+      updateUrl();
+      renderProducts(currentCategory, currentSearch);
     });
   });
+
+  // Gestion du widget de recherche (loupe) dans le header
+  if (searchWidget && searchToggle && searchForm && searchInput) {
+    searchToggle.addEventListener('click', () => {
+      searchWidget.classList.toggle('active');
+      if (searchWidget.classList.contains('active')) {
+        searchInput.focus();
+      }
+    });
+
+    // Filtrage en direct pendant la frappe
+    searchInput.addEventListener('input', () => {
+      currentSearch = searchInput.value.trim();
+      renderProducts(currentCategory, currentSearch);
+      updateUrl();
+    });
+
+    // Validation (touche Entrée) : garde le focus, referme juste le clavier mobile
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      currentSearch = searchInput.value.trim();
+      renderProducts(currentCategory, currentSearch);
+      updateUrl();
+      searchInput.blur();
+    });
+
+    // Ferme le champ si on clique en dehors (seulement s'il est vide)
+    document.addEventListener('click', (e) => {
+      if (!searchWidget.contains(e.target) && !searchInput.value.trim()) {
+        searchWidget.classList.remove('active');
+      }
+    });
+
+    // Si on arrive avec ?search=... dans l'URL, on ouvre le champ automatiquement
+    if (currentSearch) {
+      searchWidget.classList.add('active');
+    }
+  }
 });
