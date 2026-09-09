@@ -1,10 +1,10 @@
 /* ===========================================================
-   JARDIN AGRO — Panier & Configuration
+   JARDIN AGRO — Panier, Notifications & Interactions
    =========================================================== */
 
-// 1. DÉFINITION DE LA CONFIGURATION GLOBALE DU SHOP
+// 1. CONFIGURATION GLOBALE DU SHOP
 const SHOP_CONFIG = {
-  currency: "$", // Modifiez la devise selon vos besoins (ex: "FC", "€")
+  currency: "$",
   whatsappNumber: "243998096713"
 };
 
@@ -33,6 +33,10 @@ const Cart = {
     }
     this.write(items);
     this.renderDrawer();
+    
+    // Notification visuelle d'ajout au panier
+    showCartToast(`"<strong>${item.name}</strong>" a été ajouté au panier ! 🌹`);
+    
     return items;
   },
 
@@ -81,7 +85,18 @@ const Cart = {
     const items = this.read();
 
     if(items.length === 0){
-      list.innerHTML = `<div class="cart-empty">Votre panier est vide.<br>Ajoutez de belles fleurs 🌹</div>`;
+      // Affichage quand le panier est vide avec illustration de l'ours
+      list.innerHTML = `
+        <div class="cart-empty" style="text-align: center; padding: 30px 10px;">
+          <div style="font-size: 64px; margin-bottom: 10px;">🐻💤</div>
+          <p style="font-weight: bold; font-size: 1.1rem; color: #4a5568; margin-bottom: 5px;">
+            Oups ! L'ours du jardin trouve votre panier vide !
+          </p>
+          <p style="color: #718096; font-size: 0.9rem;">
+            Ajoutez de magnifiques fleurs et bouquets 🌹
+          </p>
+        </div>
+      `;
       if(whatsBtn) whatsBtn.setAttribute("disabled", "true");
     }else{
       list.innerHTML = items.map((item, idx) => `
@@ -112,7 +127,7 @@ const Cart = {
     if(items.length === 0) return "";
     let msg = "Bonjour Jardin Agro 🌹\n\nJe souhaite commander :\n\n";
     items.forEach(item => {
-      msg += `• ${item.qty} × ${item.name} (${item.size})\n`;
+      msg += `• ${item.qty} × ${item.name} (${item.size}) - ${SHOP_CONFIG.currency}${item.price * item.qty}\n`;
     });
     msg += `\nTotal estimé : ${SHOP_CONFIG.currency}${this.total()}\n\nMerci.`;
     return msg;
@@ -126,24 +141,101 @@ const Cart = {
   }
 };
 
+/* --- Fonctions d'ouverture / fermeture du panier --- */
 function openCart(){
-  document.getElementById("cartOverlay").classList.add("open");
-  document.getElementById("cartDrawer").classList.add("open");
+  const overlay = document.getElementById("cartOverlay");
+  const drawer = document.getElementById("cartDrawer");
+  if(overlay) overlay.classList.add("open");
+  if(drawer) drawer.classList.add("open");
   document.body.style.overflow = "hidden";
   Cart.renderDrawer();
 }
+
 function closeCart(){
-  document.getElementById("cartOverlay").classList.remove("open");
-  document.getElementById("cartDrawer").classList.remove("open");
+  const overlay = document.getElementById("cartOverlay");
+  const drawer = document.getElementById("cartDrawer");
+  if(overlay) overlay.classList.remove("open");
+  if(drawer) drawer.classList.remove("open");
   document.body.style.overflow = "";
 }
 
-// 2. ÉCOUTEURS D'ÉVÉNEMENTS INITIALES
+/* --- Notification Toast Visuelle --- */
+function showCartToast(message) {
+  let toast = document.getElementById("cartToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "cartToast";
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: #2e7d32;
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 10000;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    `;
+    document.body.appendChild(toast);
+  }
+
+  toast.innerHTML = message;
+  toast.style.opacity = "1";
+  toast.style.transform = "translateY(0)";
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(20px)";
+  }, 3000);
+}
+
+/* --- Helper : Récupérer les données du produit sur clic --- */
+function getProductDataFromElement(btnEl) {
+  const card = btnEl.closest('.product-card') || btnEl.closest('.swiper-slide') || btnEl.closest('.group');
+  if(!card) return null;
+
+  return {
+    id: card.dataset.id || "prod_" + Date.now(),
+    name: card.dataset.name || card.querySelector('h3')?.textContent.trim() || "Bouquet Jardin Agro",
+    price: parseFloat(card.dataset.price) || 0,
+    size: card.dataset.size || "Standard",
+    qty: 1,
+    image: card.dataset.image || card.querySelector('img')?.src || ""
+  };
+}
+
+/* --- Action 1 : Ajouter au Panier --- */
+function addCurrentProductToCart(btnEl) {
+  const item = getProductDataFromElement(btnEl);
+  if(item) {
+    Cart.add(item);
+  }
+}
+
+/* --- Action 2 : Commander Tout de Suite via WhatsApp --- */
+function buyCurrentProductNow(btnEl) {
+  const item = getProductDataFromElement(btnEl);
+  const name = item ? item.name : "un bouquet";
+  const msg = encodeURIComponent(`Bonjour Jardin Agro ! Je souhaite commander directement : ${name}`);
+  window.open(`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${msg}`, '_blank');
+}
+
+/* --- Initialisation --- */
 document.addEventListener("DOMContentLoaded", () => {
   Cart.updateBadge();
 
   const cartBtn = document.getElementById("cartToggle");
-  if(cartBtn) cartBtn.addEventListener("click", openCart);
+  if(cartBtn) {
+    cartBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCart();
+    });
+  }
 
   const closeBtn = document.getElementById("cartCloseBtn");
   if(closeBtn) closeBtn.addEventListener("click", closeCart);
@@ -154,24 +246,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const whatsBtn = document.getElementById("cartWhatsappBtn");
   if(whatsBtn) whatsBtn.addEventListener("click", () => Cart.sendWhatsapp());
 });
-
-// 3. ÉCOUTEUR GLOBAL POUR LES BOUTONS D'ACTION DIRECTS (Découvrir / Profiter / Réserver)
-document.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-
-    const text = btn.textContent.trim().toLowerCase();
-
-    if (text.includes('découvrir') || text.includes('profiter') || text.includes('réserver')) {
-        // Retrouve la carte du produit
-        const card = btn.closest('.swiper-slide') || btn.closest('.group') || btn.closest('div');
-        const titleElement = card ? card.querySelector('h3') : null;
-        const productName = titleElement ? titleElement.textContent.trim() : "un de vos bouquets";
-
-        // Message automatique
-        const message = encodeURIComponent(`Bonjour Jardin Agro ! Je souhaite avoir plus d'informations ou commander : ${productName}`);
-        
-        // Redirection WhatsApp centralisée sur SHOP_CONFIG
-        window.open(`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${message}`, '_blank');
-    }
-});
+       
