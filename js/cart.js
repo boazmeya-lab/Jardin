@@ -1,6 +1,12 @@
 /* ===========================================================
-   JARDIN AGRO — Panier
+   JARDIN AGRO — Panier & Configuration
    =========================================================== */
+
+// 1. DÉFINITION DE LA CONFIGURATION GLOBALE DU SHOP
+const SHOP_CONFIG = {
+  currency: "$", // Modifiez la devise selon vos besoins (ex: "FC", "€")
+  whatsappNumber: "243998096713"
+};
 
 const Cart = {
   KEY: "jardinagro_cart",
@@ -132,6 +138,7 @@ function closeCart(){
   document.body.style.overflow = "";
 }
 
+// 2. ÉCOUTEURS D'ÉVÉNEMENTS INITIALES
 document.addEventListener("DOMContentLoaded", () => {
   Cart.updateBadge();
 
@@ -147,10 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const whatsBtn = document.getElementById("cartWhatsappBtn");
   if(whatsBtn) whatsBtn.addEventListener("click", () => Cart.sendWhatsapp());
 });
-// NUMÉRO WHATSAPP OFFICIEL
-const WHATSAPP_NUMBER = "243998096713"; 
 
-// ÉCOUTE DE TOUS LES BOUTONS D'ACTION (Découvrir / Profiter / Réserver)
+// 3. ÉCOUTEUR GLOBAL POUR LES BOUTONS D'ACTION DIRECTS (Découvrir / Profiter / Réserver)
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
@@ -166,8 +171,7 @@ document.addEventListener('click', (e) => {
         // Message automatique
         const message = encodeURIComponent(`Bonjour Jardin Agro ! Je souhaite avoir plus d'informations ou commander : ${productName}`);
         
-        // Redirection WhatsApp
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+        // Redirection WhatsApp centralisée sur SHOP_CONFIG
+        window.open(`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${message}`, '_blank');
     }
 });
-
