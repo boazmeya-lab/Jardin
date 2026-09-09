@@ -3,10 +3,17 @@
    Modifier ici pour ajouter / changer des produits.
    =========================================================== */
 
-const SHOP_CONFIG = {
-  whatsappNumber: "243900000000", // Remplacer par le vrai numéro (format international, sans +)
-  currency: "$"
-};
+// On vérifie si SHOP_CONFIG existe déjà, sinon on le crée
+if (typeof SHOP_CONFIG === 'undefined') {
+  window.SHOP_CONFIG = {
+    whatsappNumber: "243998096713", // Numéro officiel configuré
+    currency: "$"
+  };
+} else {
+  // Mise à jour du numéro s'il était déjà initialisé
+  SHOP_CONFIG.whatsappNumber = "243998096713";
+  SHOP_CONFIG.currency = "$";
+}
 
 const PRODUCTS = [
   {
