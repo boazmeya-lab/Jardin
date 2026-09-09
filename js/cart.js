@@ -1,249 +1,181 @@
 /* ===========================================================
-   JARDIN AGRO — Panier, Notifications & Interactions
+   JARDIN AGRO — Gestion du Panier (Cart Drawer)
    =========================================================== */
 
-// 1. CONFIGURATION GLOBALE DU SHOP
-const SHOP_CONFIG = {
-  currency: "$",
-  whatsappNumber: "243998096713"
-};
-
-const Cart = {
-  KEY: "jardinagro_cart",
-
-  read(){
-    try{
-      return JSON.parse(localStorage.getItem(this.KEY)) || [];
-    }catch(e){ return []; }
-  },
-
-  write(items){
-    localStorage.setItem(this.KEY, JSON.stringify(items));
-    this.updateBadge();
-  },
-
-  add(item){
-    // item: {id, name, price, size, qty, image}
-    const items = this.read();
-    const existing = items.find(i => i.id === item.id && i.size === item.size);
-    if(existing){
-      existing.qty += item.qty;
-    }else{
-      items.push(item);
-    }
-    this.write(items);
-    this.renderDrawer();
-    
-    // Notification visuelle d'ajout au panier
-    showCartToast(`"<strong>${item.name}</strong>" a été ajouté au panier ! 🌹`);
-    
-    return items;
-  },
-
-  remove(index){
-    const items = this.read();
-    items.splice(index, 1);
-    this.write(items);
-    this.renderDrawer();
-  },
-
-  changeQty(index, delta){
-    const items = this.read();
-    if(!items[index]) return;
-    items[index].qty = Math.max(1, items[index].qty + delta);
-    this.write(items);
-    this.renderDrawer();
-  },
-
-  count(){
-    return this.read().reduce((sum, i) => sum + i.qty, 0);
-  },
-
-  total(){
-    return this.read().reduce((sum, i) => sum + i.qty * i.price, 0);
-  },
-
-  clear(){
-    this.write([]);
-    this.renderDrawer();
-  },
-
-  updateBadge(){
-    document.querySelectorAll(".cart-count").forEach(el => {
-      const c = this.count();
-      el.textContent = c;
-      el.style.display = c > 0 ? "flex" : "none";
-    });
-  },
-
-  renderDrawer(){
-    const list = document.getElementById("cartItems");
-    const totalEl = document.getElementById("cartTotal");
-    const whatsBtn = document.getElementById("cartWhatsappBtn");
-    if(!list) return;
-
-    const items = this.read();
-
-    if(items.length === 0){
-      // Affichage quand le panier est vide avec illustration de l'ours
-      list.innerHTML = `
-        <div class="cart-empty" style="text-align: center; padding: 30px 10px;">
-          <div style="font-size: 64px; margin-bottom: 10px;">🐻💤</div>
-          <p style="font-weight: bold; font-size: 1.1rem; color: #4a5568; margin-bottom: 5px;">
-            Oups ! L'ours du jardin trouve votre panier vide !
-          </p>
-          <p style="color: #718096; font-size: 0.9rem;">
-            Ajoutez de magnifiques fleurs et bouquets 🌹
-          </p>
-        </div>
-      `;
-      if(whatsBtn) whatsBtn.setAttribute("disabled", "true");
-    }else{
-      list.innerHTML = items.map((item, idx) => `
-        <div class="cart-item">
-          <img src="${item.image}" alt="${item.name}" loading="lazy">
-          <div class="cart-item-info">
-            <span class="cart-item-name">${item.name}</span>
-            <span class="cart-item-meta">Taille : ${item.size} · ${SHOP_CONFIG.currency}${item.price}</span>
-            <div class="cart-item-row">
-              <div class="qty-mini">
-                <button aria-label="Diminuer" onclick="Cart.changeQty(${idx}, -1)">−</button>
-                <span>${item.qty}</span>
-                <button aria-label="Augmenter" onclick="Cart.changeQty(${idx}, 1)">+</button>
-              </div>
-              <button class="cart-remove" onclick="Cart.remove(${idx})">Retirer</button>
-            </div>
-          </div>
-        </div>
-      `).join("");
-      if(whatsBtn) whatsBtn.removeAttribute("disabled");
-    }
-
-    if(totalEl) totalEl.textContent = `${SHOP_CONFIG.currency}${this.total()}`;
-  },
-
-  whatsappMessage(){
-    const items = this.read();
-    if(items.length === 0) return "";
-    let msg = "Bonjour Jardin Agro 🌹\n\nJe souhaite commander :\n\n";
-    items.forEach(item => {
-      msg += `• ${item.qty} × ${item.name} (${item.size}) - ${SHOP_CONFIG.currency}${item.price * item.qty}\n`;
-    });
-    msg += `\nTotal estimé : ${SHOP_CONFIG.currency}${this.total()}\n\nMerci.`;
-    return msg;
-  },
-
-  sendWhatsapp(){
-    const msg = this.whatsappMessage();
-    if(!msg) return;
-    const url = `https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
-  }
-};
-
-/* --- Fonctions d'ouverture / fermeture du panier --- */
-function openCart(){
-  const overlay = document.getElementById("cartOverlay");
-  const drawer = document.getElementById("cartDrawer");
-  if(overlay) overlay.classList.add("open");
-  if(drawer) drawer.classList.add("open");
-  document.body.style.overflow = "hidden";
-  Cart.renderDrawer();
-}
-
-function closeCart(){
-  const overlay = document.getElementById("cartOverlay");
-  const drawer = document.getElementById("cartDrawer");
-  if(overlay) overlay.classList.remove("open");
-  if(drawer) drawer.classList.remove("open");
-  document.body.style.overflow = "";
-}
-
-/* --- Notification Toast Visuelle --- */
-function showCartToast(message) {
-  let toast = document.getElementById("cartToast");
-  if (!toast) {
-    toast = document.createElement("div");
-    toast.id = "cartToast";
-    toast.style.cssText = `
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background-color: #2e7d32;
-      color: #ffffff;
-      padding: 14px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 10000;
-      font-size: 14px;
-      transition: all 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-      pointer-events: none;
-    `;
-    document.body.appendChild(toast);
-  }
-
-  toast.innerHTML = message;
-  toast.style.opacity = "1";
-  toast.style.transform = "translateY(0)";
-
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    toast.style.transform = "translateY(20px)";
-  }, 3000);
-}
-
-/* --- Helper : Récupérer les données du produit sur clic --- */
-function getProductDataFromElement(btnEl) {
-  const card = btnEl.closest('.product-card') || btnEl.closest('.swiper-slide') || btnEl.closest('.group');
-  if(!card) return null;
-
-  return {
-    id: card.dataset.id || "prod_" + Date.now(),
-    name: card.dataset.name || card.querySelector('h3')?.textContent.trim() || "Bouquet Jardin Agro",
-    price: parseFloat(card.dataset.price) || 0,
-    size: card.dataset.size || "Standard",
-    qty: 1,
-    image: card.dataset.image || card.querySelector('img')?.src || ""
+// 1. Initialisation de la configuration
+if (typeof SHOP_CONFIG === 'undefined') {
+  window.SHOP_CONFIG = {
+    whatsappNumber: "243998096713",
+    currency: "$"
   };
 }
 
-/* --- Action 1 : Ajouter au Panier --- */
-function addCurrentProductToCart(btnEl) {
-  const item = getProductDataFromElement(btnEl);
-  if(item) {
-    Cart.add(item);
+// 2. Variable globale du panier
+let cart = JSON.parse(localStorage.getItem('jardin_agro_cart')) || [];
+
+// 3. Sauvegarder dans LocalStorage
+function saveCart() {
+  localStorage.setItem('jardin_agro_cart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+// 4. Ajouter un produit au panier
+function addToCart(productId, quantity = 1) {
+  const product = typeof PRODUCTS !== 'undefined' ? PRODUCTS.find(p => p.id === productId) : null;
+  
+  if (!product) {
+    console.error("Produit non trouvé :", productId);
+    return;
   }
-}
 
-/* --- Action 2 : Commander Tout de Suite via WhatsApp --- */
-function buyCurrentProductNow(btnEl) {
-  const item = getProductDataFromElement(btnEl);
-  const name = item ? item.name : "un bouquet";
-  const msg = encodeURIComponent(`Bonjour Jardin Agro ! Je souhaite commander directement : ${name}`);
-  window.open(`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${msg}`, '_blank');
-}
-
-/* --- Initialisation --- */
-document.addEventListener("DOMContentLoaded", () => {
-  Cart.updateBadge();
-
-  const cartBtn = document.getElementById("cartToggle");
-  if(cartBtn) {
-    cartBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      openCart();
+  const existingItem = cart.find(item => item.id === productId);
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: quantity
     });
   }
 
-  const closeBtn = document.getElementById("cartCloseBtn");
-  if(closeBtn) closeBtn.addEventListener("click", closeCart);
+  saveCart();
+  openCartDrawer();
+}
 
-  const overlay = document.getElementById("cartOverlay");
-  if(overlay) overlay.addEventListener("click", closeCart);
+// 5. Supprimer un produit du panier
+function removeFromCart(productId) {
+  cart = cart.filter(item => item.id !== productId);
+  saveCart();
+}
 
-  const whatsBtn = document.getElementById("cartWhatsappBtn");
-  if(whatsBtn) whatsBtn.addEventListener("click", () => Cart.sendWhatsapp());
+// 6. Modifier la quantité
+function updateQuantity(productId, change) {
+  const item = cart.find(item => item.id === productId);
+  if (item) {
+    item.quantity += change;
+    if (item.quantity <= 0) {
+      removeFromCart(productId);
+    } else {
+      saveCart();
+    }
+  }
+}
+
+// 7. Mettre à jour l'affichage du panier (Badge + Liste + Total)
+function updateCartUI() {
+  // Badges (Nombre total d'articles)
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const badges = document.querySelectorAll('#cartBadge, .cart-count');
+  badges.forEach(badge => {
+    badge.textContent = totalCount;
+  });
+
+  // Liste des articles
+  const cartItemsContainer = document.getElementById('cartItems');
+  const cartTotalContainer = document.getElementById('cartTotal');
+
+  if (cartItemsContainer) {
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px; color: #777;">
+          <i class="fa-solid fa-basket-shopping" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
+          <p>Votre panier est vide pour le moment.</p>
+        </div>
+      `;
+    } else {
+      cartItemsContainer.innerHTML = cart.map(item => `
+        <div class="cart-item" style="display: flex; align-items: center; gap: 15px; padding: 12px 0; border-bottom: 1px solid #eee;">
+          <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+          <div style="flex: 1;">
+            <h4 style="margin: 0 0 5px; font-size: 14px; font-weight: 600;">${item.name}</h4>
+            <div style="font-size: 13px; color: #2e7d32; font-weight: bold;">
+              ${SHOP_CONFIG.currency}${item.price}
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+              <button onclick="updateQuantity('${item.id}', -1)" style="border:1px solid #ccc; background:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">-</button>
+              <span style="font-size: 13px; font-weight: 600;">${item.quantity}</span>
+              <button onclick="updateQuantity('${item.id}', 1)" style="border:1px solid #ccc; background:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">+</button>
+            </div>
+          </div>
+          <button onclick="removeFromCart('${item.id}')" style="border:none; background:none; color:#d32f2f; cursor:pointer; font-size:16px;" aria-label="Supprimer">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Total
+  if (cartTotalContainer) {
+    const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    cartTotalContainer.textContent = `${SHOP_CONFIG.currency}${totalAmount}`;
+  }
+}
+
+// 8. Fonctions Ouverture / Fermeture Tiroir
+function openCartDrawer() {
+  const drawer = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('cartOverlay');
+  if (drawer) drawer.classList.add('active');
+  if (overlay) overlay.classList.add('active');
+}
+
+function closeCartDrawer() {
+  const drawer = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('cartOverlay');
+  if (drawer) drawer.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+}
+
+// 9. Envoyer la commande WhatsApp
+function sendWhatsAppOrder() {
+  if (cart.length === 0) {
+    alert("Votre panier est vide.");
+    return;
+  }
+
+  let message = "Bonjour Jardin Agro, je souhaite passer une commande :\n\n";
+  let total = 0;
+
+  cart.forEach(item => {
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+    message += `• ${item.name} (x${item.quantity}) : ${SHOP_CONFIG.currency}${subtotal}\n`;
+  });
+
+  message += `\n*Total : ${SHOP_CONFIG.currency}${total}*\n\nMerci de me confirmer la disponibilité et la livraison !`;
+
+  const encodedMessage = encodeURIComponent(message);
+  window.open(`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodedMessage}`, '_blank');
+}
+
+// 10. Attachement des événements au chargement du DOM
+document.addEventListener('DOMContentLoaded', () => {
+  // Boutons pour ouvrir le panier
+  const cartToggleBtn = document.getElementById('cartToggle');
+  if (cartToggleBtn) {
+    cartToggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCartDrawer();
+    });
+  }
+
+  // Boutons pour fermer le panier
+  const cartCloseBtn = document.getElementById('cartCloseBtn');
+  const cartOverlay = document.getElementById('cartOverlay');
+
+  if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCartDrawer);
+  if (cartOverlay) cartOverlay.addEventListener('click', closeCartDrawer);
+
+  // Bouton WhatsApp
+  const whatsappBtn = document.getElementById('cartWhatsappBtn');
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener('click', sendWhatsAppOrder);
+  }
+
+  // Mettre à jour l'affichage initial
+  updateCartUI();
 });
-       
