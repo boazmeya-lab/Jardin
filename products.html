@@ -149,5 +149,12 @@
   <script src="js/cart.js?v=1.0"></script>
   <script src="js/products.js?v=4.0"></script>
   <script src="js/main.js"></script>
+  <!-- ✅ CORRECTION 2 : On attache les fonctions du panier pour que les boutons cliquables marchent -->
+<script>
+if (typeof addToCart === 'function') window.addToCart = addToCart;
+if (typeof removeFromCart === 'function') window.removeFromCart = removeFromCart;
+if (typeof updateQuantity === 'function') window.updateQuantity = updateQuantity;
+if (typeof openCartDrawer === 'function') window.openCartDrawer = openCartDrawer;
+</script>
 </body>
 </html>
