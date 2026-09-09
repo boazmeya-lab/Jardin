@@ -20,7 +20,7 @@
       
       <!-- Logo -->
       <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-  <img src="image/logi.png" alt="Logo Jardin Agro" style="height: 80px; width: auto;" onerror="this.style.display='none'">
+        <img src="image/logi.png" alt="Logo Jardin Agro" style="height: 80px; width: auto;" onerror="this.style.display='none'">
       </a>
 
       <!-- Navigation -->
@@ -53,9 +53,12 @@
           <span></span>
           <span></span>
         </button>
-        <a href="cart.html" class="icon-btn" aria-label="Panier">
-          <i class="fa-solid fa-bag-shopping"></i> <span>0</span>
-        </a>
+
+        <!-- ✅ BOUTON PANIER CORRIGÉ (Plus de lien vers cart.html) -->
+        <button type="button" class="icon-btn" id="cartToggle" aria-label="Panier" style="background:none; border:none; cursor:pointer; position:relative;">
+          <i class="fa-solid fa-bag-shopping"></i> 
+          <span class="cart-count" id="cartBadge">0</span>
+        </button>
       </div>
 
     </div>
@@ -72,8 +75,8 @@
       <p class="hero-subtitle">Des créations florales uniques adaptées à chaque univers et événement.</p>
       <div style="display:flex; gap:15px; justify-content:center;">
         <div style="display:flex; gap:15px; justify-content:center;">
-  <a href="#univers" class="btn btn-primary">Découvrir nos univers</a>
-  <a href="products.html" class="btn btn-secondary">Voir tous les bouquets</a>
+          <a href="#univers" class="btn btn-primary">Découvrir nos univers</a>
+          <a href="products.html" class="btn btn-secondary">Voir tous les bouquets</a>
         </div>
       </div>
     </div>
@@ -241,6 +244,33 @@
     </div>
   </footer>
 
+  <!-- ✅ DRAWER PANIER ET OVERLAY -->
+  <div id="cartOverlay" class="cart-overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2>Votre Panier</h2>
+      <button id="cartCloseBtn" class="cart-close" aria-label="Fermer">&times;</button>
+    </div>
+    
+    <div id="cartItems" class="cart-body">
+      <!-- Le panier sera injecté ici dynamiquement via cart.js -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total :</span>
+        <span id="cartTotal">$0</span>
+      </div>
+      <button id="cartWhatsappBtn" class="cart-whatsapp-btn">
+        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+      </button>
+    </div>
+  </aside>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+
   <!-- SCRIPT JS MOBILE MENU & RECHERCHE -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -261,7 +291,7 @@
         });
       }
 
-      // Recherche par nom de fleur : ouvre le champ, puis redirige vers le catalogue
+      // Recherche par nom de fleur
       const searchWidget = document.getElementById('searchWidget');
       const searchToggle = document.getElementById('searchToggle');
       const searchForm = document.getElementById('searchForm');
@@ -283,7 +313,6 @@
           }
         });
 
-        // Ferme le champ si on clique en dehors
         document.addEventListener('click', (e) => {
           if (!searchWidget.contains(e.target)) {
             searchWidget.classList.remove('active');
@@ -294,4 +323,5 @@
   </script>
 
 </body>
-</html>
+                                                                    </html>
+          
