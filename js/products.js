@@ -1,50 +1,35 @@
-// Base de données des produits par univers
+/* ===========================================================
+   JARDIN AGRO — Base de données & Affichage des Produits
+   =========================================================== */
+
+// Base de données des produits par univers (IDs uniques corrigés)
 const products = [
   // HÔTEL
-  { id: 1, title: "fleurs xxl", category: "hotels", price: "45 $", surMesure: false, image: "image/hôtel/maison1.jpg" },
-  { id: 2, title: "------ ", category: "hotels", price: "0 $", surMesure: false, image: "image/hôtel/maison2.jpg" },
-  { id: 3, title: "-----", category: "hotels", price: "0 $", surMesure: false, image: "image/hôtel/maison3.jpg" },
-  { id: 4, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison4.jpg" },
-  { id: 5, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison5.jpg" },
-  { id: 6, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison6.jpg" },
-  { id: 7, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison7.jpg" },
-  { id: 8, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison8.jpg" },
-  { id: 9, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison9.jpg" },
-  { id: 10, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison10.jpg" },
-  { id: 11, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison11.jpg" },
-  { id: 12, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison12.jpg" },
-  { id: 13, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison13.jpg" },
-  { id: 14, title: "-----", category: "hotels", price: "0  $", surMesure: false, image: "image/hôtel/maison14.jpg" },
-
-
- 
+  { id: 101, title: "Fleurs XXL Élégance", category: "hotels", price: 45, surMesure: false, image: "image/hôtel/maison1.jpg" },
+  { id: 102, title: "Composition Prestige Hôtel", category: "hotels", price: 60, surMesure: false, image: "image/hôtel/maison2.jpg" },
+  { id: 103, title: "Vase Réception Grand Luxe", category: "hotels", price: 75, surMesure: false, image: "image/hôtel/maison3.jpg" },
+  { id: 104, title: "Bouquet Hall d'Accueil", category: "hotels", price: 50, surMesure: false, image: "image/hôtel/maison4.jpg" },
+  { id: 105, title: "Arrangement Floral Suite", category: "hotels", price: 40, surMesure: false, image: "image/hôtel/maison5.jpg" },
+  { id: 106, title: "Centre de Table Buffet", category: "hotels", price: 55, surMesure: false, image: "image/hôtel/maison6.jpg" },
+  { id: 107, title: "Composition Exotique Hôtel", category: "hotels", price: 70, surMesure: false, image: "image/hôtel/maison7.jpg" },
+  { id: 108, title: "Orchidées & Rameaux VIP", category: "hotels", price: 65, surMesure: false, image: "image/hôtel/maison8.jpg" },
 
   // ENTREPRISES & BANQUES
-  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau1.jpg" },
-  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau2.jpg" },
-  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau3.jpg" },
-  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau4.jpg" },
-  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau5.jpg" },
-  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau6.jpg" },
-  { id: 3, title: "-----", category: "entreprises", price: "0 ", surMesure: false, image: "image/entreprise/bureau7.jpg" },
-  
-  
-  
-  
-  
-  
-  
-  // CONFÉRENCES & CÉRÉMONIES
-  { id: 4, title: "Décoration Pupitre & Scène", category: "conferences", price: "80 $", surMesure: true, image: "image/evenement.jpg" },
-  
-  // MARIAGE & FÊTES
-  { id: 5, title: "-----", category: "mariage", price: "0 $", surMesure: false, image: "image/fete1.jpg" },
-  
-  // FUNÉRAIRE
-  { id: 6, title: "------", category: "funeraire", price: "0 $", surMesure: false, image: "image/RIP/finerail1.jpg" },
-  { id: 6, title: "------", category: "funeraire", price: "0 $", surMesure: false, image: "image/RIP/funerail2.jpg" },
-  { id: 6, title: "------", category: "funeraire", price: "0 $", surMesure: false, image: "image/RIP/finerail.jpg" }
+  { id: 201, title: "Décoration Bureau Direction", category: "entreprises", price: 50, surMesure: false, image: "image/entreprise/bureau1.jpg" },
+  { id: 202, title: "Plantes & Fleurs Réception", category: "entreprises", price: 45, surMesure: false, image: "image/entreprise/bureau2.jpg" },
+  { id: 203, title: "Arrangement Espace Attente", category: "entreprises", price: 40, surMesure: false, image: "image/entreprise/bureau3.jpg" },
+  { id: 204, title: "Composition Salles de Réunion", category: "entreprises", price: 55, surMesure: false, image: "image/entreprise/bureau4.jpg" },
 
+  // CONFÉRENCES & CÉRÉMONIES
+  { id: 301, title: "Décoration Pupitre & Scène", category: "conferences", price: 80, surMesure: true, image: "image/evenement.jpg" },
+
+  // MARIAGE & FÊTES
+  { id: 401, title: "Arche Florale & Festivité", category: "mariage", price: 120, surMesure: true, image: "image/fete1.jpg" },
+
+  // FUNÉRAIRE
+  { id: 501, title: "Couronne d'Hommage Lys & Roses", category: "funeraire", price: 65, surMesure: false, image: "image/RIP/finerail1.jpg" },
+  { id: 502, title: "Coussin Floral Serénité", category: "funeraire", price: 55, surMesure: false, image: "image/RIP/funerail2.jpg" },
+  { id: 503, title: "Jetée de Fleurs de Deuil", category: "funeraire", price: 45, surMesure: false, image: "image/RIP/finerail.jpg" }
 ];
 
 const categoryNames = {
@@ -56,7 +41,7 @@ const categoryNames = {
   funeraire: "Hommages Funéraires"
 };
 
-// Mapping pour harmoniser les variantes d'URL (ex: ?cat=hotel ou ?cat=hotels)
+// Mapping pour harmoniser les variantes d'URL
 const categoryMap = {
   'hotel': 'hotels',
   'hotels': 'hotels',
@@ -75,7 +60,7 @@ const categoryMap = {
   'deuil': 'funeraire'
 };
 
-// Normalise un texte pour une recherche insensible à la casse et aux accents
+// Normalise un texte pour recherche insensible à la casse et aux accents
 function normalizeText(str) {
   return (str || '')
     .toString()
@@ -92,19 +77,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchStatusWrap = document.getElementById('searchStatusWrap');
   const searchStatus = document.getElementById('searchStatus');
 
-  // Widget de recherche dans le header (loupe)
+  // Widget de recherche dans le header
   const searchWidget = document.getElementById('searchWidget');
   const searchToggle = document.getElementById('searchToggle');
   const searchForm = document.getElementById('searchForm');
   const searchInput = document.getElementById('searchInput');
 
-  // Récupération des paramètres dans l'URL ('cat' OU 'category' pour la catégorie, 'search' pour la recherche)
+  // URL Params
   const urlParams = new URLSearchParams(window.location.search);
   const rawCategory = urlParams.get('cat') || urlParams.get('category') || 'all';
   let currentCategory = categoryMap[rawCategory.toLowerCase().trim()] || rawCategory;
   let currentSearch = urlParams.get('search') || '';
 
-  // Pré-remplit le champ de recherche si on arrive avec ?search=...
   if (searchInput && currentSearch) {
     searchInput.value = currentSearch;
   }
@@ -132,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
       filtered = filtered.filter(p => normalizeText(p.title).includes(normalizedSearch));
     }
 
-    // Affiche/masque l'indicateur de recherche active
     if (searchStatusWrap && searchStatus) {
       if (normalizedSearch) {
         searchStatusWrap.style.display = 'block';
@@ -150,9 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Rendu HTML identique aux cartes de ton HTML principal
+    // Rendu des cartes produits avec boutons "Ajouter au panier" et "Commander"
     productsGrid.innerHTML = filtered.map(p => `
-      <div class="product-card">
+      <div class="product-card" data-id="${p.id}" data-name="${p.title}" data-price="${p.price}" data-size="Standard" data-image="${p.image}">
         <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
           <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i> 
           ${p.surMesure ? 'Sur mesure' : 'Livrable'}
@@ -160,20 +143,24 @@ document.addEventListener('DOMContentLoaded', () => {
         <img src="${p.image}" alt="${p.title}" onerror="this.src='image/logi.png'">
         <div class="product-details">
           <h3>${p.title}</h3>
-          <p class="price">${p.price}</p>
-          <a href="product-detail.html?id=${p.id}" class="btn-discover">
-            Découvrir <i class="fa-solid fa-arrow-right"></i>
-          </a>
+          <p class="price">${p.price > 0 ? SHOP_CONFIG.currency + p.price : 'Sur devis'}</p>
+          
+          <div class="product-actions-group" style="display: flex; gap: 8px; margin-top: 10px;">
+            <button type="button" class="btn-add-cart" onclick="addCurrentProductToCart(this)" style="flex: 1; padding: 8px; background: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+              <i class="fa-solid fa-cart-shopping"></i> Panier
+            </button>
+            <button type="button" class="btn-buy-now" onclick="buyCurrentProductNow(this)" style="flex: 1; padding: 8px; background: #25d366; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+              <i class="fa-brands fa-whatsapp"></i> Commander
+            </button>
+          </div>
         </div>
       </div>
     `).join('');
 
-    // Mise à jour du titre h1 (uniquement quand aucune recherche n'est active)
     if (pageTitle && categoryNames[category]) {
       pageTitle.textContent = normalizedSearch ? 'Résultats de recherche' : categoryNames[category];
     }
 
-    // Activation du bouton correspondant
     filterBtns.forEach(btn => {
       if (btn.dataset.category === category) {
         btn.classList.add('active');
@@ -186,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Affichage initial
   renderProducts(currentCategory, currentSearch);
 
-  // Gestion du clic sur les boutons de filtre (la recherche en cours est conservée)
+  // Écouteurs de clics sur les filtres
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       currentCategory = btn.dataset.category;
@@ -195,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Gestion du widget de recherche (loupe) dans le header
+  // Écouteurs sur la recherche
   if (searchWidget && searchToggle && searchForm && searchInput) {
     searchToggle.addEventListener('click', () => {
       searchWidget.classList.toggle('active');
@@ -204,14 +191,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Filtrage en direct pendant la frappe
     searchInput.addEventListener('input', () => {
       currentSearch = searchInput.value.trim();
       renderProducts(currentCategory, currentSearch);
       updateUrl();
     });
 
-    // Validation (touche Entrée) : garde le focus, referme juste le clavier mobile
     searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
       currentSearch = searchInput.value.trim();
@@ -220,14 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
       searchInput.blur();
     });
 
-    // Ferme le champ si on clique en dehors (seulement s'il est vide)
     document.addEventListener('click', (e) => {
       if (!searchWidget.contains(e.target) && !searchInput.value.trim()) {
         searchWidget.classList.remove('active');
       }
     });
 
-    // Si on arrive avec ?search=... dans l'URL, on ouvre le champ automatiquement
     if (currentSearch) {
       searchWidget.classList.add('active');
     }
