@@ -40,6 +40,21 @@
     </nav>
 
     <div class="header-actions">
+      <div class="search-widget" id="searchWidget">
+        <button class="icon-btn" id="searchToggle" aria-label="Rechercher une fleur">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <form class="search-form" id="searchForm" role="search">
+          <input
+            type="search"
+            id="searchInput"
+            class="search-input"
+            placeholder="Rechercher une fleur..."
+            aria-label="Rechercher une fleur"
+            autocomplete="off"
+          >
+        </form>
+      </div>
       <a href="products.html" class="icon-btn" aria-label="Panier">
         <i class="fas fa-shopping-bag"></i>
       </a>
@@ -64,6 +79,11 @@
       <button class="filter-btn" data-category="mariage">Mariage & Fêtes</button>
       <button class="filter-btn" data-category="funeraire">Funéraire</button>
     </div>
+  </section>
+
+  <!-- INDICATEUR DE RECHERCHE ACTIVE -->
+  <section class="container" id="searchStatusWrap" style="display:none; padding-bottom: 10px;">
+    <p id="searchStatus" style="text-align:center; color:#6E6865; font-size:0.9rem;"></p>
   </section>
 
   <!-- GRILLE DES PRODUITS -->
@@ -103,7 +123,7 @@
       
 
   <!-- CHARGEMENT DU SCRIPT UNIQUE (AVEC PARAMÈTRE ANTI-CACHE) -->
-  <script src="js/products.js?v=3.0"></script>
+  <script src="js/products.js?v=4.0"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
