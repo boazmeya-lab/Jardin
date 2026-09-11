@@ -153,7 +153,31 @@ const PRODUCTS = [
     rating: 4
   }
 ];
+// Ajoute le produit de la carte cliquée au panier
+function addCurrentProductToCart(button) {
+  const card = button.closest('.product-card');
+  if (!card) return;
+  const id = Number(card.dataset.id);
+  if (typeof addToCart === 'function') {
+    addToCart(id, 1);
+  }
+}
 
+// Commande directe via WhatsApp pour un seul produit
+function buyCurrentProductNow(button) {
+  const card = button.closest('.product-card');
+  if (!card) return;
+
+  const name = card.dataset.name;
+  const price = card.dataset.price;
+
+  const message = `Bonjour Jardin Agro, je souhaite commander :\n\n• ${name} : ${SHOP_CONFIG.currency}${price}\n\nMerci de me confirmer la disponibilité et la livraison !`;
+  const encodedMessage = encodeURIComponent(message);
+  window.open(`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodedMessage}`, '_blank');
+}
+
+window.addCurrentProductToCart = addCurrentProductToCart;
+window.buyCurrentProductNow = buyCurrentProductNow;
 function getProductById(id){
   return PRODUCTS.find(p => p.id === id);
 }
