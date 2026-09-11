@@ -31,7 +31,11 @@ const products = [
   { id: 502, title: "Coussin Floral Serénité", category: "funeraire", price: 55, surMesure: false, image: "image/RIP/funerail2.jpg" },
   { id: 503, title: "Jetée de Fleurs de Deuil", category: "funeraire", price: 45, surMesure: false, image: "image/RIP/finerail.jpg" }
 ];
+const products = [
+  // ... (inchangé)
+];
 
+window.PRODUCTS = products; // ✅ harmonise avec cart.js qui cherche "PRODUCTS"
 const categoryNames = {
   all: "Tous nos Produits",
   hotels: "Compositions pour Hôtels",
