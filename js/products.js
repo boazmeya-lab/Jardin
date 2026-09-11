@@ -170,13 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (currentSearch) {
-      searchWidget.classList.add('active'
-
-                           
-                                 <script src="js/data.js?v=1.0"></script>
-<script src="js/cart.js?v=1.0"></script>
-<script src="js/products.js?v=4.0"></script>
-<script src="js/main.js"></script>
+      searchWidget.classList.add('active');
     }
   }
 });
