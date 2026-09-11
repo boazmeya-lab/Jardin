@@ -1122,3 +1122,114 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
   object-fit: cover;
   display: block;
      }
+/* ===========================================================
+   15. PANIER (Cart Drawer)
+   =========================================================== */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1900;
+}
+.cart-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 90vw;
+  height: 100%;
+  background: var(--white);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+}
+.cart-drawer.active {
+  transform: translateX(0);
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid var(--grey-mid);
+}
+.cart-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.cart-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px;
+}
+
+.cart-footer {
+  padding: 20px;
+  border-top: 1px solid var(--grey-mid);
+}
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+.cart-whatsapp-btn {
+  width: 100%;
+  background: #25D366;
+  color: var(--white);
+  border: none;
+  padding: 14px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.cart-whatsapp-btn:hover {
+  background: #1eb956;
+}
+
+.cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+@media (max-width: 480px) {
+  .cart-drawer {
+    width: 100%;
+    max-width: 100%;
+  }
+   }
