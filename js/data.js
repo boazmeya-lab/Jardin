@@ -1,159 +1,90 @@
 /* ===========================================================
-   JARDIN AGRO — Données produits & configuration
-   Modifier ici pour ajouter / changer des produits.
+   JARDIN AGRO — Base de données & Affichage des Produits
    =========================================================== */
 
-// On vérifie si SHOP_CONFIG existe déjà, sinon on le crée
+// 1. Configuration boutique
 if (typeof SHOP_CONFIG === 'undefined') {
   window.SHOP_CONFIG = {
-    whatsappNumber: "243998096713", // Numéro officiel configuré
+    whatsappNumber: "243998096713",
     currency: "$"
   };
 } else {
-  // Mise à jour du numéro s'il était déjà initialisé
   SHOP_CONFIG.whatsappNumber = "243998096713";
   SHOP_CONFIG.currency = "$";
 }
 
-const PRODUCTS = [
-  {
-    id: "rose-rouge",
-    name: "Rose Rouge Passion",
-    category: "Roses",
-    price: 25,
-    oldPrice: null,
-    badge: "bestseller",
-    image: "assets/images/rose-rouge.jpg",
-    gallery: [
-      "assets/images/rose-rouge.jpg",
-      "assets/images/rose-rouge-1.jpg",
-      "assets/images/rose-rouge-2.jpg",
-      "assets/images/rose-rouge-3.jpg"
-    ],
-    description: "Un bouquet de roses rouges sélectionnées à la main, symbole intemporel de la passion et de l'amour sincère. Chaque tige est choisie pour sa fraîcheur et l'intensité de sa couleur.",
-    rating: 5
-  },
-  {
-    id: "bouquet-elegance",
-    name: "Bouquet Élégance",
-    category: "Bouquets",
-    price: 42,
-    oldPrice: 52,
-    badge: "promo",
-    image: "assets/images/bouquet-elegance.jpg",
-    gallery: [
-      "assets/images/bouquet-elegance.jpg",
-      "assets/images/bouquet-elegance-1.jpg",
-      "assets/images/bouquet-elegance-2.jpg",
-      "assets/images/bouquet-elegance-3.jpg"
-    ],
-    description: "Une composition raffinée mêlant roses, pivoines et verdure noble, pensée pour illuminer n'importe quelle occasion avec beaucoup de caractère.",
-    rating: 5
-  },
-  {
-    id: "lys-blanc",
-    name: "Lys Blanc Pureté",
-    category: "Deuil",
-    price: 30,
-    oldPrice: null,
-    badge: "new",
-    image: "assets/images/lys-blanc.jpg",
-    gallery: [
-      "assets/images/lys-blanc.jpg",
-      "assets/images/lys-blanc-1.jpg",
-      "assets/images/lys-blanc-2.jpg",
-      "assets/images/lys-blanc-3.jpg"
-    ],
-    description: "Des lys blancs immaculés, symbole de pureté et de respect, idéals pour accompagner un hommage ou une cérémonie avec dignité.",
-    rating: 4
-  },
-  {
-    id: "tulipes-pastel",
-    name: "Tulipes Pastel",
-    category: "Bouquets",
-    price: 28,
-    oldPrice: null,
-    badge: null,
-    image: "assets/images/tulipes-pastel.jpg",
-    gallery: [
-      "assets/images/tulipes-pastel.jpg",
-      "assets/images/tulipes-pastel-1.jpg",
-      "assets/images/tulipes-pastel-2.jpg",
-      "assets/images/tulipes-pastel-3.jpg"
-    ],
-    description: "Un mélange doux de tulipes aux tons pastel, léger et printanier, parfait pour une attention délicate et pleine de douceur.",
-    rating: 5
-  },
-  {
-    id: "orchidee-blanche",
-    name: "Orchidée Blanche",
-    category: "Plantes",
-    price: 55,
-    oldPrice: null,
-    badge: "new",
-    image: "assets/images/orchidee-blanche.jpg",
-    gallery: [
-      "assets/images/orchidee-blanche.jpg",
-      "assets/images/orchidee-blanche-1.jpg",
-      "assets/images/orchidee-blanche-2.jpg",
-      "assets/images/orchidee-blanche-3.jpg"
-    ],
-    description: "Une orchidée élégante en pot, à l'allure sculpturale, pour offrir la longévité et le raffinement d'une plante d'exception.",
-    rating: 5
-  },
-  {
-    id: "bouquet-mariage",
-    name: "Bouquet Cérémonie",
-    category: "Mariage",
-    price: 75,
-    oldPrice: null,
-    badge: "bestseller",
-    image: "assets/images/bouquet-mariage.jpg",
-    gallery: [
-      "assets/images/bouquet-mariage.jpg",
-      "assets/images/bouquet-mariage-1.jpg",
-      "assets/images/bouquet-mariage-2.jpg",
-      "assets/images/bouquet-mariage-3.jpg"
-    ],
-    description: "Une création sur-mesure en blanc et vert tendre, taillée pour sublimer le plus beau jour de votre vie avec grâce et élégance.",
-    rating: 5
-  },
-  {
-    id: "coeur-de-roses",
-    name: "Cœur de Roses",
-    category: "Amour",
-    price: 38,
-    oldPrice: 45,
-    badge: "promo",
-    image: "assets/images/coeur-de-roses.jpg",
-    gallery: [
-      "assets/images/coeur-de-roses.jpg",
-      "assets/images/coeur-de-roses-1.jpg",
-      "assets/images/coeur-de-roses-2.jpg",
-      "assets/images/coeur-de-roses-3.jpg"
-    ],
-    description: "Un arrangement en forme de cœur, tout en roses rouges et roses pâles, pour déclarer votre amour avec originalité.",
-    rating: 5
-  },
-  {
-    id: "panier-fleuri",
-    name: "Panier Fleuri Fête",
-    category: "Anniversaire",
-    price: 34,
-    oldPrice: null,
-    badge: null,
-    image: "assets/images/panier-fleuri.jpg",
-    gallery: [
-      "assets/images/panier-fleuri.jpg",
-      "assets/images/panier-fleuri-1.jpg",
-      "assets/images/panier-fleuri-2.jpg",
-      "assets/images/panier-fleuri-3.jpg"
-    ],
-    description: "Un panier généreux et coloré rempli de fleurs de saison, pensé pour célébrer les anniversaires et les grands événements joyeux.",
-    rating: 4
-  }
+// 2. Base de données des produits par univers
+const products = [
+  // HÔTEL
+  { id: 101, name: "Fleurs XXL Élégance", category: "hotels", price: 45, surMesure: false, image: "image/hôtel/maison1.jpg" },
+  { id: 102, name: "Composition Prestige Hôtel", category: "hotels", price: 60, surMesure: false, image: "image/hôtel/maison2.jpg" },
+  { id: 103, name: "Vase Réception Grand Luxe", category: "hotels", price: 75, surMesure: false, image: "image/hôtel/maison3.jpg" },
+  { id: 104, name: "Bouquet Hall d'Accueil", category: "hotels", price: 50, surMesure: false, image: "image/hôtel/maison4.jpg" },
+  { id: 105, name: "Arrangement Floral Suite", category: "hotels", price: 40, surMesure: false, image: "image/hôtel/maison5.jpg" },
+  { id: 106, name: "Centre de Table Buffet", category: "hotels", price: 55, surMesure: false, image: "image/hôtel/maison6.jpg" },
+  { id: 107, name: "Composition Exotique Hôtel", category: "hotels", price: 70, surMesure: false, image: "image/hôtel/maison7.jpg" },
+  { id: 108, name: "Orchidées & Rameaux VIP", category: "hotels", price: 65, surMesure: false, image: "image/hôtel/maison8.jpg" },
+
+  // ENTREPRISES & BANQUES
+  { id: 201, name: "Décoration Bureau Direction", category: "entreprises", price: 50, surMesure: false, image: "image/entreprise/bureau1.jpg" },
+  { id: 202, name: "Plantes & Fleurs Réception", category: "entreprises", price: 45, surMesure: false, image: "image/entreprise/bureau2.jpg" },
+  { id: 203, name: "Arrangement Espace Attente", category: "entreprises", price: 40, surMesure: false, image: "image/entreprise/bureau3.jpg" },
+  { id: 204, name: "Composition Salles de Réunion", category: "entreprises", price: 55, surMesure: false, image: "image/entreprise/bureau4.jpg" },
+
+  // CONFÉRENCES & CÉRÉMONIES
+  { id: 301, name: "Décoration Pupitre & Scène", category: "conferences", price: 80, surMesure: true, image: "image/evenement.jpg" },
+
+  // MARIAGE & FÊTES
+  { id: 401, name: "Arche Florale & Festivité", category: "mariage", price: 120, surMesure: true, image: "image/fete1.jpg" },
+
+  // FUNÉRAIRE
+  { id: 501, name: "Couronne d'Hommage Lys & Roses", category: "funeraire", price: 65, surMesure: false, image: "image/RIP/finerail1.jpg" },
+  { id: 502, name: "Coussin Floral Serénité", category: "funeraire", price: 55, surMesure: false, image: "image/RIP/funerail2.jpg" },
+  { id: 503, name: "Jetée de Fleurs de Deuil", category: "funeraire", price: 45, surMesure: false, image: "image/RIP/finerail.jpg" }
 ];
-// Ajoute le produit de la carte cliquée au panier
+
+// ✅ Alias pour cart.js, qui cherche "PRODUCTS" (majuscules)
+window.PRODUCTS = products;
+
+const categoryNames = {
+  all: "Tous nos Produits",
+  hotels: "Compositions pour Hôtels",
+  entreprises: "Fleurs pour Entreprises & Banques",
+  conferences: "Décorations de Conférences",
+  mariage: "Mariage & Célébrations",
+  funeraire: "Hommages Funéraires"
+};
+
+// Mapping pour harmoniser les variantes d'URL
+const categoryMap = {
+  'hotel': 'hotels',
+  'hotels': 'hotels',
+  'entreprise': 'entreprises',
+  'entreprises': 'entreprises',
+  'banque': 'entreprises',
+  'banques': 'entreprises',
+  'conference': 'conferences',
+  'conferences': 'conferences',
+  'mariage': 'mariage',
+  'mariages': 'mariage',
+  'fete': 'mariage',
+  'fetes': 'mariage',
+  'funeraire': 'funeraire',
+  'funeraires': 'funeraire',
+  'deuil': 'funeraire'
+};
+
+// Normalise un texte pour recherche insensible à la casse et aux accents
+function normalizeText(str) {
+  return (str || '')
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+// 3. Fonctions liées aux boutons "Panier" / "Commander" sur les cartes produit
 function addCurrentProductToCart(button) {
   const card = button.closest('.product-card');
   if (!card) return;
@@ -163,7 +94,6 @@ function addCurrentProductToCart(button) {
   }
 }
 
-// Commande directe via WhatsApp pour un seul produit
 function buyCurrentProductNow(button) {
   const card = button.closest('.product-card');
   if (!card) return;
@@ -178,6 +108,155 @@ function buyCurrentProductNow(button) {
 
 window.addCurrentProductToCart = addCurrentProductToCart;
 window.buyCurrentProductNow = buyCurrentProductNow;
-function getProductById(id){
-  return PRODUCTS.find(p => p.id === id);
+
+function getProductById(id) {
+  return products.find(p => p.id === id);
 }
+
+// 4. Affichage et filtrage du catalogue (page products.html)
+document.addEventListener('DOMContentLoaded', () => {
+  const productsGrid = document.getElementById('productsGrid');
+  const pageTitle = document.getElementById('pageTitle') || document.getElementById('categoryTitle');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const searchStatusWrap = document.getElementById('searchStatusWrap');
+  const searchStatus = document.getElementById('searchStatus');
+
+  // Widget de recherche dans le header
+  const searchWidget = document.getElementById('searchWidget');
+  const searchToggle = document.getElementById('searchToggle');
+  const searchForm = document.getElementById('searchForm');
+  const searchInput = document.getElementById('searchInput');
+
+  // URL Params
+  const urlParams = new URLSearchParams(window.location.search);
+  const rawCategory = urlParams.get('cat') || urlParams.get('category') || 'all';
+  let currentCategory = categoryMap[rawCategory.toLowerCase().trim()] || rawCategory;
+  let currentSearch = urlParams.get('search') || '';
+
+  if (searchInput && currentSearch) {
+    searchInput.value = currentSearch;
+  }
+
+  function updateUrl() {
+    const params = new URLSearchParams();
+    if (currentCategory && currentCategory !== 'all') params.set('cat', currentCategory);
+    if (currentSearch) params.set('search', currentSearch);
+    const query = params.toString();
+    const newUrl = window.location.pathname + (query ? '?' + query : '');
+    window.history.pushState({ path: newUrl }, '', newUrl);
+  }
+
+  function renderProducts(category, searchTerm) {
+    if (!productsGrid) return;
+
+    productsGrid.innerHTML = '';
+
+    let filtered = category === 'all'
+      ? products
+      : products.filter(p => p.category === category);
+
+    const normalizedSearch = normalizeText(searchTerm);
+    if (normalizedSearch) {
+      filtered = filtered.filter(p => normalizeText(p.name).includes(normalizedSearch));
+    }
+
+    if (searchStatusWrap && searchStatus) {
+      if (normalizedSearch) {
+        searchStatusWrap.style.display = 'block';
+        searchStatus.textContent = `Résultats pour « ${searchTerm} » (${filtered.length})`;
+      } else {
+        searchStatusWrap.style.display = 'none';
+      }
+    }
+
+    if (filtered.length === 0) {
+      const message = normalizedSearch
+        ? `Aucune fleur ne correspond à « ${searchTerm} ».`
+        : 'Aucun produit disponible dans cette catégorie.';
+      productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; padding: 40px;">${message}</p>`;
+      return;
+    }
+
+    // Rendu des cartes produits avec boutons "Ajouter au panier" et "Commander"
+    productsGrid.innerHTML = filtered.map(p => `
+      <div class="product-card" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-size="Standard" data-image="${p.image}">
+        <span class="badge-livrable ${p.surMesure ? 'sur-mesure' : ''}">
+          <i class="fa-solid ${p.surMesure ? 'fa-pen-ruler' : 'fa-truck-fast'}"></i>
+          ${p.surMesure ? 'Sur mesure' : 'Livrable'}
+        </span>
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='image/logi.png'">
+        <div class="product-details">
+          <h3>${p.name}</h3>
+          <p class="price">${p.price > 0 ? SHOP_CONFIG.currency + p.price : 'Sur devis'}</p>
+
+          <div class="product-actions-group" style="display: flex; gap: 8px; margin-top: 10px;">
+            <button type="button" class="btn-add-cart" onclick="addCurrentProductToCart(this)" style="flex: 1; padding: 8px; background: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+              <i class="fa-solid fa-cart-shopping"></i> Panier
+            </button>
+            <button type="button" class="btn-buy-now" onclick="buyCurrentProductNow(this)" style="flex: 1; padding: 8px; background: #25d366; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+              <i class="fa-brands fa-whatsapp"></i> Commander
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    if (pageTitle && categoryNames[category]) {
+      pageTitle.textContent = normalizedSearch ? 'Résultats de recherche' : categoryNames[category];
+    }
+
+    filterBtns.forEach(btn => {
+      if (btn.dataset.category === category) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Affichage initial
+  renderProducts(currentCategory, currentSearch);
+
+  // Écouteurs de clics sur les filtres
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentCategory = btn.dataset.category;
+      updateUrl();
+      renderProducts(currentCategory, currentSearch);
+    });
+  });
+
+  // Écouteurs sur la recherche
+  if (searchWidget && searchToggle && searchForm && searchInput) {
+    searchToggle.addEventListener('click', () => {
+      searchWidget.classList.toggle('active');
+      if (searchWidget.classList.contains('active')) {
+        searchInput.focus();
+      }
+    });
+
+    searchInput.addEventListener('input', () => {
+      currentSearch = searchInput.value.trim();
+      renderProducts(currentCategory, currentSearch);
+      updateUrl();
+    });
+
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      currentSearch = searchInput.value.trim();
+      renderProducts(currentCategory, currentSearch);
+      updateUrl();
+      searchInput.blur();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!searchWidget.contains(e.target) && !searchInput.value.trim()) {
+        searchWidget.classList.remove('active');
+      }
+    });
+
+    if (currentSearch) {
+      searchWidget.classList.add('active');
+    }
+  }
+});
