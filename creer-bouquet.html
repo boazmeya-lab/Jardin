@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Créez votre bouquet — Jardin Agro</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&display=swap');
@@ -18,11 +18,12 @@
     --or: #B08A4E;
     --encre: #2A2A26;
     --ligne: #E2DACB;
-    --ombre: rgba(46, 59, 42, 0.14);
+    --whatsapp: #3F7A57;
     --radius: 3px;
   }
 
-  *{ box-sizing: border-box; }
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html{ touch-action: manipulation; } /* empêche le double-tap-zoom sur iOS */
   html,body{ margin:0; padding:0; }
   body{
     background: var(--ivoire);
@@ -30,6 +31,7 @@
     font-family: 'Work Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+  button, .swatch, .stepper button{ touch-action: manipulation; }
   h1,h2,h3, .display{
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
@@ -40,11 +42,20 @@
   /* ---------- Header ---------- */
   .site-header{
     display:flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    padding: 28px 48px 22px;
+    padding: 16px 48px;
     border-bottom: 1px solid var(--ligne);
+    gap: 16px;
   }
+  .brand-block{ display:flex; align-items:center; gap: 12px; }
+  .site-logo{
+    height: 42px;
+    width: 42px;
+    object-fit: contain;
+    display: block;
+  }
+  .site-logo.hidden{ display:none; }
   .brand{
     font-family:'Cormorant Garamond', serif;
     font-style: italic;
@@ -57,13 +68,59 @@
     font-size: 14px;
     color: var(--vert-mousse);
   }
-  .cart-pill{
+  .header-right{ display:flex; align-items:center; gap: 14px; }
+
+  .cart-btn{
+    position: relative;
+    display:flex; align-items:center; gap: 8px;
     border:1px solid var(--vert-mousse);
     border-radius: 20px;
-    padding: 5px 14px;
+    padding: 7px 16px;
     font-size: 13px;
     color: var(--vert-fonce);
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Work Sans', sans-serif;
   }
+  .cart-btn:hover{ background: var(--ivoire-2); }
+  .cart-badge{
+    background: var(--vert-fonce); color: var(--ivoire);
+    border-radius: 50%;
+    min-width: 18px; height: 18px;
+    font-size: 11px;
+    display:flex; align-items:center; justify-content:center;
+    padding: 0 4px;
+  }
+
+  /* ---------- Panneau panier ---------- */
+  .cart-overlay{
+    position: fixed; inset: 0;
+    background: rgba(46,59,42,0.25);
+    z-index: 200;
+    display:none;
+  }
+  .cart-overlay.open{ display:block; }
+  .cart-panel{
+    position: fixed; top:0; right:0; bottom:0;
+    width: min(380px, 100%);
+    background: var(--ivoire);
+    box-shadow: -8px 0 24px rgba(0,0,0,0.12);
+    z-index: 201;
+    display:flex; flex-direction: column;
+    padding: 24px;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+  }
+  .cart-overlay.open .cart-panel{ transform: translateX(0); }
+  .cart-panel-header{ display:flex; justify-content: space-between; align-items:center; margin-bottom: 18px; }
+  .cart-close{ background:none; border:none; font-size: 20px; cursor:pointer; color: var(--vert-mousse); }
+  .cart-items{ flex:1; overflow-y:auto; }
+  .cart-item{ border-bottom: 1px solid var(--ligne); padding: 12px 0; font-size: 13px; color: var(--vert-mousse); }
+  .cart-item .cart-item-top{ display:flex; justify-content: space-between; color: var(--vert-fonce); font-size: 14px; margin-bottom: 4px; }
+  .cart-item .remove-item{ background:none; border:none; color: var(--rose-fonce); font-size: 12px; cursor:pointer; padding: 0; margin-top: 4px; }
+  .cart-empty{ color: var(--vert-sauge); font-size: 14px; text-align:center; margin-top: 40px; }
+  .cart-total{ display:flex; justify-content: space-between; padding: 14px 0; border-top: 1px solid var(--ligne); font-size: 16px; color: var(--vert-fonce); }
+  .cart-panel .btn{ width: 100%; }
 
   .intro{
     max-width: 640px;
@@ -122,12 +179,12 @@
     justify-self: end;
   }
   .stepper button{
-    width: 28px; height: 28px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     border: 1px solid var(--vert-mousse);
     background: transparent;
     color: var(--vert-fonce);
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1;
     cursor: pointer;
     display:flex; align-items:center; justify-content:center;
@@ -215,13 +272,11 @@
     border: 2px solid transparent;
     cursor: pointer;
     position: relative;
+    background-size: cover;
+    background-position: center;
     box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
   }
   .swatch[data-selected="true"]{ border-color: var(--vert-fonce); }
-  .swatch .tag{
-    position:absolute; top: 46px; left: 50%; transform: translateX(-50%);
-    font-size: 11px; color: var(--vert-mousse); white-space: nowrap;
-  }
 
   /* ---------- Récap prix ---------- */
   .summary{
@@ -261,31 +316,12 @@
     border: 1px solid var(--vert-mousse);
   }
   .btn-secondary:hover{ background: var(--ivoire-2); }
-  .btn-ai{
-    background: transparent;
-    color: var(--or);
-    border: 1px solid var(--or);
+  .btn-whatsapp{
+    background: var(--whatsapp); color: var(--ivoire);
+    display:flex; align-items:center; justify-content:center; gap: 8px;
   }
-  .btn-ai:hover{ background: #FBF4E8; }
+  .btn-whatsapp:hover{ background: #35664A; }
   .btn[disabled]{ opacity: 0.4; cursor: default; }
-
-  .ai-panel{
-    margin-top: 14px;
-    border: 1px dashed var(--or);
-    padding: 14px 16px;
-    font-size: 13px;
-    color: var(--vert-mousse);
-    line-height: 1.6;
-    border-radius: 3px;
-    display:none;
-  }
-  .ai-panel.visible{ display:block; }
-  .ai-panel .spinner{
-    display:inline-block; width: 10px; height:10px; border-radius:50%;
-    background: var(--or); margin-right: 8px;
-    animation: pulse 1s infinite ease-in-out;
-  }
-  @keyframes pulse{ 0%,100%{ opacity: 0.3;} 50%{ opacity: 1; } }
 
   .toast{
     position: fixed; bottom: 26px; left: 50%;
@@ -299,7 +335,7 @@
   .toast.visible{ opacity: 1; transform: translateX(-50%) translateY(0); }
 
   @media (max-width: 880px){
-    .site-header{ padding: 20px 20px; }
+    .site-header{ padding: 14px 20px; }
     .site-header nav{ display:none; }
     .intro{ padding: 30px 20px 4px; }
     .intro h1{ font-size: 32px; }
@@ -312,14 +348,40 @@
 <body>
 
 <header class="site-header">
-  <div class="brand">Jardin Agro</div>
+  <div class="brand-block">
+    <!-- LOGO : placez votre fichier logo (ex. logo.png) à la racine du site,
+         ou changez le chemin ci-dessous. S'il est introuvable, il est
+         simplement masqué et le nom "Jardin Agro" reste affiché seul. -->
+    <img class="site-logo" id="siteLogo" src="images/logo.png" alt="Jardin Agro" onerror="this.classList.add('hidden')">
+    <div class="brand">Jardin Agro</div>
+  </div>
   <nav>
     <span>Fleurs</span>
     <span>Compositions</span>
     <span>Professionnels</span>
   </nav>
-  <div class="cart-pill" id="cartPill">Panier · 0</div>
+  <div class="header-right">
+    <button class="cart-btn" id="cartToggleBtn">
+      🛍️ Panier <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
 </header>
+
+<!-- ================= PANNEAU PANIER ================= -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-panel">
+    <div class="cart-panel-header">
+      <h2 style="font-size:22px;">Votre panier</h2>
+      <button class="cart-close" id="cartCloseBtn">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">0,00 $</span>
+    </div>
+    <button class="btn btn-whatsapp" id="cartWhatsappBtn">📱 Commander sur WhatsApp</button>
+  </div>
+</div>
 
 <section class="intro">
   <h1>Créez votre bouquet</h1>
@@ -382,8 +444,7 @@
     <div class="actions">
       <button class="btn btn-primary" id="addToCartBtn" disabled>Ajouter mon bouquet au panier</button>
       <button class="btn btn-secondary" id="resetBtn">Réinitialiser mon bouquet</button>
-      <button class="btn btn-ai" id="aiBtn" disabled>✨ Générer une version réaliste</button>
-      <div class="ai-panel" id="aiPanel"></div>
+      <button class="btn btn-whatsapp" id="orderWhatsappBtn" disabled>📱 Commander sur WhatsApp</button>
     </div>
   </div>
 
@@ -393,55 +454,61 @@
 
 <script>
 /* =========================================================================
+   0. RÉGLAGES
+   Remplacez le numéro ci-dessous par le vôtre, au format international
+   SANS le "+" ni espaces : indicatif pays + numéro complet.
+   Exemple Québec/Canada : 1 514 555 1234  ->  "15145551234"
+   ========================================================================= */
+const WHATSAPP_NUMBER = "15145551234"; // <-- À REMPLACER par votre numéro
+
+/* =========================================================================
    1. DONNÉES DES FLEURS
-   Pour utiliser vos propres images PNG : remplacez la valeur "image" par le
-   chemin de votre fichier, par ex. "images/fleurs/rose-rouge.png".
-   Tant que "image" reste vide, une fleur de démonstration (SVG) est générée
-   automatiquement pour que le prototype fonctionne sans aucun fichier.
-   Chaque image (démo ou réelle) doit représenter la fleur ENTIÈRE avec sa
-   tige, orientée verticalement, tige vers le bas — exactement comme demandé
-   dans le cahier des charges.
    ========================================================================= */
 const FLOWERS = [
-  { id:'rose-rouge',   name:'Rose rouge',    price:2.0, category:'focale',    type:'rose',       color:'#A8394A', dark:'#7C2735', image:"image/rose-rouge.png" },
-  { id:'rose-blanche', name:'Rose blanche',  price:2.0, category:'focale',    type:'rose',       color:'#FBF8F1', dark:'#E4D9C6', image:"image/rose12.png" },
-  { id:'rose-rose',    name:'Rose rose',     price:2.2, category:'focale',    type:'rose',       color:'#E2A6B4', dark:'#C77E90', image:"image/rose-rose1.png" },
-  { id:'tulipe',       name:'Tulipe',        price:1.8, category:'focale',    type:'tulip',      color:'#D85C77', dark:'#B03F58', image:"image/bryant2.png" },
-  { id:'tournesol',    name:'Tournesol',     price:2.5, category:'focale',    type:'sunflower',  color:'#EFB93B', dark:'#6B4A2A', image:"image/nehemie.png" },
-  { id:'lys',          name:'Lys',           price:3.0, category:'focale',    type:'lily',       color:'#FBF3E3', dark:'#D9A544', image:"image/david.png" },
-  { id:'eucalyptus',   name:'Eucalyptus',    price:1.0, category:'feuillage', type:'eucalyptus', color:'#8FAE8C', dark:'#5C7A5C', image:" image/eucalyptus1.png "},
+  { id:'rose-rouge',   name:'Rose rouge',    price:2.0, category:'focale',    type:'rose',       color:'#A8394A', dark:'#7C2735', image:"images/rose-rouge.png" },
+  { id:'rose-blanche', name:'Rose blanche',  price:2.0, category:'focale',    type:'rose',       color:'#FBF8F1', dark:'#E4D9C6', image:"images/rose12.png" },
+  { id:'rose-rose',    name:'Rose rose',     price:2.2, category:'focale',    type:'rose',       color:'#E2A6B4', dark:'#C77E90', image:"images/rose-rose1.png" },
+  { id:'tulipe',       name:'Tulipe',        price:1.8, category:'focale',    type:'tulip',      color:'#D85C77', dark:'#B03F58', image:"images/bryant2.png" },
+  { id:'tournesol',    name:'Tournesol',     price:2.5, category:'focale',    type:'sunflower',  color:'#EFB93B', dark:'#6B4A2A', image:"images/nehemie.png" },
+  { id:'lys',          name:'Lys',           price:3.0, category:'focale',    type:'lily',       color:'#FBF3E3', dark:'#D9A544', image:"images/david.png" },
+  { id:'eucalyptus',   name:'Eucalyptus',    price:1.0, category:'feuillage', type:'eucalyptus', color:'#8FAE8C', dark:'#5C7A5C', image:"images/eucalyptus1.png" },
   { id:'gypsophile',   name:'Gypsophile',    price:0.8, category:'feuillage', type:'gypsophila', color:'#FFFFFF', dark:'#C9C2B4', image:null },
 ];
 
 const WRAPPINGS = [
-  { id:'blanc', name:'Papier blanc', price:2, swatch:'#FBFAF7', image:"image/emballage1.jpg"},
-  { id:'rose',  name:'Papier rose',  price:2, swatch:'#EBC9C3' },
-  { id:'kraft', name:'Papier kraft', price:1.5, swatch:'#C7A579' },
-  { id:'noir',  name:'Papier noir',  price:2.5, swatch:'#2B2A28' },
+  { id:'blanc', name:'Papier blanc', price:2,   swatch:'#FBFAF7', image:"images/emballage1.jpg" },
+  { id:'rose',  name:'Papier rose',  price:2,   swatch:'#EBC9C3', image:null },
+  { id:'kraft', name:'Papier kraft', price:1.5, swatch:'#C7A579', image:null },
+  { id:'noir',  name:'Papier noir',  price:2.5, swatch:'#2B2A28', image:null },
 ];
 
 const RIBBONS = [
-  { id:'blanc', name:'Blanc', swatch:'#FBFAF7' ,image:"image/ruban2.jpg"},
-  { id:'rouge', name:'Rouge', swatch:'#A8394A' },
-  { id:'rose',  name:'Rose',  swatch:'#D9A9A0' },
-  { id:'noir',  name:'Noir',  swatch:'#2B2A28' },
-  { id:'dore',  name:'Doré',  swatch:'#B08A4E' },
+  { id:'blanc', name:'Blanc', swatch:'#FBFAF7', image:"images/ruban2.jpg" },
+  { id:'rouge', name:'Rouge', swatch:'#A8394A', image:null },
+  { id:'rose',  name:'Rose',  swatch:'#D9A9A0', image:null },
+  { id:'noir',  name:'Noir',  swatch:'#2B2A28', image:null },
+  { id:'dore',  name:'Doré',  swatch:'#B08A4E', image:null },
 ];
+
+/* Remarque : NOTE_IMAGES_CORRIGEES
+   - Chemins remis en "images/..." (au pluriel) : vérifiez que votre dossier
+     GitHub s'appelle bien "images" et pas "image". Renommez le dossier ou
+     ajustez les chemins ci-dessus pour qu'ils correspondent exactement.
+   - L'espace involontaire dans " image/eucalyptus1.png " a été supprimé :
+     un espace dans un chemin empêche l'image de se charger. */
 
 /* =========================================================================
    2. ÉTAT
    ========================================================================= */
 const state = {
-  quantities: {},        // { flowerId: qty }
+  quantities: {},
   wrapping: null,
-  ribbon: RIBBONS[1].id,
-  cartCount: 0,
+  ribbon: RIBBONS[0].id,
 };
 FLOWERS.forEach(f => state.quantities[f.id] = 0);
 
 /* =========================================================================
-   3. GÉNÉRATION DES IMAGES DE DÉMONSTRATION (SVG data-URI)
-   Chaque fleur est dessinée verticalement : tige en bas, fleur en haut.
+   3. IMAGES DE DÉMONSTRATION (utilisées seulement si "image" est null)
    ========================================================================= */
 function petalPath(cx, cy, angleDeg, length, width, color){
   const rad = angleDeg * Math.PI/180;
@@ -477,7 +544,6 @@ function buildFlowerSVG(f){
       bloom += petalPath(cx, topY, a, 24, 6, f.color);
     }
     bloom += `<circle cx="${cx}" cy="${topY}" r="13" fill="${f.dark}"/>`;
-    bloom += `<circle cx="${cx}" cy="${topY}" r="13" fill="url(#seedPattern)" opacity="0.35"/>`;
   } else if(f.type === 'lily'){
     for(let i=0;i<6;i++){
       const a = (360/6)*i - 90;
@@ -508,17 +574,7 @@ function buildFlowerSVG(f){
 
   const stem = `<path d="M ${cx},260 Q ${cx+4},170 ${cx},${topY+18}" fill="none" stroke="${stemColor}" stroke-width="4.5" stroke-linecap="round"/>`;
 
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 260">
-    <defs>
-      <pattern id="seedPattern" width="4" height="4" patternUnits="userSpaceOnUse">
-        <circle cx="2" cy="2" r="0.6" fill="#3b2c17"/>
-      </pattern>
-    </defs>
-    ${stem}
-    ${leaves}
-    ${bloom}
-  </svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 260">${stem}${leaves}${bloom}</svg>`;
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
 
@@ -541,7 +597,7 @@ function renderCatalog(){
         <div class="price">${f.price.toFixed(2).replace('.',',')} $ / fleur</div>
       </div>
       <div class="stepper">
-        <button data-action="minus" data-id="${f.id}" aria-label="Retirer une ${f.name}">−</button>
+        <button data-action="minus" data-id="${f.id}" aria-label="Retirer une ${f.name}" disabled>−</button>
         <span class="qty" id="qty-${f.id}">0</span>
         <button data-action="plus" data-id="${f.id}" aria-label="Ajouter une ${f.name}">+</button>
       </div>
@@ -570,14 +626,8 @@ function changeQuantity(id, delta){
 
 /* =========================================================================
    5. COMPOSITION DU BOUQUET
-   Technique : chaque fleur est une image tige-comprise, positionnée avec
-   son pivot en bas (origine de transformation), puis pivotée en éventail
-   autour d'un point de préhension commun. Le feuillage (eucalyptus,
-   gypsophile) est posé en premier avec un angle d'ouverture plus large ;
-   les fleurs principales sont ajoutées ensuite, plus resserrées, ce qui
-   donne l'apparence d'un vrai bouquet tenu à la main.
    ========================================================================= */
-const GRIP_Y = 68; // hauteur du point de préhension depuis le bas de la scène
+const GRIP_Y = 68;
 
 function renderBouquet(){
   const stage = document.getElementById('bouquetStage');
@@ -587,17 +637,16 @@ function renderBouquet(){
   document.getElementById('bouquetEmpty').style.display = totalStems === 0 ? 'flex' : 'none';
   document.getElementById('stemCount').textContent = totalStems + (totalStems > 1 ? ' tiges' : ' tige');
 
-  // Ordre de dépôt : feuillage large d'abord, puis fleurs principales resserrées
   const order = FLOWERS.filter(f => f.category === 'feuillage').concat(FLOWERS.filter(f => f.category === 'focale'));
 
-  let seed = 1; // petit générateur déterministe pour une composition stable entre les rendus
+  let seed = 1;
   function rand(){ seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
 
   order.forEach(f => {
     const qty = state.quantities[f.id];
     if(qty === 0) return;
     const isFoliage = f.category === 'feuillage';
-    const spread = isFoliage ? 76 : 46; // ouverture angulaire max en degrés
+    const spread = isFoliage ? 76 : 46;
     const baseHeight = isFoliage ? 260 : 230;
 
     for(let i=0; i<qty; i++){
@@ -626,7 +675,7 @@ function renderBouquet(){
 }
 
 /* =========================================================================
-   6. EMBALLAGE & RUBAN
+   6. EMBALLAGE & RUBAN (couleur OU photo, si "image" est renseignée)
    ========================================================================= */
 function renderSwatches(){
   const wrapRow = document.getElementById('wrapSwatches');
@@ -634,7 +683,7 @@ function renderSwatches(){
   WRAPPINGS.forEach(w => {
     const el = document.createElement('div');
     el.className = 'swatch';
-    el.style.background = w.swatch;
+    el.style.background = w.image ? `url("${w.image}") center/cover, ${w.swatch}` : w.swatch;
     el.dataset.id = w.id;
     el.title = w.name + ' — ' + w.price.toFixed(2).replace('.',',') + ' $';
     el.addEventListener('click', () => { state.wrapping = w.id; renderSwatches(); renderBouquet(); updateSummary(); });
@@ -646,7 +695,7 @@ function renderSwatches(){
   RIBBONS.forEach(r => {
     const el = document.createElement('div');
     el.className = 'swatch';
-    el.style.background = r.swatch;
+    el.style.background = r.image ? `url("${r.image}") center/cover, ${r.swatch}` : r.swatch;
     el.dataset.id = r.id;
     el.title = r.name;
     el.dataset.selected = state.ribbon === r.id;
@@ -661,7 +710,7 @@ function updateWrapping(){
   const totalStems = FLOWERS.reduce((sum,f) => sum + state.quantities[f.id], 0);
   if(!state.wrapping || totalStems === 0){ cone.style.background = 'transparent'; return; }
   const w = WRAPPINGS.find(x => x.id === state.wrapping);
-  cone.style.background = w.swatch;
+  cone.style.background = w.image ? `url("${w.image}") center/cover` : w.swatch;
 }
 
 function updateRibbon(){
@@ -672,8 +721,7 @@ function updateRibbon(){
   const show = totalStems > 0;
   band.style.display = show ? 'block' : 'none';
   bow.style.display = show ? 'block' : 'none';
-  band.style.background = r.swatch;
-  bow.style.background = 'transparent';
+  band.style.background = r.image ? `url("${r.image}") center/cover` : r.swatch;
   bow.innerHTML = show ? `
     <svg viewBox="0 0 46 30" width="46" height="30">
       <path d="M23,15 L4,4 Q0,15 4,26 Z" fill="${r.swatch}" stroke="rgba(0,0,0,0.12)" stroke-width="0.5"/>
@@ -697,12 +745,69 @@ function updateSummary(){
 
   const canAct = totalStems > 0;
   document.getElementById('addToCartBtn').disabled = !canAct;
-  document.getElementById('aiBtn').disabled = !canAct;
+  document.getElementById('orderWhatsappBtn').disabled = !canAct;
 }
 
 /* =========================================================================
-   8. ACTIONS : réinitialiser, ajouter au panier, rendu IA
+   8. PANIER — persistant via localStorage (clé partagée : "jardinAgroCart")
+   Toute autre page de votre site qui lit cette même clé localStorage peut
+   afficher/gérer le même panier (badge, page panier dédiée, etc.).
+   Ceci fonctionne uniquement sur un vrai site hébergé (pas dans un aperçu
+   d'éditeur) et par navigateur — pas de synchronisation entre appareils
+   sans un vrai backend.
    ========================================================================= */
+const CART_KEY = 'jardinAgroCart';
+
+function getCart(){
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveCart(cart){
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  renderCartBadge();
+}
+function renderCartBadge(){
+  const cart = getCart();
+  document.getElementById('cartBadge').textContent = cart.length;
+}
+
+function buildCurrentBouquetOrder(){
+  const flowersTotal = FLOWERS.reduce((sum,f) => sum + f.price * state.quantities[f.id], 0);
+  const wrapPrice = state.wrapping ? WRAPPINGS.find(w => w.id === state.wrapping).price : 0;
+  return {
+    flowers: FLOWERS.filter(f => state.quantities[f.id] > 0).map(f => ({ id:f.id, name:f.name, qty:state.quantities[f.id], price:f.price })),
+    wrapping: state.wrapping ? WRAPPINGS.find(w => w.id === state.wrapping).name : null,
+    ribbon: RIBBONS.find(r => r.id === state.ribbon).name,
+    total: +(flowersTotal + wrapPrice).toFixed(2),
+  };
+}
+
+function orderToText(order){
+  const lines = order.flowers.map(f => `- ${f.qty} × ${f.name}`);
+  let msg = `Bonjour ! Je souhaite commander ce bouquet :\n${lines.join('\n')}`;
+  if(order.wrapping) msg += `\nEmballage : ${order.wrapping}`;
+  msg += `\nRuban : ${order.ribbon}`;
+  msg += `\nTotal : ${order.total.toFixed(2).replace('.',',')} $`;
+  return msg;
+}
+
+function openWhatsappOrder(order){
+  const text = encodeURIComponent(orderToText(order));
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+}
+
+document.getElementById('addToCartBtn').addEventListener('click', () => {
+  const order = buildCurrentBouquetOrder();
+  const cart = getCart();
+  cart.push(order);
+  saveCart(cart);
+  showToast('Votre bouquet a été ajouté au panier');
+});
+
+document.getElementById('orderWhatsappBtn').addEventListener('click', () => {
+  openWhatsappOrder(buildCurrentBouquetOrder());
+});
+
 document.getElementById('resetBtn').addEventListener('click', () => {
   FLOWERS.forEach(f => { state.quantities[f.id] = 0; document.getElementById('qty-'+f.id).textContent = 0; });
   document.querySelectorAll('.stepper button[data-action="minus"]').forEach(b => b.disabled = true);
@@ -710,58 +815,56 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   renderSwatches();
   renderBouquet();
   updateSummary();
-  document.getElementById('aiPanel').classList.remove('visible');
   showToast('Bouquet réinitialisé');
 });
 
-document.getElementById('addToCartBtn').addEventListener('click', () => {
-  const flowersTotal = FLOWERS.reduce((sum,f) => sum + f.price * state.quantities[f.id], 0);
-  const wrapPrice = state.wrapping ? WRAPPINGS.find(w => w.id === state.wrapping).price : 0;
-  const order = {
-    flowers: FLOWERS.filter(f => state.quantities[f.id] > 0).map(f => ({ id: f.id, name: f.name, qty: state.quantities[f.id], price: f.price })),
-    wrapping: state.wrapping,
-    ribbon: state.ribbon,
-    total: flowersTotal + wrapPrice,
-  };
-  // Dans une vraie boutique : envoyer "order" à votre panier / API (js/cart.js)
-  console.log('Bouquet ajouté au panier :', order);
-  state.cartCount += 1;
-  document.getElementById('cartPill').textContent = 'Panier · ' + state.cartCount;
-  showToast('Votre bouquet a été ajouté au panier');
-});
+/* ---- Panneau panier (ouverture / fermeture / contenu) ---- */
+const cartOverlay = document.getElementById('cartOverlay');
+document.getElementById('cartToggleBtn').addEventListener('click', () => { renderCartPanel(); cartOverlay.classList.add('open'); });
+document.getElementById('cartCloseBtn').addEventListener('click', () => cartOverlay.classList.remove('open'));
+cartOverlay.addEventListener('click', (e) => { if(e.target === cartOverlay) cartOverlay.classList.remove('open'); });
 
-document.getElementById('aiBtn').addEventListener('click', () => {
-  const panel = document.getElementById('aiPanel');
-  panel.classList.add('visible');
-  panel.innerHTML = `<span class="spinner"></span> Génération du rendu réaliste en cours…`;
-  /* ---------------------------------------------------------------------
-     Emplacement pour l'appel réel à une API de génération d'images (ex.
-     Gemini / Imagen). Ce prototype n'appelle aucune API : il simule
-     l'attente pour montrer le comportement attendu. Le point important du
-     cahier des charges est respecté : cette fonction n'est déclenchée que
-     sur un clic volontaire, jamais à chaque "+" ou "−".
-
-     Exemple d'intégration réelle :
-       const description = summarizeBouquetForPrompt();
-       const res = await fetch('/api/generate-realistic-bouquet', {
-         method: 'POST',
-         headers: {'Content-Type':'application/json'},
-         body: JSON.stringify({ prompt: description })
-       });
-       const { imageUrl } = await res.json();
-       panel.innerHTML = `<img src="${imageUrl}" style="max-width:100%;border-radius:3px;">`;
-  --------------------------------------------------------------------- */
-  setTimeout(() => {
-    panel.innerHTML = `Rendu réaliste indisponible dans ce prototype — branchez ici votre API de génération d'image (Gemini, etc.) à partir de la composition actuelle du bouquet.`;
-  }, 1400);
-});
-
-function summarizeBouquetForPrompt(){
-  const parts = FLOWERS.filter(f => state.quantities[f.id] > 0).map(f => `${state.quantities[f.id]} ${f.name.toLowerCase()}`);
-  const wrap = state.wrapping ? WRAPPINGS.find(w => w.id === state.wrapping).name.toLowerCase() : 'sans emballage';
-  const ribbon = RIBBONS.find(r => r.id === state.ribbon).name.toLowerCase();
-  return `Un bouquet réaliste et élégant composé de ${parts.join(', ')}, enveloppé dans du ${wrap}, noué d'un ruban ${ribbon}, photographié en lumière naturelle douce.`;
+function renderCartPanel(){
+  const cart = getCart();
+  const itemsEl = document.getElementById('cartItems');
+  itemsEl.innerHTML = '';
+  if(cart.length === 0){
+    itemsEl.innerHTML = '<div class="cart-empty">Votre panier est vide</div>';
+  } else {
+    cart.forEach((order, index) => {
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      const flowerList = order.flowers.map(f => `${f.qty} × ${f.name}`).join(', ');
+      div.innerHTML = `
+        <div class="cart-item-top"><span>Bouquet ${index+1}</span><span>${order.total.toFixed(2).replace('.',',')} $</span></div>
+        <div>${flowerList}</div>
+        <div>${order.wrapping ? order.wrapping + ' · ' : ''}Ruban ${order.ribbon}</div>
+        <button class="remove-item" data-index="${index}">Retirer</button>
+      `;
+      itemsEl.appendChild(div);
+    });
+    itemsEl.querySelectorAll('.remove-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cart = getCart();
+        cart.splice(+btn.dataset.index, 1);
+        saveCart(cart);
+        renderCartPanel();
+      });
+    });
+  }
+  const total = cart.reduce((sum,o) => sum + o.total, 0);
+  document.getElementById('cartTotal').textContent = total.toFixed(2).replace('.',',') + ' $';
 }
+
+document.getElementById('cartWhatsappBtn').addEventListener('click', () => {
+  const cart = getCart();
+  if(cart.length === 0){ showToast('Votre panier est vide'); return; }
+  let msg = 'Bonjour ! Je souhaite commander :\n\n';
+  cart.forEach((order, i) => { msg += `Bouquet ${i+1} :\n${orderToText(order).split('\n').slice(1).join('\n')}\n\n`; });
+  const total = cart.reduce((sum,o) => sum + o.total, 0);
+  msg += `Total général : ${total.toFixed(2).replace('.',',')} $`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+});
 
 let toastTimer;
 function showToast(message){
@@ -779,6 +882,7 @@ renderCatalog();
 renderSwatches();
 renderBouquet();
 updateSummary();
+renderCartBadge();
 </script>
 </body>
 </html>
