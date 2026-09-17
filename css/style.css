@@ -1233,3 +1233,18 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
     max-width: 100%;
   }
    }
+#cartWhatsappBtn {
+  background-color: #386633;
+  color: #ffffff;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-weight: 500;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#cartWhatsappBtn:hover {
+  background-color: #2D5A27;
+   }
