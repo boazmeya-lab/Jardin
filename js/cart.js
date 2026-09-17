@@ -66,49 +66,46 @@ function updateQuantity(productId, change) {
 
 // 7. Mettre à jour l'affichage du panier (Badge + Liste + Total)
 function updateCartUI() {
-  // Badges (Nombre total d'articles)
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const badges = document.querySelectorAll('#cartBadge, .cart-count');
   badges.forEach(badge => {
     badge.textContent = totalCount;
   });
 
-  // Liste des articles
   const cartItemsContainer = document.getElementById('cartItems');
   const cartTotalContainer = document.getElementById('cartTotal');
 
   if (cartItemsContainer) {
     if (cart.length === 0) {
       cartItemsContainer.innerHTML = `
-        <div style="text-align: center; padding: 40px 20px; color: #777;">
-          <i class="fa-solid fa-basket-shopping" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
-          <p>Votre panier est vide pour le moment.</p>
+        <div style="text-align: center; padding: 50px 20px; color: #888;">
+          <i class="fa-solid fa-basket-shopping" style="font-size: 40px; margin-bottom: 12px; color: #ccc;"></i>
+          <p style="font-size: 14px; margin: 0;">Votre panier est vide pour le moment.</p>
         </div>
       `;
     } else {
       cartItemsContainer.innerHTML = cart.map(item => `
-        <div class="cart-item" style="display: flex; align-items: center; gap: 15px; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+        <div class="cart-item" style="display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f0f0f0;">
+          <img src="${item.image}" alt="${item.name}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 10px;">
           <div style="flex: 1;">
-            <h4 style="margin: 0 0 5px; font-size: 14px; font-weight: 600;">${item.name}</h4>
-            <div style="font-size: 13px; color: #2e7d32; font-weight: bold;">
+            <h4 style="margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #222;">${item.name}</h4>
+            <div style="font-size: 13px; color: #2D5A27; font-weight: 700;">
               ${SHOP_CONFIG.currency}${item.price}
             </div>
-            <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
-              <button onclick="updateQuantity('${item.id}', -1)" style="border:1px solid #ccc; background:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">-</button>
-              <span style="font-size: 13px; font-weight: 600;">${item.quantity}</span>
-              <button onclick="updateQuantity('${item.id}', 1)" style="border:1px solid #ccc; background:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">+</button>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+              <button onclick="updateQuantity('${item.id}', -1)" style="border: 1px solid #e0e0e0; background: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #444;">-</button>
+              <span style="font-size: 13px; font-weight: 600; min-width: 16px; text-align: center;">${item.quantity}</span>
+              <button onclick="updateQuantity('${item.id}', 1)" style="border: 1px solid #e0e0e0; background: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #444;">+</button>
             </div>
           </div>
-          <button onclick="removeFromCart('${item.id}')" style="border:none; background:none; color:#d32f2f; cursor:pointer; font-size:16px;" aria-label="Supprimer">
-            <i class="fa-solid fa-trash"></i>
+          <button onclick="removeFromCart('${item.id}')" style="border: none; background: none; color: #b71c1c; cursor: pointer; padding: 6px; font-size: 14px; opacity: 0.7; transition: opacity 0.2s;" aria-label="Supprimer">
+            <i class="fa-solid fa-trash-can"></i>
           </button>
         </div>
       `).join('');
     }
   }
 
-  // Total
   if (cartTotalContainer) {
     const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     cartTotalContainer.textContent = `${SHOP_CONFIG.currency}${totalAmount}`;
@@ -154,7 +151,6 @@ function sendWhatsAppOrder() {
 
 // 10. Attachement des événements au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
-  // Boutons pour ouvrir le panier
   const cartToggleBtn = document.getElementById('cartToggle');
   if (cartToggleBtn) {
     cartToggleBtn.addEventListener('click', (e) => {
@@ -163,25 +159,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Boutons pour fermer le panier
   const cartCloseBtn = document.getElementById('cartCloseBtn');
   const cartOverlay = document.getElementById('cartOverlay');
 
   if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCartDrawer);
   if (cartOverlay) cartOverlay.addEventListener('click', closeCartDrawer);
 
-  // Bouton WhatsApp
   const whatsappBtn = document.getElementById('cartWhatsappBtn');
   if (whatsappBtn) {
     whatsappBtn.addEventListener('click', sendWhatsAppOrder);
   }
 
-  // Mettre à jour l'affichage initial
   updateCartUI();
 
-// ✅ CORRECTION 1 : On attache les fonctions au window pour qu'on puisse les appeler avec onclick="..."
-window.updateQuantity = updateQuantity;
-window.removeFromCart = removeFromCart;
-window.addToCart = addToCart;           // au cas où
-window.openCartDrawer = openCartDrawer;  // au cas où
+  // Attachement global pour onclick HTML
+  window.updateQuantity = updateQuantity;
+  window.removeFromCart = removeFromCart;
+  window.addToCart = addToCart;
+  window.openCartDrawer = openCartDrawer;
 });
