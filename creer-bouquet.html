@@ -5,21 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Créez votre bouquet — Jardin Agro</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
   :root{
-    --ivoire: #FAF7F1;
-    --ivoire-2: #F2EDE3;
-    --vert-fonce: #2E3B2A;
-    --vert-mousse: #5C6E4F;
-    --vert-sauge: #93A583;
+    --ivoire: #F7F5F3;
+    --ivoire-2: #EFEBE5;
+    --vert-fonce: #2E5B38;
+    --vert-fonce-hover: #23472C;
+    --vert-mousse: #3F6E4A;
+    --vert-sauge: #8FAE95;
     --rose-poudre: #D9A9A0;
-    --rose-fonce: #B5716A;
-    --or: #B08A4E;
-    --encre: #2A2A26;
-    --ligne: #E2DACB;
-    --whatsapp: #3F7A57;
-    --radius: 3px;
+    --rose-fonce: #B11A29;
+    --or: #D4AF37;
+    --encre: #1A1616;
+    --ligne: #EAE6E2;
+    --whatsapp: #25D366;
+    --whatsapp-hover: #1EB956;
+    --radius: 4px;
   }
 
   *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -28,46 +30,61 @@
   body{
     background: var(--ivoire);
     color: var(--encre);
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   button, .swatch, .stepper button{ touch-action: manipulation; }
   h1,h2,h3, .display{
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-weight: 600;
     color: var(--vert-fonce);
     margin: 0;
   }
 
-  /* ---------- Header ---------- */
+  /* ---------- Header (aligné sur la page d'accueil) ---------- */
   .site-header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     display:flex;
     align-items: center;
     justify-content: space-between;
     padding: 16px 48px;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     border-bottom: 1px solid var(--ligne);
     gap: 16px;
   }
-  .brand-block{ display:flex; align-items:center; gap: 12px; }
+  .brand-block{ display:flex; align-items:center; gap: 12px; text-decoration:none; }
   .site-logo{
-    height: 42px;
-    width: 42px;
+    height: 45px;
+    width: auto;
     object-fit: contain;
     display: block;
   }
   .site-logo.hidden{ display:none; }
   .brand{
-    font-family:'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 24px;
+    font-family:'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 22px;
     color: var(--vert-fonce);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
   .site-header nav{
     display:flex; gap: 28px;
-    font-size: 14px;
-    color: var(--vert-mousse);
+    font-size: 0.95rem;
+    font-weight: 500;
   }
+  .site-header nav a{
+    text-decoration: none;
+    color: var(--encre);
+    transition: color 0.2s ease;
+  }
+  .site-header nav a:hover{ color: var(--vert-fonce); }
   .header-right{ display:flex; align-items:center; gap: 14px; }
 
   .cart-btn{
@@ -80,7 +97,7 @@
     color: var(--vert-fonce);
     background: transparent;
     cursor: pointer;
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
   .cart-btn:hover{ background: var(--ivoire-2); }
   .cart-badge{
@@ -95,7 +112,7 @@
   /* ---------- Panneau panier ---------- */
   .cart-overlay{
     position: fixed; inset: 0;
-    background: rgba(46,59,42,0.25);
+    background: rgba(26,22,22,0.25);
     z-index: 200;
     display:none;
   }
@@ -200,7 +217,7 @@
   .stage-frame{
     background: linear-gradient(180deg, #FFFFFF 0%, var(--ivoire-2) 100%);
     border: 1px solid var(--ligne);
-    border-radius: 4px;
+    border-radius: var(--radius);
     padding: 18px 18px 0;
   }
   .stage-label{
@@ -247,25 +264,36 @@
     z-index: 40;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   }
+  /* Le ruban est descendu plus bas sur le bouquet, vers le bas de l'emballage */
   .ribbon-band{
     position:absolute;
-    left:50%; bottom: 92px;
+    left:50%; bottom: 40px;
     width: 130px; height: 22px;
     transform: translateX(-50%);
     z-index: 41;
+    overflow: hidden;
+    border-radius: 2px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.15);
   }
   .ribbon-bow{
-    position:absolute; left:50%; bottom: 96px;
+    position:absolute; left:50%; bottom: 44px;
     width: 46px; height: 30px;
     transform: translateX(-50%);
     z-index: 42;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  }
+  .ribbon-band img, .ribbon-bow img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   /* ---------- Options ---------- */
   .options{ margin-top: 26px; }
   .option-block + .option-block{ margin-top: 22px; }
-  .option-block h3{ font-size: 15px; font-weight: 500; color: var(--vert-fonce); margin-bottom: 10px; font-family:'Work Sans'; }
+  .option-block h3{ font-size: 15px; font-weight: 500; color: var(--vert-fonce); margin-bottom: 10px; font-family:'Plus Jakarta Sans'; }
   .swatch-row{ display:flex; gap: 12px; flex-wrap: wrap; }
   .swatch{
     width: 40px; height: 40px;
@@ -298,20 +326,21 @@
     border-top: 1px solid var(--ligne);
   }
   .summary-total .label{ font-size: 15px; color: var(--vert-fonce); }
-  .summary-total .value{ font-family:'Cormorant Garamond', serif; font-size: 30px; color: var(--vert-fonce); }
+  .summary-total .value{ font-family:'Playfair Display', serif; font-size: 30px; color: var(--vert-fonce); }
 
   .actions{ margin-top: 22px; display:flex; flex-direction: column; gap: 10px; }
   .btn{
     border: none;
-    padding: 14px 20px;
-    border-radius: 2px;
+    padding: 14px 26px;
+    border-radius: 999px;
     font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     transition: opacity 0.15s ease, background 0.15s ease;
   }
   .btn-primary{ background: var(--vert-fonce); color: var(--ivoire); }
-  .btn-primary:hover{ background: #253321; }
+  .btn-primary:hover{ background: var(--vert-fonce-hover); }
   .btn-secondary{
     background: transparent; color: var(--vert-fonce);
     border: 1px solid var(--vert-mousse);
@@ -321,7 +350,7 @@
     background: var(--whatsapp); color: var(--ivoire);
     display:flex; align-items:center; justify-content:center; gap: 8px;
   }
-  .btn-whatsapp:hover{ background: #35664A; }
+  .btn-whatsapp:hover{ background: var(--whatsapp-hover); }
   .btn[disabled]{ opacity: 0.4; cursor: default; }
 
   .toast{
@@ -349,17 +378,18 @@
 <body>
 
 <header class="site-header">
-  <div class="brand-block">
+  <a class="brand-block" href="index.html">
     <!-- LOGO : placez votre fichier logo (ex. logo.png) à la racine du site,
          ou changez le chemin ci-dessous. S'il est introuvable, il est
          simplement masqué et le nom "Jardin Agro" reste affiché seul. -->
     <img class="site-logo" id="siteLogo" src="images/logo.png" alt="Jardin Agro" onerror="this.classList.add('hidden')">
     <div class="brand">Jardin Agro</div>
-  </div>
+  </a>
   <nav>
-    <span>Fleurs</span>
-    <span>Compositions</span>
-    <span>Professionnels</span>
+    <a href="index.html">Accueil</a>
+    <a href="products.html">Catalogue &amp; Services</a>
+    <a href="index.html#livraison">Livraison</a>
+    <a href="index.html#contact">Contact</a>
   </nav>
   <div class="header-right">
     <button class="cart-btn" id="cartToggleBtn">
@@ -417,8 +447,8 @@
         </div>
         <div class="wrap-cone" id="wrapCone" style="background: transparent;"></div>
         <!-- flower instances injected here -->
-        <div class="ribbon-band" id="ribbonBand" style="display:none;"></div>
-        <div class="ribbon-bow" id="ribbonBow" style="display:none;"></div>
+        <div class="ribbon-band" id="ribbonBand" style="display:none;"><img id="ribbonBandImg" alt="Ruban"></div>
+        <div class="ribbon-bow" id="ribbonBow" style="display:none;"><img id="ribbonBowImg" alt=""></div>
       </div>
     </div>
 
@@ -496,7 +526,11 @@ const RIBBONS = [
      GitHub s'appelle bien "images" et pas "image". Renommez le dossier ou
      ajustez les chemins ci-dessus pour qu'ils correspondent exactement.
    - L'espace involontaire dans " image/eucalyptus1.png " a été supprimé :
-     un espace dans un chemin empêche l'image de se charger. */
+     un espace dans un chemin empêche l'image de se charger.
+   - Pour le ruban : ajoutez simplement une photo dans le champ "image" de
+     chaque entrée de RIBBONS (comme pour "blanc" ci-dessus). Si aucune photo
+     n'est fournie, un visuel de secours dans la bonne couleur est généré
+     automatiquement, exactement comme pour les fleurs. */
 
 /* =========================================================================
    2. ÉTAT
@@ -580,6 +614,33 @@ function buildFlowerSVG(f){
 }
 
 FLOWERS.forEach(f => { f.resolvedImage = f.image || buildFlowerSVG(f); });
+
+/* ---- Visuels de secours pour le ruban (bande + noeud), même logique
+   que pour les fleurs : une vraie photo si "image" est renseignée,
+   sinon un visuel généré dans la bonne couleur. ---- */
+function buildRibbonBandSVG(color){
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 30">
+    <rect width="200" height="30" fill="${color}"/>
+    <rect width="200" height="7" y="0" fill="rgba(255,255,255,0.28)"/>
+    <rect width="200" height="7" y="23" fill="rgba(0,0,0,0.12)"/>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+function buildRibbonBowSVG(color){
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 30">
+    <rect width="46" height="30" fill="${color}"/>
+    <path d="M23,15 L4,4 Q0,15 4,26 Z" fill="rgba(255,255,255,0.18)"/>
+    <path d="M23,15 L42,4 Q46,15 42,26 Z" fill="rgba(0,0,0,0.12)"/>
+    <circle cx="23" cy="15" r="4.5" fill="rgba(0,0,0,0.15)"/>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+RIBBONS.forEach(r => {
+  r.resolvedImage = r.image || buildRibbonBandSVG(r.swatch);
+  r.resolvedBow = r.image || buildRibbonBowSVG(r.swatch);
+});
 
 /* =========================================================================
    4. RENDU DU CATALOGUE
@@ -696,7 +757,7 @@ function renderSwatches(){
   RIBBONS.forEach(r => {
     const el = document.createElement('div');
     el.className = 'swatch';
-    el.style.background = r.image ? `url("${r.image}") center/cover, ${r.swatch}` : r.swatch;
+    el.style.background = `url("${r.resolvedImage}") center/cover, ${r.swatch}`;
     el.dataset.id = r.id;
     el.title = r.name;
     el.dataset.selected = state.ribbon === r.id;
@@ -717,18 +778,21 @@ function updateWrapping(){
 function updateRibbon(){
   const band = document.getElementById('ribbonBand');
   const bow = document.getElementById('ribbonBow');
+  const bandImg = document.getElementById('ribbonBandImg');
+  const bowImg = document.getElementById('ribbonBowImg');
   const totalStems = FLOWERS.reduce((sum,f) => sum + state.quantities[f.id], 0);
   const r = RIBBONS.find(x => x.id === state.ribbon);
   const show = totalStems > 0;
+
   band.style.display = show ? 'block' : 'none';
   bow.style.display = show ? 'block' : 'none';
-  band.style.background = r.image ? `url("${r.image}") center/cover` : r.swatch;
-  bow.innerHTML = show ? `
-    <svg viewBox="0 0 46 30" width="46" height="30">
-      <path d="M23,15 L4,4 Q0,15 4,26 Z" fill="${r.swatch}" stroke="rgba(0,0,0,0.12)" stroke-width="0.5"/>
-      <path d="M23,15 L42,4 Q46,15 42,26 Z" fill="${r.swatch}" stroke="rgba(0,0,0,0.12)" stroke-width="0.5"/>
-      <circle cx="23" cy="15" r="4.5" fill="${r.swatch}" stroke="rgba(0,0,0,0.12)" stroke-width="0.5"/>
-    </svg>` : '';
+
+  if(show){
+    bandImg.src = r.resolvedImage;
+    bandImg.alt = 'Ruban ' + r.name;
+    bowImg.src = r.resolvedBow;
+    bowImg.alt = '';
+  }
 }
 
 /* =========================================================================
