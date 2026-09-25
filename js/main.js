@@ -3,14 +3,7 @@
    =========================================================== */
 
 // 1. MENU MOBILE
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
 
-if (menuToggle && navMenu) {
-  menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    navMenu.classList.toggle('active');
-  });
 
   // Ferme le menu mobile lors du clic sur un lien
   document.querySelectorAll('.nav-menu a').forEach(link => {
