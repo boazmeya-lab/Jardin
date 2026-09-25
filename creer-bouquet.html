@@ -491,10 +491,12 @@
    SANS le "+" ni espaces : indicatif pays + numéro complet.
    Exemple Québec/Canada : 1 514 555 1234  ->  "15145551234"
    ========================================================================= */
+const WHATSAPP_NUMBER = "243831982374"; // <-- À REMPLACER par votre numéro
+
 function openWhatsApp(message) {
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
-  }; // <-- À REMPLACER par votre numéro
+}
 
 /* =========================================================================
    1. DONNÉES DES FLEURS
