@@ -406,6 +406,36 @@
         });
       }
   </script>
+<!-- BOUTON FAQ FLOTTANT -->
+<a href="faq.html" class="faq-float-btn" aria-label="Foire aux questions">
+  <i class="fa-solid fa-circle-question"></i>
+</a>
 
+<style>
+  .faq-float-btn{
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--primary-color, #2e5b38);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    z-index: 1500;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .faq-float-btn:hover{
+    background: var(--primary-hover, #23472c);
+    transform: translateY(-3px);
+  }
+  @media (max-width: 480px){
+    .faq-float-btn{ bottom: 16px; left: 16px; width: 46px; height: 46px; font-size: 1.1rem; }
+  }
+</style>
 </body>
 </html>
