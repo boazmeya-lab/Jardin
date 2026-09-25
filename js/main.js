@@ -7,10 +7,6 @@
    JARDIN AGRO — Menu mobile & Interactions Globales
    =========================================================== */
 
-// 1. MENU MOBILE
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
-
   // Ferme le menu mobile lors du clic sur un lien
   document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', () => {
