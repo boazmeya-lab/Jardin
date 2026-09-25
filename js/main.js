@@ -1,9 +1,27 @@
 /* ===========================================================
-   JARDIN AGRO — Interactions Globales (Panier)
+   JARDIN AGRO — Menu mobile & Interactions Globales
    =========================================================== */
 
-// GESTION DU TIROIR PANIER & SÉCURITÉ ANTI-404
+// 1. MENU MOBILE
 document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('navMenu');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+  }
+
+  // 2. GESTION DU TIROIR PANIER & SÉCURITÉ ANTI-404
   document.addEventListener('click', (e) => {
     const link = e.target.closest('a[href*="cart.html"], #cartToggle');
     if (link) {
