@@ -318,24 +318,7 @@
 
   <!-- SCRIPT JS MOBILE MENU, RECHERCHE & SUGGESTIONS -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const menuToggle = document.getElementById('menuToggle');
-      const navMenu = document.getElementById('navMenu');
-
-      if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
-          navMenu.classList.toggle('active');
-          menuToggle.classList.toggle('active');
-        });
-
-        navMenu.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
-          });
-        });
-      }
-
+    
       /* =====================================================
          RECHERCHE + SUGGESTIONS
          Liste de suggestions statique (page, catégories, quelques
