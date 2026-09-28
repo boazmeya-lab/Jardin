@@ -78,3 +78,66 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+(function () {
+  var btn = document.querySelector('a[href="creer-bouquet.html"].btn');
+  if (!btn) return;
+  try { if (sessionStorage.getItem('hintBouquetVu')) return; } catch (e) {}
+
+  // CSS
+  var style = document.createElement('style');
+  style.textContent = `
+    .hint-wrap{ position:relative; display:inline-block; }
+    .hint-bouquet{
+      position:absolute; bottom:calc(100% + 14px); left:50%;
+      transform:translateX(-50%) translateY(6px);
+      background:#fff; color:#1A1616;
+      font:600 0.85rem 'Plus Jakarta Sans',sans-serif;
+      padding:10px 34px 10px 14px; border-radius:12px;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      white-space:nowrap; opacity:0; pointer-events:none;
+      transition:opacity .35s, transform .35s; z-index:50;
+    }
+    .hint-bouquet.show{ opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
+    .hint-bouquet::after{
+      content:''; position:absolute; top:100%; left:50%; margin-left:-7px;
+      border:7px solid transparent; border-top-color:#fff;
+    }
+    .hint-close{
+      position:absolute; top:4px; right:8px; border:none; background:none;
+      font-size:1.2rem; line-height:1; cursor:pointer; color:#6E6865;
+    }
+    .hint-wrap.pulse .btn{ animation:hintPulse 1.8s infinite; }
+    @keyframes hintPulse{
+      0%{ box-shadow:0 0 0 0 rgba(46,91,56,.5); }
+      70%{ box-shadow:0 0 0 14px rgba(46,91,56,0); }
+      100%{ box-shadow:0 0 0 0 rgba(46,91,56,0); }
+    }
+    @media (max-width:767px){
+      .hint-bouquet{ white-space:normal; width:210px; text-align:center; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Enveloppe le bouton pour positionner la bulle
+  var wrap = document.createElement('span');
+  wrap.className = 'hint-wrap pulse';
+  btn.parentNode.insertBefore(wrap, btn);
+  wrap.appendChild(btn);
+
+  var hint = document.createElement('div');
+  hint.className = 'hint-bouquet';
+  hint.innerHTML = '✨ Composez votre bouquet sur-mesure <button type="button" class="hint-close" aria-label="Fermer">&times;</button>';
+  wrap.appendChild(hint);
+
+  function fermer() {
+    hint.classList.remove('show');
+    wrap.classList.remove('pulse');
+    try { sessionStorage.setItem('hintBouquetVu', '1'); } catch (e) {}
+  }
+
+  hint.querySelector('.hint-close').addEventListener('click', fermer);
+  btn.addEventListener('click', fermer);
+
+  setTimeout(function () { hint.classList.add('show'); }, 1500); // apparaît après 1,5 s
+  setTimeout(fermer, 11000);                                      // disparaît après ~10 s
+})();
