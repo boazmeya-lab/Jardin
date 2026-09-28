@@ -9,12 +9,26 @@
   var PHONE_TEL = '+243831982374';
   var CONTACT_PAGE = 'contact.html';
 
-  /* ---------- BASE DE CONNAISSANCES ----------
-     q  : questions types (sert aussi à la recherche)
-     k  : mots-clés utiles
-     a  : réponse (HTML autorisé)
-     ⚠ Les réponses marquées [À VÉRIFIER] doivent être validées par les propriétaires. */
+  /* ---------- BASE DE CONNAISSANCES ---------- */
   var FAQ = [
+    // Salutations & Politesse
+    {
+      q: 'Bonjour',
+      k: ['bonjour', 'salut', 'coucou', 'hello', 'bonsoir', 'hola', 'hey'],
+      a: 'Bonjour 🌸 Comment puis-je vous aider aujourd’hui ?'
+    },
+    {
+      q: 'Comment ça va ?',
+      k: ['ca va', 'cava', 'comment ca va', 'comment vas tu', 'comment allez vous', 'forme'],
+      a: 'Tout va très bien, merci ! 🌿 Et vous, comment puis-je vous aider ?'
+    },
+    {
+      q: 'Merci',
+      k: ['merci', 'super', 'genial', 'parfait', 'top', 'remercie', 'merci beaucoup'],
+      a: 'Avec grand plaisir ! N’hésitez pas si vous avez d’autres questions. Bonne journée 🌺'
+    },
+
+    // FAQ Produits & Services
     {
       q: 'Comment passer une commande ?',
       k: ['commander', 'commande', 'acheter', 'achat', 'panier', 'reserver', 'passer'],
@@ -23,7 +37,6 @@
     {
       q: 'Quels sont les délais et zones de livraison ?',
       k: ['livraison', 'livrer', 'delai', 'zone', 'combien de temps', 'quand', 'recevoir', 'adresse'],
-      /* [À VÉRIFIER] : remplacer par les vrais délais et zones */
       a: 'Les délais et zones de livraison sont détaillés sur la page <a href="livraison.html">Livraison</a>. Pour une livraison urgente ou une adresse particulière, notre service client vous répond rapidement.'
     },
     {
@@ -34,19 +47,16 @@
     {
       q: 'Proposez-vous des abonnements floraux pour les entreprises ?',
       k: ['abonnement', 'entreprise', 'societe', 'bureau', 'professionnel', 'hotel', 'restaurant', 'regulier', 'gros', 'grossiste'],
-      /* [À VÉRIFIER] */
       a: 'Oui, nous accompagnons les professionnels (bureaux, hôtels, restaurants…) avec des livraisons régulières et des ventes en gros. Contactez notre service client pour un devis adapté à vos besoins.'
     },
     {
       q: 'Faites-vous des compositions pour les cérémonies funéraires ?',
       k: ['funeraire', 'funerailles', 'deuil', 'enterrement', 'obseques', 'couronne', 'condoleances', 'ceremonie', 'gerbe'],
-      /* [À VÉRIFIER] */
       a: 'Oui, nous réalisons des compositions pour les cérémonies funéraires (gerbes, couronnes, bouquets). Merci de nous contacter directement pour préciser vos souhaits et le délai.'
     },
     {
       q: 'Comment se passe le paiement ?',
       k: ['paiement', 'payer', 'prix', 'mobile money', 'carte', 'cash', 'especes', 'mpesa', 'airtel', 'orange', 'facture'],
-      /* [À VÉRIFIER] : lister les vrais modes de paiement */
       a: 'Les modes de paiement disponibles s’affichent lors de la validation de votre commande. Pour une question précise (facture, paiement à la livraison, commande professionnelle), contactez notre service client.'
     },
     {
@@ -120,24 +130,28 @@
       });
       if (score > bestScore) { bestScore = score; best = e.item; }
     });
-    return bestScore >= 2 ? best : null;
+    return bestScore >= 1.5 ? best : null;
   }
 
-  /* ---------- INTERFACE ---------- */
+  /* ---------- INTERFACE CSS OPTIMISÉE POUR MOBILE ---------- */
   var css = '' +
-    '#ja-chat-btn{position:fixed;right:18px;bottom:18px;z-index:9998;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:#2b5a3c;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:26px}' +
+    '#ja-chat-btn{position:fixed;right:18px;bottom:18px;z-index:9998;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:#2b5a3c;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:26px;-webkit-tap-highlight-color:transparent}' +
     '#ja-tip{position:fixed;right:18px;bottom:90px;z-index:9997;max-width:230px;background:#a4162b;color:#fff;padding:12px 30px 12px 14px;border-radius:14px;font:600 14px/1.4 "Plus Jakarta Sans",system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25);display:none}' +
     '#ja-tip.show{display:block}' +
     '#ja-tip::after{content:"";position:absolute;bottom:-9px;right:22px;border:9px solid transparent;border-top-color:#a4162b;border-bottom:0}' +
     '#ja-tip button{position:absolute;top:4px;right:6px;background:none;border:0;color:#fff;font-size:18px;cursor:pointer;line-height:1}' +
     '@media (prefers-reduced-motion:no-preference){#ja-tip.show{animation:jaBob 1.6s ease-in-out infinite}@keyframes jaBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}}' +
     '#ja-chat-btn:focus-visible,#ja-chat button:focus-visible,#ja-chat input:focus-visible,#ja-chat a:focus-visible{outline:3px solid #a4162b;outline-offset:2px}' +
-    '#ja-chat{position:fixed;right:18px;bottom:88px;z-index:9999;width:min(370px,calc(100vw - 24px));height:min(560px,calc(100vh - 110px));background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);display:none;flex-direction:column;overflow:hidden;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#222}' +
+    
+    /* Blocage du scroll mobile / iOS Fix */
+    '#ja-chat{position:fixed;right:18px;bottom:88px;z-index:9999;width:min(370px,calc(100vw - 24px));height:min(560px,calc(100vh - 110px));height:min(560px,calc(100dvh - 110px));background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);display:none;flex-direction:column;overflow:hidden;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#222;touch-action:none}' +
     '#ja-chat.open{display:flex}' +
-    '#ja-chat header{background:#2b5a3c;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}' +
+    '#ja-chat header{background:#2b5a3c;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}' +
     '#ja-chat header strong{font-family:"Playfair Display",Georgia,serif;font-size:18px;font-weight:600}' +
     '#ja-chat header button{background:none;border:0;color:#fff;font-size:22px;cursor:pointer;line-height:1}' +
-    '#ja-msgs{flex:1;overflow-y:auto;padding:14px;background:#f7f7f4;display:flex;flex-direction:column;gap:10px}' +
+    
+    /* Zone de messages autonome */
+    '#ja-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:14px;background:#f7f7f4;display:flex;flex-direction:column;gap:10px}' +
     '.ja-m{max-width:86%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.5;word-wrap:break-word}' +
     '.ja-m a{color:#a4162b}' +
     '.ja-bot{background:#fff;border:1px solid #e6e6e0;align-self:flex-start;border-bottom-left-radius:4px}' +
@@ -148,7 +162,7 @@
     '.ja-cta a{display:block;text-align:center;text-decoration:none;padding:10px 12px;border-radius:999px;font-size:14px;font-weight:600}' +
     '.ja-cta .p{background:#2b5a3c;color:#fff}' +
     '.ja-cta .s{border:1px solid #2b5a3c;color:#2b5a3c}' +
-    '#ja-form{display:flex;gap:8px;padding:10px;border-top:1px solid #e6e6e0;background:#fff}' +
+    '#ja-form{display:flex;gap:8px;padding:10px;border-top:1px solid #e6e6e0;background:#fff;flex-shrink:0}' +
     '#ja-input{flex:1;border:1px solid #d5d5cf;border-radius:999px;padding:10px 14px;font-size:14px;font-family:inherit;min-width:0}' +
     '#ja-send{border:0;background:#a4162b;color:#fff;border-radius:999px;padding:0 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}' +
     '@media (prefers-reduced-motion:no-preference){.ja-m{animation:jaIn .18s ease-out}@keyframes jaIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}}';
@@ -172,7 +186,6 @@
     document.body.appendChild(btn);
     document.body.appendChild(box);
 
-    /* Bulle d'indication avec flèche vers le robot */
     var tip = el('div', { id: 'ja-tip', role: 'status' }, 'Voici l’IA de Jardin Agro 🤖<br>Vous avez des questions ?<button type="button" aria-label="Fermer l’indication">×</button>');
     document.body.appendChild(tip);
     function hideTip() {
