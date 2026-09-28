@@ -10,7 +10,7 @@
 
   /* ---------- BASE DE CONNAISSANCES ---------- */
   var FAQ = [
-    // Salutations & Politeness
+    // Salutations & Politesse
     {
       q: 'Bonjour',
       k: ['bonjour', 'salut', 'coucou', 'hello', 'bonsoir', 'hola', 'hey'],
@@ -66,7 +66,7 @@
     {
       q: 'Comment entretenir un bouquet de roses ?',
       k: ['rose', 'roses', 'bouquet', 'tete qui penche', 'penchent'],
-      a: 'Pour les roses : retirez les feuilles du bas, recoupez les tiges en biais et mettez-les dans de l'eau propre et fraîche. Si une tête penche, recoupez la tige et plongez-la quelques minutes dans de l'eau tiède. Gardez-les au frais, à l'écart du soleil.'
+      a: 'Pour les roses : retirez les feuilles du bas, recoupez les tiges en biais et mettez-les dans de l’eau propre et fraîche. Si une tête penche, recoupez la tige et plongez-la quelques minutes dans de l’eau tiède. Gardez-les au frais, à l’écart du soleil.'
     },
     {
       q: 'Comment garder un bouquet frais pendant le transport ou avant un événement ?',
@@ -132,7 +132,7 @@
     return bestScore >= 1.5 ? best : null;
   }
 
-  /* ---------- INTERFACE FULLSCREEN MOBILE ---------- */
+  /* ---------- INTERFACE CSS CORRIGÉE ---------- */
   var css = '' +
     '#ja-chat-btn{position:fixed;right:18px;bottom:18px;z-index:9998;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:#2b5a3c;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:26px;-webkit-tap-highlight-color:transparent}' +
     '#ja-tip{position:fixed;right:18px;bottom:90px;z-index:9997;max-width:230px;background:#a4162b;color:#fff;padding:12px 30px 12px 14px;border-radius:14px;font:600 14px/1.4 "Plus Jakarta Sans",system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25);display:none}' +
@@ -142,19 +142,17 @@
     '@media (prefers-reduced-motion:no-preference){#ja-tip.show{animation:jaBob 1.6s ease-in-out infinite}@keyframes jaBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}}' +
     '#ja-chat-btn:focus-visible,#ja-chat button:focus-visible,#ja-chat input:focus-visible,#ja-chat a:focus-visible{outline:3px solid #a4162b;outline-offset:2px}' +
     
-    /* Fullscreen sur Mobile / Modal sur PC */
+    /* Configuration Plein écran / Pop-up PC */
     '#ja-chat{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#fff;display:none;flex-direction:column;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#222}' +
-    '@media (min-width:600px){' +
-      '#ja-chat{top:auto;left:auto;right:18px;bottom:88px;width:370px;height:560px;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden}' +
-    '}' +
+    '@media (min-width:600px){#ja-chat{top:auto;left:auto;right:18px;bottom:88px;width:370px;height:560px;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden}}' +
     '#ja-chat.open{display:flex}' +
     
-    /* Header avec zone de sécurité mobile (notches iPhone) */
-    '#ja-chat header{background:#2b5a3c;color:#fff;padding:16px;padding-top:calc(16px + env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;flex-shrink:0}' +
+    /* Header */
+    '#ja-chat header{background:#2b5a3c;color:#fff;padding:16px;padding-top:max(16px, env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;flex-shrink:0}' +
     '#ja-chat header strong{font-family:"Playfair Display",Georgia,serif;font-size:18px;font-weight:600}' +
-    '#ja-chat header button{background:rgba(255,255,255,.15);border:0;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}' +
+    '#ja-chat header button{background:rgba(255,255,255,.2);border:0;color:#fff;font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}' +
     
-    /* Messages */
+    /* Zone de messages */
     '#ja-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;background:#f7f7f4;display:flex;flex-direction:column;gap:12px}' +
     '.ja-m{max-width:85%;padding:11px 15px;border-radius:16px;font-size:15px;line-height:1.5;word-wrap:break-word}' +
     '.ja-m a{color:#a4162b;font-weight:600}' +
@@ -167,8 +165,8 @@
     '.ja-cta .p{background:#2b5a3c;color:#fff}' +
     '.ja-cta .s{border:1px solid #2b5a3c;color:#2b5a3c}' +
     
-    /* Formulaire en bas avec font-size 16px (0 zoom) */
-    '#ja-form{display:flex;gap:8px;padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));border-top:1px solid #e6e6e0;background:#fff;flex-shrink:0}' +
+    /* Zone de saisie */
+    '#ja-form{display:flex;gap:8px;padding:12px;padding-bottom:max(12px, env(safe-area-inset-bottom));border-top:1px solid #e6e6e0;background:#fff;flex-shrink:0}' +
     '#ja-input{flex:1;border:1px solid #d5d5cf;border-radius:999px;padding:12px 16px;font-size:16px!important;font-family:inherit;min-width:0;-webkit-appearance:none}' +
     '#ja-send{border:0;background:#a4162b;color:#fff;border-radius:999px;padding:0 18px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}' +
     '@media (prefers-reduced-motion:no-preference){.ja-m{animation:jaIn .18s ease-out}@keyframes jaIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}}';
