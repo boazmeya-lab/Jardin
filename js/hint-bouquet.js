@@ -1,5 +1,5 @@
-/* Jardin Agro – Indice "Créer mon bouquet"
-   Affiche une bulle au-dessus du bouton "creer-bouquet.html" 
+/* Jardin Agro – Indice "Créer mon bouquet" (Bulle blanche)
+   Affiche une bulle blanche au-dessus du bouton "creer-bouquet.html" 
    qui reste visible jusqu'à un clic explicite sur la croix ou le bouton.
 */
 (function () {
@@ -28,12 +28,12 @@
       bottom: calc(100% + 14px);
       left: 50%;
       transform: translateX(-50%) translateY(6px);
-      background: #a4162b;
-      color: #ffffff;
+      background: #ffffff;
+      color: #1a1616;
       font: 600 0.88rem 'Plus Jakarta Sans', system-ui, sans-serif;
       padding: 10px 34px 10px 14px;
       border-radius: 12px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
       white-space: nowrap;
       opacity: 0;
       pointer-events: none;
@@ -46,6 +46,7 @@
       transform: translateX(-50%) translateY(0);
       pointer-events: auto;
     }
+    /* Flèche blanche pointant vers le bas */
     .ja-hint-bouquet::after {
       content: '';
       position: absolute;
@@ -53,7 +54,7 @@
       left: 50%;
       margin-left: -7px;
       border: 7px solid transparent;
-      border-top-color: #a4162b;
+      border-top-color: #ffffff;
     }
     .ja-hint-close {
       position: absolute;
@@ -64,20 +65,21 @@
       font-size: 1.2rem;
       line-height: 1;
       cursor: pointer;
-      color: #ffffff;
+      color: #6e6865;
       opacity: 0.8;
     }
     .ja-hint-close:hover {
       opacity: 1;
+      color: #1a1616;
     }
     .ja-hint-wrap.pulse .btn, 
     .ja-hint-wrap.pulse a {
       animation: jaHintPulse 1.8s infinite;
     }
     @keyframes jaHintPulse {
-      0% { box-shadow: 0 0 0 0 rgba(164, 22, 43, 0.5); }
-      70% { box-shadow: 0 0 0 14px rgba(164, 22, 43, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(164, 22, 43, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(46, 91, 56, 0.5); }
+      70% { box-shadow: 0 0 0 14px rgba(46, 91, 56, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(46, 91, 56, 0); }
     }
     @media (max-width: 767px) {
       .ja-hint-bouquet {
