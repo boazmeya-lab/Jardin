@@ -3,7 +3,7 @@
 // Dépend de flowers.js (doit être chargé avant ce fichier)
 // ============================================
 
-const NUMERO_WHATSAPP = "243831982374"; // ⚠️ remplace par le vrai numéro de Jardin Agro (format international, sans +)
+const NUMERO_WHATSAPP = "243831982374"; // Numéro Jardin Agro (format international, sans +)
 
 // État du bouquet en cours de création
 const bouquet = {
@@ -26,6 +26,7 @@ function styleVisuel(item) {
 }
 
 // ---------- Construction des pickers ----------
+
 function construireFlowerPicker() {
   const container = document.getElementById("flowerPicker");
   if (!container) return;
@@ -54,6 +55,7 @@ function construireFlowerPicker() {
     `;
     container.appendChild(card);
   });
+
   container.addEventListener("click", (e) => {
     const btn = e.target.closest(".qty-btn");
     if (!btn) return;
