@@ -26,11 +26,17 @@ function styleVisuel(item) {
 }
 
 // ---------- Construction des pickers ----------
-
-function construireFlowerPicker() {
-  const container = document.getElementById("flowerPicker");
-  if (!container) return;
-  container.innerHTML = "";
+let derniere = null;
+  FLOWERS.forEach((fleur) => {
+    if (fleur.family !== derniere) {
+      const h = document.createElement("h3");
+      h.className = "flower-family";
+      h.textContent = fleur.familyName + " · " + formatPrix(fleur.price) + " / fleur";
+      container.appendChild(h);
+      derniere = fleur.family;
+    }
+    const card = document.createElement("div");
+    card.className = "flower-card";
 
   FLOWERS.forEach((fleur) => {
     const card = document.createElement("div");
