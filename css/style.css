@@ -1248,3 +1248,4 @@ h1, h2, h3, .hero-title, .section-title, .logo-text {
 #cartWhatsappBtn:hover {
   background-color: #2D5A27;
    }
+.flower-family{grid-column:1/-1;margin:18px 0 4px;font-family:'Playfair Display',serif;font-size:20px;color:#2E5B38}
