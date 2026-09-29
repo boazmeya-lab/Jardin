@@ -6,14 +6,31 @@
 // Remplace les chemins "img" par les vrais noms de tes fichiers.
 // ============================================
 
-const FLOWERS = [
-  { id: "rose_rouge",   name: "Rose rouge",   price: 2.50, color: "#c0392b", img: "image/rose1.jpg" },
-  { id: "rose_blanche", name: "Rose blanche", price: 2.50, color: "#f5f5f5", img: "image/rose2.jpg" },
-  { id: "tulipe",       name: "Tulipe",       price: 1.80, color: "#e67e22", img: "image/rose3.jpg" },
-  { id: "lys",          name: "Lys",          price: 3.00, color: "#f9e79f", img: "image/rose4.jpg" },
-  { id: "tournesol",    name: "Tournesol",    price: 2.20, color: "#f1c40f", img: "image/fleurs/tournesol.jpg" },
-  { id: "orchidee",     name: "Orchidée",     price: 4.50, color: "#9b59b6", img: "image/fleurs/orchidee.jpg" },
+const FAMILIES = [
+ {id:'roses', name:'Roses', price:3, v:[
+  ['jaune','#F2C94C'],['blanche','#FBF8F1','image/rose12.png'],
+  ['rouge','#A8394A','image/rose-rouge.png'],['rose','#E2A6B4','image/rose-rose1.png'],
+  ['orange','#F08A3C'],['bicolore','#E8B4B8']]},
+ {id:'spray', name:'Roses spray', price:3, v:[
+  ['rouge','#A8394A'],['blanche','#FBF8F1'],['orange','#F08A3C'],
+  ['bicolore rouge','#E8B4B8'],['feu d’artifice','#F5A65B']]},
+ {id:'lys', name:'Lys', price:5, v:[
+  ['rose','#F2B6C6'],['blanche','#FBF3E3','image/david.png']]},
+ {id:'hortensias', name:'Hortensias', price:5, v:[
+  ['rose','#E8A9C0'],['blanche','#FBF8F1'],['mauve','#A98BC7']]},
+ {id:'marguerites', name:'Marguerites', price:3, v:[
+  ['blanche','#FFFFFF'],['rose','#F2B6C6'],['jaune','#F6D55C'],['mauve','#C3A6E0']]},
 ];
+const slug = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-');
+const FLOWERS = FAMILIES.flatMap(fam => fam.v.map(([label, color, img]) => ({
+  id: fam.id + '-' + slug(label),
+  name: fam.name + ' ' + label,
+  price: fam.price,
+  color: color,
+  img: img || null,
+  family: fam.id,
+  familyName: fam.name,
+})));
 
 const RIBBONS = [
   { id: "ruban_rouge", name: "Rouge",  price: 1.00, color: "#c0392b", img: "image/rubans/rouge.jpg" },
