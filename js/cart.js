@@ -1,12 +1,14 @@
 /* ===========================================================
-   JARDIN AGRO — Panier du site principal (index.html, products.html)
+   JARDIN AGRO — Panier unique du site
+   (index.html, products.html, creer-bouquet.html)
    Utilise window.PRODUCTS défini dans js/data.js
-   Clé localStorage dédiée : "jardinAgroProductCart"
-   (différente de "jardinAgroCart" utilisée par creer-bouquet.html,
-   pour éviter tout conflit entre les deux systèmes de panier)
+   Clé localStorage : "jardinAgroProductCart"
+   Un article du panier = produit du catalogue OU bouquet personnalisé
+   (un bouquet a en plus un champ "details" : liste de lignes de texte)
    =========================================================== */
 
 const PRODUCT_CART_KEY = 'jardinAgroProductCart';
+const OLD_BOUQUET_CART_KEY = 'jardinAgroCart'; // ancien panier du configurateur
 
 /* ---------- Stockage ---------- */
 function getProductCart() {
@@ -18,8 +20,27 @@ function getProductCart() {
 }
 
 function saveProductCart(cart) {
-  localStorage.setItem(PRODUCT_CART_KEY, JSON.stringify(cart));
+  try { localStorage.setItem(PRODUCT_CART_KEY, JSON.stringify(cart)); } catch (e) {}
   updateCartBadge();
+}
+
+// Reprend les bouquets de l'ancien panier (une seule fois), puis le supprime
+function migrateOldBouquetCart() {
+  try {
+    const old = JSON.parse(localStorage.getItem(OLD_BOUQUET_CART_KEY));
+    if (Array.isArray(old) && old.length) {
+      const cart = getProductCart();
+      old.forEach((o, i) => {
+        const details = (o.flowers || []).map(f => `${f.qty} × ${f.name}`);
+        if (o.wrapping) details.push('Emballage : ' + o.wrapping);
+        if (o.ribbon) details.push('Ruban : ' + o.ribbon);
+        cart.push({ id: 'bouquet-old-' + Date.now() + '-' + i, name: 'Bouquet personnalisé',
+                    price: o.total || 0, image: '', qty: 1, details });
+      });
+      localStorage.setItem(PRODUCT_CART_KEY, JSON.stringify(cart));
+    }
+    localStorage.removeItem(OLD_BOUQUET_CART_KEY);
+  } catch (e) {}
 }
 
 /* ---------- Actions panier ---------- */
@@ -45,6 +66,14 @@ function addToCart(productId, qty = 1) {
     });
   }
 
+  saveProductCart(cart);
+  renderCartUI();
+}
+
+// Ajoute un article libre (ex. bouquet personnalisé) : {id, name, price, image, qty, details[]}
+function addCustomItem(item) {
+  const cart = getProductCart();
+  cart.push(Object.assign({ qty: 1, image: '', details: [] }, item));
   saveProductCart(cart);
   renderCartUI();
 }
@@ -85,9 +114,10 @@ function renderCartUI() {
   } else {
     itemsEl.innerHTML = cart.map((item, index) => `
       <div class="cart-item" style="display:flex; gap:12px; padding:12px 0; border-bottom:1px solid #EAE6E2;">
-        <img src="${item.image || ''}" alt="${item.name}" style="width:56px; height:56px; object-fit:cover; border-radius:4px;" onerror="this.style.visibility='hidden'">
+        ${item.image ? `<img src="${item.image}" alt="${item.name}" style="width:56px; height:56px; object-fit:cover; border-radius:4px;" onerror="this.style.visibility='hidden'">` : ''}
         <div style="flex:1;">
           <div style="font-weight:600;">${item.name}</div>
+          ${item.details && item.details.length ? `<div style="font-size:12px; color:#6E6865; margin-top:2px;">${item.details.join(' · ')}</div>` : ''}
           <div style="font-size:13px; color:#3F6E4A;">${item.price.toFixed(2)} $ x ${item.qty}</div>
           <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
             <button class="cart-qty-btn" data-action="minus" data-index="${index}" style="width:24px;height:24px;border:1px solid #3F6E4A;background:none;border-radius:50%;cursor:pointer;">−</button>
@@ -138,13 +168,15 @@ function closeCart() {
   if (drawer) drawer.classList.remove('active');
 }
 
-// Exposées globalement pour que main.js (qui écoute les clics sur #cartToggle) puisse les appeler
+// Exposées globalement pour main.js et creer-bouquet.html
 window.openCart = openCart;
 window.closeCart = closeCart;
 window.addToCart = addToCart;
+window.addCustomItem = addCustomItem;
 
 /* ---------- Init ---------- */
 document.addEventListener('DOMContentLoaded', () => {
+  migrateOldBouquetCart();
   updateCartBadge();
 
   const closeBtn = document.getElementById('cartCloseBtn');
@@ -156,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Délégation : tout bouton "Ajouter au panier" doit porter
-  // class="add-to-cart" et data-id="ID_DU_PRODUIT" (voir products.js)
+  // class="add-to-cart" et data-id="ID_DU_PRODUIT"
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('.add-to-cart');
     if (btn && btn.dataset.id) {
@@ -174,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let msg = 'Bonjour ! Je souhaite commander :\n\n';
       cart.forEach(item => {
         msg += `- ${item.qty} x ${item.name} (${(item.price * item.qty).toFixed(2)} $)\n`;
+        (item.details || []).forEach(d => { msg += `    · ${d}\n`; });
       });
       const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
       msg += `\nTotal : ${total.toFixed(2)} $`;
