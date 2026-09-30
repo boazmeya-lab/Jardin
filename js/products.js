@@ -2,14 +2,72 @@
    JARDIN AGRO — Affichage, filtres et recherche du catalogue
    =========================================================== */
 
+// Numéro WhatsApp de Jardin Agro (remplace SHOP_CONFIG.whatsappNumber)
+const WHATSAPP_NUMBER = '243831982374';
+
+// --- Notification visuelle (toast) ---
+function showCartToast(message) {
+  let toast = document.getElementById('cartToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cartToast';
+    toast.style.cssText = 'position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);' +
+      'background:#2e5b38;color:#fff;padding:12px 22px;border-radius:999px;font-size:.9rem;font-weight:500;' +
+      'opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:3000;max-width:90vw;text-align:center;' +
+      'box-shadow:0 6px 18px rgba(0,0,0,.2);';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(showCartToast._t);
+  showCartToast._t = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2200);
+}
+
+// --- Mise à jour du badge du panier (le petit chiffre sur le sac) ---
+function bumpCartBadge(before) {
+  const badge = document.getElementById('cartBadge');
+  if (!badge) return;
+
+  // 1. On laisse cart.js se rafraîchir s'il expose une de ces fonctions
+  ['updateCartCount', 'updateCartBadge', 'renderCartBadge', 'updateCartUI', 'renderCart'].forEach(fn => {
+    if (typeof window[fn] === 'function') {
+      try { window[fn](); } catch (e) { /* ignoré */ }
+    }
+  });
+
+  // 2. Si le chiffre n'a toujours pas changé, on l'augmente nous-mêmes
+  if (badge.textContent === before) {
+    badge.textContent = (parseInt(before, 10) || 0) + 1;
+  }
+
+  // Petite animation pour attirer l'œil
+  badge.style.transition = 'transform .2s';
+  badge.style.transform = 'scale(1.5)';
+  setTimeout(() => { badge.style.transform = 'scale(1)'; }, 220);
+}
+
 // 1. Actions "Panier" / "Commander" sur une carte produit
 function addCurrentProductToCart(button) {
   const card = button.closest('.product-card');
   if (!card) return;
   const id = Number(card.dataset.id);
-  if (typeof addToCart === 'function') {
-    addToCart(id, 1);
+  const name = card.dataset.name;
+
+  if (typeof addToCart !== 'function') {
+    showCartToast('Le panier est indisponible pour le moment');
+    return;
   }
+
+  const badge = document.getElementById('cartBadge');
+  const before = badge ? badge.textContent : null;
+
+  addToCart(id, 1);
+  bumpCartBadge(before);
+  showCartToast(`${name} ajouté au panier`);
 }
 
 function buyCurrentProductNow(button) {
@@ -21,7 +79,7 @@ function buyCurrentProductNow(button) {
 
   const message = `Bonjour Jardin Agro, je souhaite commander :\n\n• ${name} : ${SHOP_CONFIG.currency}${price}\n\nMerci de me confirmer la disponibilité et la livraison !`;
   const encodedMessage = encodeURIComponent(message);
-  window.open(`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodedMessage}`, '_blank');
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
 }
 
 window.addCurrentProductToCart = addCurrentProductToCart;
