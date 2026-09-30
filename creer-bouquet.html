@@ -3,187 +3,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Créez votre bouquet — Jardin Agro</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Créer mon bouquet — Jardin Agro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css?v=5.0">
 <style>
-:root{--ivoire:#F7F5F3;--ivoire2:#EFEBE5;--vert:#2E5B38;--vert-h:#23472C;--mousse:#3F6E4A;--sauge:#8FAE95;--rouge:#B11A29;--encre:#1A1616;--ligne:#EAE6E2;--wa:#25D366}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0}
-body{background:var(--ivoire);color:var(--encre);font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:'Playfair Display',serif;font-weight:600;color:var(--vert);margin:0}
-button{font-family:inherit;touch-action:manipulation}
+/* Suggestions de recherche (identique à l'accueil) */
+.search-suggestions{position:absolute;top:calc(100% + 8px);right:0;width:260px;max-width:80vw;background:var(--white);border:1px solid var(--grey-mid);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.12);overflow:hidden;display:none;z-index:1100}
+.search-suggestions.active{display:block}
+.search-suggestion-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:.85rem;cursor:pointer}
+.search-suggestion-item+.search-suggestion-item{border-top:1px solid var(--grey-mid)}
+.search-suggestion-item:hover{background:var(--bg-light)}
+.search-suggestion-item i{color:var(--primary-color);width:14px;text-align:center}
+.search-suggestion-empty{padding:12px 16px;font-size:.82rem;color:var(--ink-soft)}
+@media(max-width:767px){.search-suggestions{left:0;right:0;width:auto;max-width:none}}
 
-/* Header */
-.site-header{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 48px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:0 2px 10px rgba(0,0,0,.08);border-bottom:1px solid var(--ligne)}
-.site-logo{height:45px;display:block}.site-logo.hidden{display:none}
-.brand{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--vert);text-decoration:none}
-.site-header nav{display:flex;gap:28px;font-size:.95rem;font-weight:500}
-.site-header nav a{text-decoration:none;color:var(--encre)}.site-header nav a:hover{color:var(--vert)}
-.header-right{display:flex;align-items:center;gap:10px}
-.icon-btn{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--ligne);background:#fff;color:var(--vert);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.icon-btn:hover{background:var(--ivoire2)}
-.icon-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--vert);color:#fff;border-radius:9px;min-width:18px;height:18px;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+/* Le sticky ne fonctionne pas avec overflow-x:hidden sur html/body */
+html,body{overflow-x:clip}
 
-/* Recherche */
-.search-bar{display:none;position:sticky;top:73px;z-index:999;background:#fff;border-bottom:1px solid var(--ligne);padding:10px 48px}
-.search-bar.open{display:block}
-.search-bar input{width:100%;max-width:520px;border:1px solid var(--ligne);border-radius:999px;padding:11px 18px;font-size:16px;font-family:inherit;background:var(--ivoire)}
-.search-bar input:focus{outline:2px solid var(--vert);background:#fff}
-.no-result{display:none;color:var(--sauge);padding:20px 4px}
+/* Page configurateur */
+.bq-page{background:var(--bg-light);padding:50px 0 80px}
+.bq-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:start}
+.bq-card{background:var(--white);border:1px solid var(--grey-mid);border-radius:var(--radius-card);box-shadow:0 4px 15px rgba(0,0,0,.05)}
+.bq-catalog{padding:8px 24px 16px}
+.bq-group h3{font-size:1.2rem;color:var(--primary-color);padding:20px 0 10px;border-bottom:1px solid var(--grey-mid)}
+.bq-row{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--grey-mid)}
+.bq-row:last-child{border-bottom:0}
+.bq-thumb{width:64px;height:76px;display:flex;align-items:flex-end;justify-content:center;background:var(--bg-light);border-radius:10px;overflow:hidden}
+.bq-thumb img{width:90%;height:92%;object-fit:contain}
+.bq-name{font-weight:500;font-size:.95rem}
+.bq-stepper{display:flex;align-items:center;gap:10px}
+.bq-stepper button{width:34px;height:34px;border-radius:50%;border:1px solid var(--primary-color);background:transparent;color:var(--primary-color);font-size:1.1rem;line-height:1;cursor:pointer;transition:all .2s}
+.bq-stepper button:hover:not(:disabled){background:var(--primary-color);color:var(--white)}
+.bq-stepper button:disabled{opacity:.3;cursor:default}
+.bq-qty{width:22px;text-align:center;font-weight:600}
+.bq-none{display:none;color:var(--ink-soft);padding:20px 0}
 
-/* Panier */
-.cart-overlay{position:fixed;inset:0;background:rgba(26,22,22,.25);z-index:2000;display:none}
-.cart-overlay.open{display:block}
-.cart-panel{position:fixed;top:0;right:0;bottom:0;width:min(380px,100%);background:var(--ivoire);box-shadow:-8px 0 24px rgba(0,0,0,.12);display:flex;flex-direction:column;padding:24px;transform:translateX(100%);transition:transform .25s}
-.cart-overlay.open .cart-panel{transform:none}
-.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.cart-close{background:none;border:0;font-size:20px;cursor:pointer;color:var(--mousse)}
-.cart-items{flex:1;overflow-y:auto}
-.cart-item{border-bottom:1px solid var(--ligne);padding:12px 0;font-size:13px;color:var(--mousse)}
-.cart-item-top{display:flex;justify-content:space-between;color:var(--vert);font-size:14px;margin-bottom:4px}
-.remove-item{background:none;border:0;color:var(--rouge);font-size:12px;cursor:pointer;padding:0;margin-top:4px}
-.cart-empty{color:var(--sauge);text-align:center;margin-top:40px}
-.cart-total{display:flex;justify-content:space-between;padding:14px 0;border-top:1px solid var(--ligne);font-size:16px;color:var(--vert)}
-
-/* Intro + mise en page */
-.intro{max-width:640px;padding:46px 48px 8px}
-.intro h1{font-size:42px;line-height:1.15}
-.intro p{color:var(--mousse);line-height:1.6;margin:14px 0 0;max-width:520px}
-.builder{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;padding:20px 48px 80px;align-items:start}
-
-/* Catalogue */
-.catalog-group+.catalog-group{margin-top:28px}
-.catalog-group h2{font-size:20px;font-style:italic;padding-bottom:10px;border-bottom:1px solid var(--ligne);margin-bottom:4px}
-.flower-row{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:16px;padding:12px 4px;border-bottom:1px solid var(--ligne)}
-.flower-thumb{width:64px;height:76px;display:flex;align-items:flex-end;justify-content:center;background:var(--ivoire2);border-radius:4px;overflow:hidden}
-.flower-thumb img{width:90%;height:92%;object-fit:contain}
-.flower-meta .name{font-size:16px}
-.stepper{display:flex;align-items:center;gap:10px}
-.stepper button{width:34px;height:34px;border-radius:50%;border:1px solid var(--mousse);background:transparent;color:var(--vert);font-size:17px;line-height:1;cursor:pointer}
-.stepper button:hover:not(:disabled){background:var(--vert);color:#fff}
-.stepper button:disabled{opacity:.3;cursor:default}
-.qty{width:20px;text-align:center}
-
-/* Aperçu */
-.preview-panel{position:sticky;top:90px}
-.stage-frame{background:linear-gradient(180deg,#fff,var(--ivoire2));border:1px solid var(--ligne);border-radius:4px;padding:18px 18px 0}
-.stage-label{display:flex;justify-content:space-between;font-size:13px;color:var(--mousse);padding-bottom:10px}
-.bouquet-stage{position:relative;height:460px;overflow:hidden}
-.bouquet-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:var(--sauge);font-size:14px}
-.bouquet-empty b{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;font-weight:400}
+.bq-side{position:sticky;top:calc(var(--header-h) + 20px);padding:22px}
+.bq-stage-frame{background:linear-gradient(180deg,var(--white),var(--bg-light));border:1px solid var(--grey-mid);border-radius:12px;padding:14px 14px 0}
+.bq-stage-label{display:flex;justify-content:space-between;font-size:.85rem;color:var(--ink-soft);padding-bottom:8px}
+.bq-stage{position:relative;height:440px;overflow:hidden}
+.bq-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:var(--ink-soft);font-size:.9rem}
+.bq-empty b{font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:var(--primary-color)}
 .flower-instance{position:absolute;bottom:68px;left:50%;width:var(--w);height:var(--h);transform-origin:50% 100%;transform:translateX(-50%) translateX(var(--jx)) rotate(var(--rot)) scale(var(--sc))}
 .flower-instance img{width:100%;height:100%;object-fit:contain;object-position:bottom center;display:block}
 .wrap-cone{position:absolute;left:50%;bottom:6px;width:190px;height:130px;transform:translateX(-50%);border-radius:50% 50% 4px 4px/65% 65% 4px 4px;z-index:40;box-shadow:0 2px 6px rgba(0,0,0,.08)}
 .ribbon-band{position:absolute;left:50%;bottom:40px;width:130px;height:22px;transform:translateX(-50%);z-index:41;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.15);display:none}
 .ribbon-bow{position:absolute;left:50%;bottom:44px;width:46px;height:30px;transform:translateX(-50%);z-index:42;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.18);display:none}
 
-/* Options */
-.option-block{margin-top:22px}
-.option-block h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;margin-bottom:10px}
+.bq-opt{margin-top:20px}
+.bq-opt h4{font-size:.9rem;font-weight:600;margin-bottom:10px}
 .swatch-row{display:flex;gap:12px;flex-wrap:wrap}
-.swatch{width:42px;height:42px;border-radius:50%;border:2px solid transparent;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
-.swatch[data-selected="true"]{border-color:var(--vert)}
+.swatch{width:40px;height:40px;border-radius:50%;border:2px solid transparent;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.swatch[data-selected="true"]{border-color:var(--primary-color);box-shadow:0 0 0 2px var(--white),0 0 0 4px var(--primary-color)}
 
-/* Récap */
-.summary{margin-top:28px;border-top:1px solid var(--ligne);padding-top:16px}
-.summary-line{display:flex;justify-content:space-between;font-size:14px;color:var(--mousse);padding:3px 0}
-.summary-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:10px;margin-top:6px;border-top:1px solid var(--ligne);color:var(--vert)}
-.summary-total .value{font-family:'Playfair Display',serif;font-size:30px}
-.actions{margin-top:20px;display:flex;flex-direction:column;gap:10px}
-.btn{border:0;padding:14px 26px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
-.btn-primary{background:var(--vert);color:#fff}.btn-primary:hover{background:var(--vert-h)}
-.btn-secondary{background:transparent;color:var(--vert);border:1px solid var(--mousse)}
-.btn-wa{background:var(--wa);color:#fff}
-.btn[disabled]{opacity:.4;cursor:default}
-.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--vert);color:#fff;padding:12px 22px;border-radius:4px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:3000}
+.bq-summary{margin-top:24px;border-top:1px solid var(--grey-mid);padding-top:14px}
+.bq-line{display:flex;justify-content:space-between;font-size:.9rem;color:var(--ink-soft);padding:3px 0}
+.bq-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:10px;border-top:1px solid var(--grey-mid)}
+.bq-total span:first-child{font-weight:600}
+.bq-total .value{font-family:var(--font-display);font-size:1.9rem;font-weight:700;color:var(--primary-color)}
+.bq-actions{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.bq-actions .btn{width:100%;padding:14px 26px;font-size:.9rem;gap:8px}
+.btn-outline{background:transparent;color:var(--primary-color);border:1.5px solid var(--primary-color)}
+.btn-outline:hover{background:var(--primary-color);color:var(--white)}
+.btn-wa{background:#25D366;color:var(--white)}.btn-wa:hover{background:#1eb956}
+.btn[disabled]{opacity:.4;cursor:default;pointer-events:none}
+
+/* Panier (contenu) */
+.cart-item{border-bottom:1px solid var(--grey-mid);padding:14px 0;font-size:.85rem;color:var(--ink-soft)}
+.cart-item-top{display:flex;justify-content:space-between;color:var(--ink);font-weight:600;font-size:.95rem;margin-bottom:4px}
+.remove-item{background:none;border:0;color:var(--red);font-size:.8rem;cursor:pointer;padding:0;margin-top:6px}
+.cart-empty{color:var(--ink-soft);text-align:center;margin-top:40px}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--primary-color);color:var(--white);padding:12px 22px;border-radius:999px;font-size:.9rem;opacity:0;pointer-events:none;transition:.25s;z-index:3000}
 .toast.visible{opacity:1;transform:translateX(-50%)}
 
 @media(max-width:880px){
-  .site-header{padding:12px 20px}.site-header nav{display:none}
-  .search-bar{padding:10px 20px;top:69px}
-  .intro{padding:30px 20px 4px}.intro h1{font-size:32px}
-  .builder{grid-template-columns:1fr;padding:16px 20px 60px;gap:30px}
-  .preview-panel{position:static;order:-1}
-  .bouquet-stage{height:380px}
+  .bq-page{padding:30px 0 60px}
+  .bq-grid{grid-template-columns:1fr;gap:28px}
+  .bq-side{position:static;order:-1}
+  .bq-stage{height:380px}
 }
 </style>
 </head>
 <body>
 
+<!-- HEADER (identique à l'accueil) -->
 <header class="site-header">
-  <a class="brand-block" href="index.html">
-    <img class="site-logo" src="image/logi.png" alt="Jardin Agro" onerror="this.classList.add('hidden');this.insertAdjacentHTML('afterend','<span class=brand>Jardin Agro</span>')">
-  </a>
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="products.html">Catalogue &amp; Services</a>
-    <a href="index.html#livraison">Livraison</a>
-    <a href="faq.html">FAQ</a>
-    <a href="index.html#contact">Contact</a>
-  </nav>
-  <div class="header-right">
-    <button class="icon-btn" id="searchBtn" aria-label="Rechercher une fleur">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-    </button>
-    <button class="icon-btn" id="cartToggleBtn" aria-label="Ouvrir le panier">
-      <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
-      <span class="cart-badge" id="cartBadge">0</span>
-    </button>
+  <div class="container header-inner">
+    <a href="index.html" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <img src="image/logi.png" alt="Logo Jardin Agro" style="height:80px;width:auto;" onerror="this.style.display='none'">
+    </a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="index.html">Accueil</a>
+      <a href="index.html#univers">Catalogue &amp; Services</a>
+      <a href="index.html#livraison">Livraison</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions" style="display:flex;align-items:center;gap:15px;">
+      <div class="search-widget" id="searchWidget">
+        <button class="icon-btn" id="searchToggle" aria-label="Rechercher une fleur"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <form class="search-form" id="searchForm" role="search">
+          <input type="search" id="searchInput" class="search-input" placeholder="Rechercher une fleur..." aria-label="Rechercher une fleur" autocomplete="off">
+          <div class="search-suggestions" id="searchSuggestions"></div>
+        </form>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+      <button type="button" class="icon-btn" id="cartToggle" aria-label="Panier" style="background:none;border:none;cursor:pointer;position:relative;">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-count" id="cartBadge">0</span>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="search-bar" id="searchBar">
-  <input id="searchInput" type="search" placeholder="Rechercher une fleur (rose, lys, hortensia…)" aria-label="Rechercher une fleur" autocomplete="off">
-</div>
+<main class="bq-page">
+  <div class="container">
+    <div class="section-header">
+      <h2>Créez votre bouquet</h2>
+      <p>Choisissez vos fleurs une à une, ajustez les quantités et voyez votre bouquet se composer.</p>
+    </div>
 
-<div class="cart-overlay" id="cartOverlay">
-  <div class="cart-panel">
-    <div class="cart-head"><h2 style="font-size:22px">Votre panier</h2><button class="cart-close" id="cartCloseBtn" aria-label="Fermer">✕</button></div>
-    <div class="cart-items" id="cartItems"></div>
-    <div class="cart-total"><span>Total</span><span id="cartTotal">0,00 $</span></div>
-    <button class="btn btn-wa" id="cartWhatsappBtn">📱 Commander sur WhatsApp</button>
-  </div>
-</div>
-
-<section class="intro">
-  <h1>Créez votre bouquet</h1>
-  <p>Choisissez vos fleurs une à une, ajustez les quantités, et composez un bouquet qui vous ressemble. L'aperçu se construit sous vos yeux, tige après tige.</p>
-</section>
-
-<main class="builder">
-  <div class="catalog">
-    <div id="catalog"></div>
-    <div class="no-result" id="noResult">Aucune fleur ne correspond à votre recherche.</div>
-  </div>
-
-  <div class="preview-panel">
-    <div class="stage-frame">
-      <div class="stage-label"><span>Votre bouquet</span><span id="stemCount">0 tige</span></div>
-      <div class="bouquet-stage" id="bouquetStage">
-        <div class="bouquet-empty" id="bouquetEmpty"><b>En attente de vos premières fleurs</b><span>Ajoutez une fleur dans le catalogue</span></div>
-        <div class="wrap-cone" id="wrapCone"></div>
-        <div class="ribbon-band" id="ribbonBand"></div>
-        <div class="ribbon-bow" id="ribbonBow"></div>
+    <div class="bq-grid">
+      <div class="bq-card bq-catalog">
+        <div id="catalog"></div>
+        <div class="bq-none" id="noResult">Aucune fleur ne correspond à votre recherche.</div>
       </div>
-    </div>
 
-    <div class="option-block"><h3>Emballage</h3><div class="swatch-row" id="wrapSwatches"></div></div>
-    <div class="option-block"><h3>Ruban</h3><div class="swatch-row" id="ribbonSwatches"></div></div>
+      <aside class="bq-card bq-side">
+        <div class="bq-stage-frame">
+          <div class="bq-stage-label"><span>Votre bouquet</span><span id="stemCount">0 tige</span></div>
+          <div class="bq-stage" id="bqStage">
+            <div class="bq-empty" id="bqEmpty"><b>Votre bouquet commence ici</b><span>Ajoutez une fleur dans le catalogue</span></div>
+            <div class="wrap-cone" id="wrapCone"></div>
+            <div class="ribbon-band" id="ribbonBand"></div>
+            <div class="ribbon-bow" id="ribbonBow"></div>
+          </div>
+        </div>
 
-    <div class="summary">
-      <div class="summary-line"><span>Fleurs</span><span id="lineFlowers">0,00 $</span></div>
-      <div class="summary-line"><span>Emballage</span><span id="lineWrap">0,00 $</span></div>
-      <div class="summary-total"><span>Total</span><span class="value" id="totalPrice">0,00 $</span></div>
-    </div>
+        <div class="bq-opt"><h4>Emballage</h4><div class="swatch-row" id="wrapSwatches"></div></div>
+        <div class="bq-opt"><h4>Ruban</h4><div class="swatch-row" id="ribbonSwatches"></div></div>
 
-    <div class="actions">
-      <button class="btn btn-primary" id="addToCartBtn" disabled>Ajouter mon bouquet au panier</button>
-      <button class="btn btn-secondary" id="resetBtn">Réinitialiser mon bouquet</button>
-      <button class="btn btn-wa" id="orderWhatsappBtn" disabled>📱 Commander sur WhatsApp</button>
+        <div class="bq-summary">
+          <div class="bq-line"><span>Fleurs</span><span id="lineFlowers">0,00 $</span></div>
+          <div class="bq-line"><span>Emballage</span><span id="lineWrap">0,00 $</span></div>
+          <div class="bq-total"><span>Total</span><span class="value" id="totalPrice">0,00 $</span></div>
+        </div>
+
+        <div class="bq-actions">
+          <button class="btn btn-primary" id="addToCartBtn" disabled>Ajouter mon bouquet au panier</button>
+          <button class="btn btn-wa" id="orderWhatsappBtn" disabled><i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp</button>
+          <button class="btn btn-outline" id="resetBtn">Réinitialiser mon bouquet</button>
+        </div>
+      </aside>
     </div>
   </div>
 </main>
+
+<!-- FOOTER (identique à l'accueil) -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <h3 class="footer-logo">Jardin Agro</h3>
+      <p>Haute fleuristerie et décorations événementielles sur-mesure.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="index.html#univers">Catalogue</a></li>
+      </ul>
+    </div>
+    <div class="footer-col" id="contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> +243 831 982 374</p>
+      <p><i class="fa-solid fa-envelope"></i> info@jardinagro.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Jardin Agro. Tous droits réservés.</p></div>
+</footer>
+
+<!-- PANIER (même drawer que l'accueil) -->
+<div id="cartOverlay" class="cart-overlay"></div>
+<aside id="cartDrawer" class="cart-drawer">
+  <div class="cart-header">
+    <h2>Votre Panier</h2>
+    <button id="cartCloseBtn" class="cart-close" aria-label="Fermer">&times;</button>
+  </div>
+  <div id="cartItems" class="cart-body"></div>
+  <div class="cart-footer">
+    <div class="cart-total-row"><span>Total :</span><span id="cartTotal">0,00 $</span></div>
+    <button id="cartWhatsappBtn" class="cart-whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp</button>
+  </div>
+</aside>
 
 <div class="toast" id="toast"></div>
 
@@ -193,8 +206,7 @@ const $ = id => document.getElementById(id);
 const eur = n => n.toFixed(2).replace('.', ',') + ' $';
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-/* ---------- DONNÉES ----------
-   Ajouter une couleur : une ligne [nom, couleur, couleur foncée, photo (facultatif)] */
+/* ---------- DONNÉES : [nom, couleur, couleur foncée, photo (facultatif)] ---------- */
 const FAMILIES = [
   {id:'roses', name:'Roses', type:'rose', price:3, v:[
     ['jaune','#F2C94C','#C9A227'],['blanche','#FBF8F1','#E4D9C6','image/rose12.png'],
@@ -211,7 +223,6 @@ const FAMILIES = [
     ['blanche','#FFFFFF','#EFB93B'],['rose','#F2B6C6','#EFB93B'],['jaune','#F6D55C','#B8860B'],['mauve','#C3A6E0','#EFB93B']]},
 ];
 const slug = s => norm(s).replace(/[^a-z0-9]+/g, '-');
-
 const WRAPPINGS = [
   {id:'blanc', name:'Papier blanc', price:2,   swatch:'#FBFAF7', image:'image/emballage 1.png'},
   {id:'rose',  name:'Papier rose',  price:2,   swatch:'#EBC9C3', image:'image/emballage2.png'},
@@ -265,22 +276,22 @@ const wrapPrice = () => state.wrapping ? WRAPPINGS.find(w => w.id === state.wrap
 function renderCatalog(){
   const root = $('catalog'); root.innerHTML = '';
   FAMILIES.forEach(fam => {
-    const g = document.createElement('div'); g.className = 'catalog-group';
-    g.innerHTML = `<h2>${fam.name} · ${fam.price} $ / fleur</h2>`;
+    const g = document.createElement('div'); g.className = 'bq-group';
+    g.innerHTML = `<h3>${fam.name} · ${fam.price} $ / fleur</h3>`;
     FLOWERS.filter(f => f.category === fam.id).forEach(f => {
-      const row = document.createElement('div'); row.className = 'flower-row'; row.dataset.search = norm(f.name);
-      row.innerHTML = `<div class="flower-thumb"><img src="${f.image || f.svg}" data-id="${f.id}" alt="${f.name}" onerror="fallbackImg(this)"></div>
-        <div class="flower-meta"><div class="name">${f.name}</div></div>
-        <div class="stepper">
+      const row = document.createElement('div'); row.className = 'bq-row'; row.dataset.search = norm(f.name);
+      row.innerHTML = `<div class="bq-thumb"><img src="${f.image || f.svg}" data-id="${f.id}" alt="${f.name}" onerror="fallbackImg(this)"></div>
+        <div class="bq-name">${f.name}</div>
+        <div class="bq-stepper">
           <button data-action="minus" data-id="${f.id}" aria-label="Retirer ${f.name}" disabled>−</button>
-          <span class="qty" id="qty-${f.id}">0</span>
+          <span class="bq-qty" id="qty-${f.id}">0</span>
           <button data-action="plus" data-id="${f.id}" aria-label="Ajouter ${f.name}">+</button>
         </div>`;
       g.appendChild(row);
     });
     root.appendChild(g);
   });
-  root.querySelectorAll('.stepper button').forEach(btn => btn.addEventListener('click', () =>
+  root.querySelectorAll('.bq-stepper button').forEach(btn => btn.addEventListener('click', () =>
     changeQuantity(btn.dataset.id, btn.dataset.action === 'plus' ? 1 : -1)));
 }
 function changeQuantity(id, delta){
@@ -290,33 +301,27 @@ function changeQuantity(id, delta){
   document.querySelector(`button[data-action="minus"][data-id="${id}"]`).disabled = next === 0;
   renderBouquet(); updateSummary();
 }
-
-/* ---------- RECHERCHE ---------- */
-$('searchBtn').addEventListener('click', () => {
-  const bar = $('searchBar'); bar.classList.toggle('open');
-  if(bar.classList.contains('open')) $('searchInput').focus();
-});
-$('searchInput').addEventListener('input', e => {
-  const q = norm(e.target.value.trim()); let any = false;
-  document.querySelectorAll('.catalog-group').forEach(g => {
+function filterCatalog(query){
+  const q = norm(query.trim()); let any = false;
+  document.querySelectorAll('.bq-group').forEach(g => {
     let visible = 0;
-    g.querySelectorAll('.flower-row').forEach(r => {
-      const show = !q || r.dataset.search.includes(q) || norm(g.querySelector('h2').textContent).includes(q);
+    g.querySelectorAll('.bq-row').forEach(r => {
+      const show = !q || r.dataset.search.includes(q);
       r.style.display = show ? '' : 'none'; if(show) visible++;
     });
     g.style.display = visible ? '' : 'none'; if(visible) any = true;
   });
   $('noResult').style.display = any ? 'none' : 'block';
-});
+  return any;
+}
 
 /* ---------- APERÇU DU BOUQUET ---------- */
 function renderBouquet(){
-  const stage = $('bouquetStage');
+  const stage = $('bqStage');
   stage.querySelectorAll('.flower-instance').forEach(el => el.remove());
   const n = totalStems();
-  $('bouquetEmpty').style.display = n === 0 ? 'flex' : 'none';
+  $('bqEmpty').style.display = n === 0 ? 'flex' : 'none';
   $('stemCount').textContent = n + (n > 1 ? ' tiges' : ' tige');
-
   let seed = 1;
   const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
   FLOWERS.forEach(f => {
@@ -365,8 +370,6 @@ function renderSwatches(){
   make('wrapSwatches', WRAPPINGS, true);
   make('ribbonSwatches', RIBBONS, false);
 }
-
-/* ---------- PRIX ---------- */
 function updateSummary(){
   $('lineFlowers').textContent = eur(flowersTotal());
   $('lineWrap').textContent = eur(wrapPrice());
@@ -379,7 +382,6 @@ const CART_KEY = 'jardinAgroCart';
 const getCart = () => { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e){ return []; } };
 function saveCart(cart){ try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch(e){} renderCartBadge(); }
 function renderCartBadge(){ $('cartBadge').textContent = getCart().length; }
-
 function currentOrder(){
   return {
     flowers: FLOWERS.filter(f => state.quantities[f.id] > 0).map(f => ({id: f.id, name: f.name, qty: state.quantities[f.id], price: f.price})),
@@ -402,16 +404,18 @@ $('addToCartBtn').addEventListener('click', () => {
 $('orderWhatsappBtn').addEventListener('click', () => sendWhatsApp('Bonjour ! Je souhaite commander ce bouquet :\n' + orderLines(currentOrder())));
 $('resetBtn').addEventListener('click', () => {
   FLOWERS.forEach(f => { state.quantities[f.id] = 0; $('qty-' + f.id).textContent = 0; });
-  document.querySelectorAll('.stepper button[data-action="minus"]').forEach(b => b.disabled = true);
+  document.querySelectorAll('.bq-stepper button[data-action="minus"]').forEach(b => b.disabled = true);
   state.wrapping = null;
   renderSwatches(); renderBouquet(); updateSummary();
   showToast('Bouquet réinitialisé');
 });
 
-const overlay = $('cartOverlay');
-$('cartToggleBtn').addEventListener('click', () => { renderCartPanel(); overlay.classList.add('open'); });
-$('cartCloseBtn').addEventListener('click', () => overlay.classList.remove('open'));
-overlay.addEventListener('click', e => { if(e.target === overlay) overlay.classList.remove('open'); });
+const drawer = $('cartDrawer'), overlay = $('cartOverlay');
+const openCart = () => { renderCartPanel(); drawer.classList.add('active'); overlay.classList.add('active'); };
+const closeCart = () => { drawer.classList.remove('active'); overlay.classList.remove('active'); };
+$('cartToggle').addEventListener('click', openCart);
+$('cartCloseBtn').addEventListener('click', closeCart);
+overlay.addEventListener('click', closeCart);
 
 function renderCartPanel(){
   const cart = getCart(), box = $('cartItems'); box.innerHTML = '';
@@ -442,6 +446,48 @@ function showToast(m){
   const t = $('toast'); t.textContent = m; t.classList.add('visible');
   clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('visible'), 2200);
 }
+
+/* ---------- MENU MOBILE ---------- */
+$('menuToggle').addEventListener('click', () => {
+  $('menuToggle').classList.toggle('active'); $('navMenu').classList.toggle('active');
+});
+
+/* ---------- RECHERCHE + SUGGESTIONS (comme l'accueil) ---------- */
+const SEARCH_SUGGESTIONS = [
+  {label:'Créer mon bouquet',     icon:'fa-solid fa-wand-magic-sparkles', url:'creer-bouquet.html'},
+  {label:'Fleurs pour hôtel',     icon:'fa-solid fa-hotel',               url:'products.html?category=hotel'},
+  {label:'Fleurs de bureau',      icon:'fa-solid fa-building-columns',    url:'products.html?category=entreprise'},
+  {label:'Entreprises & banques', icon:'fa-solid fa-building-columns',    url:'products.html?category=entreprise'},
+  {label:'Fleurs pour conférence',icon:'fa-solid fa-microphone-lines',    url:'products.html?category=conference'},
+  {label:'Bouquets de mariage',   icon:'fa-solid fa-champagne-glasses',   url:'products.html?category=mariage'},
+  {label:'Couronnes funéraires',  icon:'fa-solid fa-dove',                url:'products.html?category=funeraire'},
+];
+const searchWidget = $('searchWidget'), searchInput = $('searchInput'), box = $('searchSuggestions');
+function renderSuggestions(query){
+  const q = norm(query.trim());
+  if(!q){ box.classList.remove('active'); box.innerHTML = ''; return; }
+  const matches = SEARCH_SUGGESTIONS.filter(s => norm(s.label).includes(q)).slice(0, 6);
+  box.innerHTML = matches.length
+    ? matches.map(s => `<div class="search-suggestion-item" data-url="${s.url}"><i class="${s.icon}"></i><span>${s.label}</span></div>`).join('')
+    : '<div class="search-suggestion-empty">Aucune suggestion</div>';
+  box.querySelectorAll('.search-suggestion-item').forEach(el => el.addEventListener('click', () => location.href = el.dataset.url));
+  box.classList.add('active');
+}
+$('searchToggle').addEventListener('click', () => {
+  searchWidget.classList.toggle('active');
+  if(searchWidget.classList.contains('active')) searchInput.focus();
+});
+searchInput.addEventListener('input', () => { filterCatalog(searchInput.value); renderSuggestions(searchInput.value); });
+searchInput.addEventListener('focus', () => renderSuggestions(searchInput.value));
+$('searchForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const q = searchInput.value.trim();
+  if(q && !filterCatalog(q)) location.href = 'products.html?search=' + encodeURIComponent(q);
+  box.classList.remove('active');
+});
+document.addEventListener('click', e => {
+  if(!searchWidget.contains(e.target)){ searchWidget.classList.remove('active'); box.classList.remove('active'); }
+});
 
 /* ---------- DÉMARRAGE ---------- */
 renderCatalog(); renderSwatches(); renderBouquet(); updateSummary(); renderCartBadge();
