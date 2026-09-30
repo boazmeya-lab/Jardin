@@ -4,10 +4,10 @@
 
 // 1. Configuration boutique
 if (typeof SHOP_CONFIG === 'undefined') {
-  window.SHOP_CONFIG = {
-    whatsappNumber: "243998096713",
-    currency: "$"
-  };
+window.SHOP_CONFIG = {
+  whatsappNumber: "243831982374",
+  currency: "$"
+};
 } else {
   SHOP_CONFIG.whatsappNumber = "243998096713";
   SHOP_CONFIG.currency = "$";
