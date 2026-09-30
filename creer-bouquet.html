@@ -71,11 +71,6 @@ html,body{overflow-x:clip}
 .btn-wa{background:#25D366;color:var(--white)}.btn-wa:hover{background:#1eb956}
 .btn[disabled]{opacity:.4;cursor:default;pointer-events:none}
 
-/* Panier (contenu) */
-.cart-item{border-bottom:1px solid var(--grey-mid);padding:14px 0;font-size:.85rem;color:var(--ink-soft)}
-.cart-item-top{display:flex;justify-content:space-between;color:var(--ink);font-weight:600;font-size:.95rem;margin-bottom:4px}
-.remove-item{background:none;border:0;color:var(--red);font-size:.8rem;cursor:pointer;padding:0;margin-top:6px}
-.cart-empty{color:var(--ink-soft);text-align:center;margin-top:40px}
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--primary-color);color:var(--white);padding:12px 22px;border-radius:999px;font-size:.9rem;opacity:0;pointer-events:none;transition:.25s;z-index:3000}
 .toast.visible{opacity:1;transform:translateX(-50%)}
 
@@ -200,8 +195,10 @@ html,body{overflow-x:clip}
 
 <div class="toast" id="toast"></div>
 
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
 <script>
-const WHATSAPP_NUMBER = "243831982374";
+const WHATSAPP_NUMBER = (window.SHOP_CONFIG && SHOP_CONFIG.whatsappNumber) || "243831982374";
 const $ = id => document.getElementById(id);
 const eur = n => n.toFixed(2).replace('.', ',') + ' $';
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -377,14 +374,10 @@ function updateSummary(){
   $('addToCartBtn').disabled = $('orderWhatsappBtn').disabled = totalStems() === 0;
 }
 
-/* ---------- PANIER (localStorage "jardinAgroCart") ---------- */
-const CART_KEY = 'jardinAgroCart';
-const getCart = () => { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e){ return []; } };
-function saveCart(cart){ try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch(e){} renderCartBadge(); }
-function renderCartBadge(){ $('cartBadge').textContent = getCart().length; }
+/* ---------- PANIER (unique, géré par js/cart.js) ---------- */
 function currentOrder(){
   return {
-    flowers: FLOWERS.filter(f => state.quantities[f.id] > 0).map(f => ({id: f.id, name: f.name, qty: state.quantities[f.id], price: f.price})),
+    flowers: FLOWERS.filter(f => state.quantities[f.id] > 0).map(f => ({id: f.id, name: f.name, qty: state.quantities[f.id], price: f.price, image: f.image})),
     wrapping: state.wrapping ? WRAPPINGS.find(w => w.id === state.wrapping).name : null,
     ribbon: RIBBONS.find(r => r.id === state.ribbon).name,
     total: +(flowersTotal() + wrapPrice()).toFixed(2),
@@ -398,7 +391,14 @@ function orderLines(o){
 const sendWhatsApp = msg => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 
 $('addToCartBtn').addEventListener('click', () => {
-  const cart = getCart(); cart.push(currentOrder()); saveCart(cart);
+  const o = currentOrder();
+  const details = o.flowers.map(f => `${f.qty} × ${f.name}`);
+  if(o.wrapping) details.push('Emballage : ' + o.wrapping);
+  details.push('Ruban : ' + o.ribbon);
+  addCustomItem({
+    id: 'bouquet-' + Date.now(), name: 'Bouquet personnalisé', price: o.total, qty: 1,
+    image: (o.flowers.find(f => f.image) || {}).image || '', details
+  });
   showToast('Votre bouquet a été ajouté au panier');
 });
 $('orderWhatsappBtn').addEventListener('click', () => sendWhatsApp('Bonjour ! Je souhaite commander ce bouquet :\n' + orderLines(currentOrder())));
@@ -409,37 +409,7 @@ $('resetBtn').addEventListener('click', () => {
   renderSwatches(); renderBouquet(); updateSummary();
   showToast('Bouquet réinitialisé');
 });
-
-const drawer = $('cartDrawer'), overlay = $('cartOverlay');
-const openCart = () => { renderCartPanel(); drawer.classList.add('active'); overlay.classList.add('active'); };
-const closeCart = () => { drawer.classList.remove('active'); overlay.classList.remove('active'); };
 $('cartToggle').addEventListener('click', openCart);
-$('cartCloseBtn').addEventListener('click', closeCart);
-overlay.addEventListener('click', closeCart);
-
-function renderCartPanel(){
-  const cart = getCart(), box = $('cartItems'); box.innerHTML = '';
-  if(!cart.length) box.innerHTML = '<div class="cart-empty">Votre panier est vide</div>';
-  cart.forEach((o, i) => {
-    const d = document.createElement('div'); d.className = 'cart-item';
-    d.innerHTML = `<div class="cart-item-top"><span>Bouquet ${i + 1}</span><span>${eur(o.total)}</span></div>
-      <div>${o.flowers.map(f => `${f.qty} × ${f.name}`).join(', ')}</div>
-      <div>${o.wrapping ? o.wrapping + ' · ' : ''}Ruban ${o.ribbon}</div>
-      <button class="remove-item" data-index="${i}">Retirer</button>`;
-    box.appendChild(d);
-  });
-  box.querySelectorAll('.remove-item').forEach(b => b.addEventListener('click', () => {
-    const c = getCart(); c.splice(+b.dataset.index, 1); saveCart(c); renderCartPanel();
-  }));
-  $('cartTotal').textContent = eur(cart.reduce((s, o) => s + o.total, 0));
-}
-$('cartWhatsappBtn').addEventListener('click', () => {
-  const cart = getCart();
-  if(!cart.length){ showToast('Votre panier est vide'); return; }
-  let msg = 'Bonjour ! Je souhaite commander :\n\n';
-  cart.forEach((o, i) => { msg += `Bouquet ${i + 1} :\n${orderLines(o)}\n\n`; });
-  sendWhatsApp(msg + `Total général : ${eur(cart.reduce((s, o) => s + o.total, 0))}`);
-});
 
 let toastTimer;
 function showToast(m){
@@ -490,7 +460,7 @@ document.addEventListener('click', e => {
 });
 
 /* ---------- DÉMARRAGE ---------- */
-renderCatalog(); renderSwatches(); renderBouquet(); updateSummary(); renderCartBadge();
+renderCatalog(); renderSwatches(); renderBouquet(); updateSummary();
 </script>
 <script src="js/chatbot.js" defer></script>
 </body>
