@@ -9,7 +9,9 @@
   var CONTACT_PAGE = 'contact.html';
   var BOT_NAME = 'Assistant Jardin Agro';
 
-  /* ---------- BASE DE CONNAISSANCES ---------- */
+  /* ---------- BASE DE CONNAISSANCES ----------
+     Pour envoyer des photos avec une réponse, ajouter le champ
+     img: ['image/photo1.jpg', 'image/photo2.jpg', 'image/photo3.jpg'] */
   var FAQ = [
     // Salutations & Politesse
     {
@@ -26,6 +28,14 @@
       q: 'Merci',
       k: ['merci', 'super', 'genial', 'parfait', 'top', 'remercie', 'merci beaucoup'],
       a: 'Avec grand plaisir ! N’hésitez pas si vous avez d’autres questions. Bonne journée 🌺'
+    },
+
+    // Photos (images envoyées automatiquement)
+    {
+      q: 'Voir des photos de bouquets',
+      k: ['photo', 'photos', 'image', 'images', 'voir', 'montrer', 'montre', 'montrez', 'exemple', 'exemples', 'modele', 'modeles', 'catalogue', 'apercu'],
+      a: 'Voici quelques-uns de nos bouquets 🌸 Retrouvez-les tous dans le <a href="products.html">catalogue</a>, ou créez le vôtre avec <a href="creer-mon-bouquet.html">Créer mon bouquet</a>.',
+      img: ['image/bouquet1.jpg', 'image/bouquet2.jpg', 'image/bouquet3.jpg']
     },
 
     // FAQ Produits & Services
@@ -82,7 +92,7 @@
   ];
 
   var GREETING = 'Bonjour 🌸 Je suis l’assistant de Jardin Agro. Posez-moi une question sur les commandes, la livraison, les bouquets ou l’entretien de vos fleurs.';
-  var SUGGESTIONS = ['Comment passer une commande ?', 'Délais de livraison', 'Conserver mes fleurs', 'Bouquet personnalisé'];
+  var SUGGESTIONS = ['Comment passer une commande ?', 'Délais de livraison', 'Conserver mes fleurs', 'Bouquet personnalisé', 'Voir des photos'];
 
   /* ---------- MOTEUR DE RECHERCHE ---------- */
   function norm(s) {
@@ -152,8 +162,9 @@
     '@media (prefers-reduced-motion:no-preference){#ja-tip.show{animation:jaBob 1.6s ease-in-out infinite}@keyframes jaBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}}' +
     '#ja-chat-btn:focus-visible,#ja-chat button:focus-visible,#ja-chat input:focus-visible,#ja-chat a:focus-visible{outline:3px solid #a4162b;outline-offset:2px}' +
 
-    /* Fenêtre : plein écran sur mobile, pop-up sur PC */
-    '#ja-chat{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#f4f5f1;display:none;flex-direction:column;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#222}' +
+    /* Fenêtre : plein écran sur mobile (hauteur ajustée au clavier par JS), pop-up sur PC */
+    '#ja-chat{position:fixed;top:0;left:0;right:0;height:100%;z-index:99999;background:#f4f5f1;display:none;flex-direction:column;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#222;overscroll-behavior:contain}' +
+    'body.ja-lock{overflow:hidden;position:fixed;width:100%}' +
     '@media (min-width:600px){#ja-chat{top:auto;left:auto;right:18px;bottom:92px;width:380px;height:580px;max-height:calc(100vh - 110px);border-radius:18px;box-shadow:0 16px 48px rgba(0,0,0,.28);overflow:hidden}}' +
     '#ja-chat.open{display:flex}' +
     '@media (prefers-reduced-motion:no-preference){#ja-chat.open{animation:jaPop .22s ease-out}@keyframes jaPop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}}' +
@@ -171,7 +182,7 @@
     '#ja-chat header button:hover{background:rgba(255,255,255,.3)}' +
 
     /* Messages */
-    '#ja-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 12px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth}' +
+    '#ja-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:14px 12px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth}' +
     '.ja-day{align-self:center;background:#e4e7df;color:#5b6357;font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px;margin:2px 0 10px}' +
     '.ja-row{display:flex;align-items:flex-end;gap:8px;margin-top:8px}' +
     '.ja-row.user{justify-content:flex-end}' +
@@ -185,6 +196,12 @@
     '.ja-bot a{color:#a4162b}' +
     '.ja-user{background:#2b5a3c;color:#fff;border-bottom-right-radius:5px}' +
     '.ja-time{font-size:11px;color:#8a9085;margin:3px 6px 0}' +
+
+    /* Photos envoyées par l’assistant */
+    '.ja-gal{display:flex;gap:6px;margin-top:10px}' +
+    '.ja-gal img{flex:1;min-width:0;width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;cursor:pointer;display:block;background:#e4e7df}' +
+    '#ja-zoom{position:fixed;top:0;left:0;right:0;bottom:0;z-index:100000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:16px}' +
+    '#ja-zoom img{max-width:100%;max-height:100%;border-radius:12px}' +
 
     /* Indicateur « en train d’écrire » */
     '.ja-typing{display:inline-flex;gap:4px;padding:14px 16px}' +
@@ -222,6 +239,11 @@
   function now() {
     var d = new Date();
     return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+  }
+  function gallery(list) {
+    return '<div class="ja-gal">' + list.map(function (s) {
+      return '<img src="' + s + '" alt="Bouquet Jardin Agro" loading="lazy">';
+    }).join('') + '</div>';
   }
 
   function init() {
@@ -263,8 +285,41 @@
     var started = false;
     var lastWho = null;
     var typingRow = null;
+    var locked = false;
+    var savedScroll = 0;
 
     function scrollDown() { msgs.scrollTop = msgs.scrollHeight; }
+
+    /* ---- Mobile : la fenêtre suit la zone visible (clavier) ---- */
+    function fitViewport() {
+      var vv = window.visualViewport;
+      if (!vv || window.innerWidth >= 600 || !box.classList.contains('open')) {
+        box.style.height = '';
+        box.style.top = '';
+        return;
+      }
+      box.style.height = vv.height + 'px';
+      box.style.top = vv.offsetTop + 'px';
+      window.scrollTo(0, 0);
+      scrollDown();
+    }
+    function lockPage(lock) {
+      if (lock === locked || window.innerWidth >= 600) return;
+      locked = lock;
+      if (lock) {
+        savedScroll = window.pageYOffset || 0;
+        document.body.style.top = -savedScroll + 'px';
+        document.body.classList.add('ja-lock');
+      } else {
+        document.body.classList.remove('ja-lock');
+        document.body.style.top = '';
+        window.scrollTo(0, savedScroll);
+      }
+    }
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', fitViewport);
+      window.visualViewport.addEventListener('scroll', fitViewport);
+    }
 
     function add(html, who) {
       var isUser = who === 'user';
@@ -278,6 +333,11 @@
       msgs.appendChild(row);
       lastWho = who;
       scrollDown();
+      /* les photos changent la hauteur après chargement */
+      Array.prototype.forEach.call(row.querySelectorAll('img'), function (im) {
+        im.addEventListener('load', scrollDown);
+        im.addEventListener('error', function () { im.style.display = 'none'; });
+      });
       return row;
     }
 
@@ -315,7 +375,7 @@
       add(esc(text), 'user');
       var found = answer(text);
       if (found) {
-        botSays(found.a);
+        botSays(found.a + (found.img && found.img.length ? gallery(found.img) : ''));
       } else {
         botSays('Je n’ai pas la réponse à cette question, mais notre service client se fera un plaisir de vous aider 🌿' + contactBlock());
       }
@@ -344,14 +404,25 @@
       box.classList.toggle('open', willOpen);
       btn.setAttribute('aria-expanded', String(willOpen));
       btn.style.display = (willOpen && window.innerWidth < 600) ? 'none' : 'flex';
+      lockPage(willOpen);
+      fitViewport();
       if (willOpen) { hideTip(); badge.style.display = 'none'; start(); setTimeout(function () { input.focus(); }, 50); }
     }
+
+    /* Agrandir une photo au toucher */
+    msgs.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'IMG') return;
+      var z = el('div', { id: 'ja-zoom' }, '<img src="' + e.target.src + '" alt="">');
+      z.addEventListener('click', function () { z.parentNode && z.parentNode.removeChild(z); });
+      document.body.appendChild(z);
+    });
 
     btn.addEventListener('click', function () { toggle(); });
     box.querySelector('header button').addEventListener('click', function () { toggle(false); btn.focus(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggle(false); });
     window.addEventListener('resize', function () {
       btn.style.display = (box.classList.contains('open') && window.innerWidth < 600) ? 'none' : 'flex';
+      fitViewport();
     });
     input.addEventListener('input', function () { send.disabled = !input.value.trim(); });
     box.querySelector('#ja-form').addEventListener('submit', function (e) {
