@@ -35,7 +35,7 @@
       q: 'Voir des photos de bouquets',
       k: ['photo', 'photos', 'image', 'images', 'voir', 'montrer', 'montre', 'montrez', 'exemple', 'exemples', 'modele', 'modeles', 'catalogue', 'apercu'],
       a: 'Voici quelques-uns de nos bouquets 🌸 Retrouvez-les tous dans le <a href="products.html">catalogue</a>, ou créez le vôtre avec <a href="creer-mon-bouquet.html">Créer mon bouquet</a>.',
-      img: ['image/bouquet1.jpg', 'image/bouquet2.jpg', 'image/bouquet3.jpg']
+      img: ['image/maison10.jpg', 'image/maison11.jpg', 'image/maison13.jpg']
     },
 
     // FAQ Produits & Services
