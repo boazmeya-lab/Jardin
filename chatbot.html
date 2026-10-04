@@ -157,19 +157,32 @@ input:focus{border-color:#2b5a3c;background:#fff}
     else botSays('Je n’ai pas la réponse à cette question, mais notre service client se fera un plaisir de vous aider 🌿' + contact());
   }
 
-  /* Clavier mobile : la page suit la zone visible */
-  var raf = 0;
+  /* Clavier mobile : la page suit la zone visible, et se remet d'aplomb quand le clavier se ferme */
+  var raf = 0, t1 = 0, t2 = 0;
   function fit() {
     raf = 0;
     var v = window.visualViewport; if (!v) return;
-    app.style.height = v.height + 'px';
-    app.style.transform = 'translate3d(0,' + v.offsetTop + 'px,0)';
+    if (window.innerHeight - v.height < 80) {            /* clavier fermé : tout remettre à zéro */
+      app.style.height = ''; app.style.transform = '';
+      if (window.scrollY) window.scrollTo(0, 0);
+    } else {                                             /* clavier ouvert */
+      app.style.height = v.height + 'px';
+      app.style.transform = 'translate3d(0,' + v.offsetTop + 'px,0)';
+    }
+    down();
   }
-  function queueFit() { if (!raf) raf = requestAnimationFrame(fit); }
+  function queueFit() {
+    if (!raf) raf = requestAnimationFrame(fit);
+    clearTimeout(t1); clearTimeout(t2);
+    t1 = setTimeout(fit, 150);   /* re-vérifie une fois l'animation du clavier terminée */
+    t2 = setTimeout(fit, 450);
+  }
   if (window.visualViewport) {
-    visualViewport.addEventListener('resize', function () { queueFit(); setTimeout(down, 60); });
+    visualViewport.addEventListener('resize', queueFit);
     visualViewport.addEventListener('scroll', queueFit);
   }
+  input.addEventListener('focus', queueFit);
+  input.addEventListener('blur', queueFit);
 
   msgs.addEventListener('click', function (e) {
     if (e.target.tagName !== 'IMG') return;
