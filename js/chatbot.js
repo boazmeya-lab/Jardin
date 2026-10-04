@@ -8,12 +8,12 @@
   var PHONE_TEL = '+243831982374';
   /* ⚠️ Vérifiez que ces noms correspondent EXACTEMENT à vos fichiers (minuscules/majuscules comptent sur Vercel) */
   var PAGES = {
-    bouquet: 'creer-bouquet.html',
+    bouquet: 'creer-mon-bouquet.html',
     catalogue: 'products.html',
     livraison: 'livraison.html',
     contact: 'https://wa.me/243831982374'   /* WhatsApp ; remplacez par 'contact.html' si cette page existe */
   };
-  var BOT_NAME = 'lora Jardin Agro';
+  var BOT_NAME = 'Assistant Jardin Agro';
 
   /* ---------- BASE DE CONNAISSANCES ----------
      Pour envoyer des photos avec une réponse, ajouter le champ
@@ -41,7 +41,7 @@
       q: 'Voir des photos de bouquets',
       k: ['photo', 'photos', 'image', 'images', 'voir', 'montrer', 'montre', 'montrez', 'exemple', 'exemples', 'modele', 'modeles', 'catalogue', 'apercu'],
       a: 'Voici quelques-uns de nos bouquets 🌸 Retrouvez-les tous dans le <a href="' + PAGES.catalogue + '">catalogue</a>, ou créez le vôtre avec <a href="' + PAGES.bouquet + '">Créer mon bouquet</a>.',
-      img: ['image/hôtel/maison5.jpg', 'image/hôtel/maison10.jpg', 'image/hôtel/maison7.jpg']
+      img: ['image/bouquet1.jpg', 'image/bouquet2.jpg', 'image/bouquet3.jpg']
     },
 
     // FAQ Produits & Services
@@ -50,11 +50,6 @@
       k: ['commander', 'commande', 'acheter', 'achat', 'panier', 'reserver', 'passer'],
       a: 'C’est simple : choisissez vos fleurs ou bouquets dans le <a href="' + PAGES.catalogue + '">catalogue</a>, ajoutez-les au panier, puis validez votre commande. Vous pouvez aussi composer votre propre bouquet avec <a href="' + PAGES.bouquet + '">Créer mon bouquet</a>.'
     },
-     {
-      q: 'je peux avoir plus dinformation sur jardin agro ?',
-      k: ['jardin agro','information', 'jardin'],
-      a: 'Jardin Argro est une entreprise spécialisée dans la vente de fleurs fraîches à Kinshasa, en République démocratique du Congo.
-     },
     {
       q: 'Quels sont les délais et zones de livraison ?',
       k: ['livraison', 'livrer', 'delai', 'zone', 'combien de temps', 'quand', 'recevoir', 'adresse'],
