@@ -50,6 +50,11 @@
       k: ['commander', 'commande', 'acheter', 'achat', 'panier', 'reserver', 'passer'],
       a: 'C’est simple : choisissez vos fleurs ou bouquets dans le <a href="' + PAGES.catalogue + '">catalogue</a>, ajoutez-les au panier, puis validez votre commande. Vous pouvez aussi composer votre propre bouquet avec <a href="' + PAGES.bouquet + '">Créer mon bouquet</a>.'
     },
+     {
+      q: 'je peux avoir plus dinformation sur jardin agro ?',
+      k: ['jardin agro','information', 'jardin'],
+      a: 'Jardin Argro est une entreprise spécialisée dans la vente de fleurs fraîches à Kinshasa, en République démocratique du Congo.
+     },
     {
       q: 'Quels sont les délais et zones de livraison ?',
       k: ['livraison', 'livrer', 'delai', 'zone', 'combien de temps', 'quand', 'recevoir', 'adresse'],
