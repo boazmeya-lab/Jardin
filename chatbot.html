@@ -138,7 +138,12 @@ input:focus{border-color:#2b5a3c;background:#fff}
     r.appendChild(m); msgs.appendChild(r); down();
     Array.prototype.forEach.call(m.querySelectorAll('img'), function (im) {
       im.addEventListener('load', down);
-      im.addEventListener('error', function () { im.style.visibility = 'hidden'; console.warn('Image introuvable :', im.getAttribute('src')); });
+      im.addEventListener('error', function () {
+        var d = document.createElement('div');
+        d.style.cssText = 'flex:1;min-width:0;aspect-ratio:1;border-radius:12px;background:#e4e7df;font-size:10px;padding:6px;word-break:break-all;color:#a4162b';
+        d.textContent = '❌ ' + decodeURI(im.getAttribute('src'));
+        im.replaceWith(d);
+      });
     });
   }
   function gallery(l) { return '<div class="gal">' + l.map(function (s) { return '<img src="' + encodeURI(s) + '" alt="Bouquet Jardin Agro">'; }).join('') + '</div>'; }
