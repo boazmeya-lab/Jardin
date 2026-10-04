@@ -6,8 +6,14 @@
 
   var PHONE_DISPLAY = '+243 831 982 374';
   var PHONE_TEL = '+243831982374';
-  var CONTACT_PAGE = 'contact.html';
-  var BOT_NAME = 'Assistant Jardin Agro';
+  /* ⚠️ Vérifiez que ces noms correspondent EXACTEMENT à vos fichiers (minuscules/majuscules comptent sur Vercel) */
+  var PAGES = {
+    bouquet: 'creer-bouquet.html',
+    catalogue: 'products.html',
+    livraison: 'livraison.html',
+    contact: 'https://wa.me/243831982374'   /* WhatsApp ; remplacez par 'contact.html' si cette page existe */
+  };
+  var BOT_NAME = 'lora Jardin Agro';
 
   /* ---------- BASE DE CONNAISSANCES ----------
      Pour envoyer des photos avec une réponse, ajouter le champ
@@ -34,25 +40,25 @@
     {
       q: 'Voir des photos de bouquets',
       k: ['photo', 'photos', 'image', 'images', 'voir', 'montrer', 'montre', 'montrez', 'exemple', 'exemples', 'modele', 'modeles', 'catalogue', 'apercu'],
-      a: 'Voici quelques-uns de nos bouquets 🌸 Retrouvez-les tous dans le <a href="products.html">catalogue</a>, ou créez le vôtre avec <a href="creer-mon-bouquet.html">Créer mon bouquet</a>.',
-      img: ['image/maison10.jpg', 'image/maison11.jpg', 'image/maison13.jpg']
+      a: 'Voici quelques-uns de nos bouquets 🌸 Retrouvez-les tous dans le <a href="' + PAGES.catalogue + '">catalogue</a>, ou créez le vôtre avec <a href="' + PAGES.bouquet + '">Créer mon bouquet</a>.',
+      img: ['image/bouquet1.jpg', 'image/bouquet2.jpg', 'image/bouquet3.jpg']
     },
 
     // FAQ Produits & Services
     {
       q: 'Comment passer une commande ?',
       k: ['commander', 'commande', 'acheter', 'achat', 'panier', 'reserver', 'passer'],
-      a: 'C’est simple : choisissez vos fleurs ou bouquets dans le <a href="products.html">catalogue</a>, ajoutez-les au panier, puis validez votre commande. Vous pouvez aussi composer votre propre bouquet avec <a href="creer-mon-bouquet.html">Créer mon bouquet</a>.'
+      a: 'C’est simple : choisissez vos fleurs ou bouquets dans le <a href="' + PAGES.catalogue + '">catalogue</a>, ajoutez-les au panier, puis validez votre commande. Vous pouvez aussi composer votre propre bouquet avec <a href="' + PAGES.bouquet + '">Créer mon bouquet</a>.'
     },
     {
       q: 'Quels sont les délais et zones de livraison ?',
       k: ['livraison', 'livrer', 'delai', 'zone', 'combien de temps', 'quand', 'recevoir', 'adresse'],
-      a: 'Les délais et zones de livraison sont détaillés sur la page <a href="livraison.html">Livraison</a>. Pour une livraison urgente ou une adresse particulière, notre service client vous répond rapidement.'
+      a: 'Les délais et zones de livraison sont détaillés sur la page <a href="' + PAGES.livraison + '">Livraison</a>. Pour une livraison urgente ou une adresse particulière, notre service client vous répond rapidement.'
     },
     {
       q: 'Puis-je créer un bouquet personnalisé ?',
       k: ['personnalise', 'personnaliser', 'creer', 'composer', 'composition', 'sur mesure', 'choisir mes fleurs', 'ruban', 'emballage'],
-      a: 'Oui ! Avec <a href="creer-mon-bouquet.html">Créer mon bouquet</a>, vous choisissez vos fleurs et leur quantité, l’emballage et le ruban. Vous voyez l’aperçu et le prix se mettre à jour en direct.'
+      a: 'Oui ! Avec <a href="' + PAGES.bouquet + '">Créer mon bouquet</a>, vous choisissez vos fleurs et leur quantité, l’emballage et le ruban. Vous voyez l’aperçu et le prix se mettre à jour en direct.'
     },
     {
       q: 'Proposez-vous des abonnements floraux pour les entreprises ?',
@@ -165,8 +171,10 @@
     /* Fenêtre : plein écran sur mobile (hauteur ajustée au clavier par JS), pop-up sur PC */
     '#ja-chat{position:fixed;top:0;left:0;right:0;height:100%;z-index:99999;background:#f4f5f1;display:none;flex-direction:column;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#222;overscroll-behavior:contain}' +
     'body.ja-lock{overflow:hidden;position:fixed;width:100%}' +
+    'html.ja-lock{overflow:hidden}' +
     '@media (min-width:600px){#ja-chat{top:auto;left:auto;right:18px;bottom:92px;width:380px;height:580px;max-height:calc(100vh - 110px);border-radius:18px;box-shadow:0 16px 48px rgba(0,0,0,.28);overflow:hidden}}' +
     '#ja-chat.open{display:flex}' +
+    '@media (max-width:599px){#ja-chat{will-change:transform}#ja-chat.open{animation:none!important}}' +
     '@media (prefers-reduced-motion:no-preference){#ja-chat.open{animation:jaPop .22s ease-out}@keyframes jaPop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}}' +
 
     /* En-tête */
@@ -182,7 +190,7 @@
     '#ja-chat header button:hover{background:rgba(255,255,255,.3)}' +
 
     /* Messages */
-    '#ja-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:14px 12px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth}' +
+    '#ja-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:14px 12px;display:flex;flex-direction:column;gap:4px}' +
     '.ja-day{align-self:center;background:#e4e7df;color:#5b6357;font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px;margin:2px 0 10px}' +
     '.ja-row{display:flex;align-items:flex-end;gap:8px;margin-top:8px}' +
     '.ja-row.user{justify-content:flex-end}' +
@@ -199,6 +207,7 @@
 
     /* Photos envoyées par l’assistant */
     '.ja-gal{display:flex;gap:6px;margin-top:10px}' +
+    '.ja-gal img.bad{visibility:hidden}' +
     '.ja-gal img{flex:1;min-width:0;width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;cursor:pointer;display:block;background:#e4e7df}' +
     '#ja-zoom{position:fixed;top:0;left:0;right:0;bottom:0;z-index:100000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:16px}' +
     '#ja-zoom img{max-width:100%;max-height:100%;border-radius:12px}' +
@@ -290,19 +299,20 @@
 
     function scrollDown() { msgs.scrollTop = msgs.scrollHeight; }
 
-    /* ---- Mobile : la fenêtre suit la zone visible (clavier) ---- */
-    function fitViewport() {
+    /* ---- Mobile : la fenêtre suit la zone visible (clavier), sans saccade ---- */
+    var raf = 0;
+    function applyViewport() {
+      raf = 0;
       var vv = window.visualViewport;
       if (!vv || window.innerWidth >= 600 || !box.classList.contains('open')) {
         box.style.height = '';
-        box.style.top = '';
+        box.style.transform = '';
         return;
       }
       box.style.height = vv.height + 'px';
-      box.style.top = vv.offsetTop + 'px';
-      window.scrollTo(0, 0);
-      scrollDown();
+      box.style.transform = 'translate3d(0,' + vv.offsetTop + 'px,0)';
     }
+    function fitViewport() { if (!raf) raf = requestAnimationFrame(applyViewport); }
     function lockPage(lock) {
       if (lock === locked || window.innerWidth >= 600) return;
       locked = lock;
@@ -310,14 +320,16 @@
         savedScroll = window.pageYOffset || 0;
         document.body.style.top = -savedScroll + 'px';
         document.body.classList.add('ja-lock');
+        document.documentElement.classList.add('ja-lock');
       } else {
         document.body.classList.remove('ja-lock');
+        document.documentElement.classList.remove('ja-lock');
         document.body.style.top = '';
         window.scrollTo(0, savedScroll);
       }
     }
     if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', fitViewport);
+      window.visualViewport.addEventListener('resize', function () { fitViewport(); setTimeout(scrollDown, 60); });
       window.visualViewport.addEventListener('scroll', fitViewport);
     }
 
@@ -336,7 +348,7 @@
       /* les photos changent la hauteur après chargement */
       Array.prototype.forEach.call(row.querySelectorAll('img'), function (im) {
         im.addEventListener('load', scrollDown);
-        im.addEventListener('error', function () { im.style.display = 'none'; });
+        im.addEventListener('error', function () { im.classList.add('bad'); if (window.console) console.warn('[Chatbot] Image introuvable :', im.getAttribute('src')); });
       });
       return row;
     }
@@ -356,7 +368,8 @@
     }
 
     function contactBlock() {
-      return '<div class="ja-cta"><a class="p" href="' + CONTACT_PAGE + '">Contacter le service client</a>' +
+      var ext = /^https?:/.test(PAGES.contact);
+      return '<div class="ja-cta"><a class="p" href="' + PAGES.contact + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>Contacter le service client</a>' +
         '<a class="s" href="tel:' + PHONE_TEL + '">Appeler le ' + PHONE_DISPLAY + '</a></div>';
     }
 
@@ -408,6 +421,17 @@
       fitViewport();
       if (willOpen) { hideTip(); badge.style.display = 'none'; start(); setTimeout(function () { input.focus(); }, 50); }
     }
+
+    /* Liens du chat : ferme le chat puis ouvre la page */
+    msgs.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || /^(tel:|mailto:)/.test(href) || a.target === '_blank') return;
+      e.preventDefault();
+      lockPage(false);
+      window.location.href = href;
+    });
 
     /* Agrandir une photo au toucher */
     msgs.addEventListener('click', function (e) {
