@@ -41,7 +41,7 @@
       q: 'Voir des photos de bouquets',
       k: ['photo', 'photos', 'image', 'images', 'voir', 'montrer', 'montre', 'montrez', 'exemple', 'exemples', 'modele', 'modeles', 'catalogue', 'apercu'],
       a: 'Voici quelques-uns de nos bouquets 🌸 Retrouvez-les tous dans le <a href="' + PAGES.catalogue + '">catalogue</a>, ou créez le vôtre avec <a href="' + PAGES.bouquet + '">Créer mon bouquet</a>.',
-      img: ['image/hôtel/maison5.jpg', 'image/hôtel/maison6.jpg', 'image/hôtel/maison7.jpg']
+      img: ['image/hôtel/maison5.jpg', 'image/hôtel/maison10.jpg', 'image/hôtel/maison7.jpg']
     },
 
     // FAQ Produits & Services
