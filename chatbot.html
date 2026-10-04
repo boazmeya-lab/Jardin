@@ -139,6 +139,10 @@ input:focus{border-color:#2b5a3c;background:#fff}
     Array.prototype.forEach.call(m.querySelectorAll('img'), function (im) {
       im.addEventListener('load', down);
       im.addEventListener('error', function () {
+        /* Safari/Chrome n'écrivent pas "ô" de la même façon : on réessaie avec l'autre forme */
+        var raw = decodeURI(im.getAttribute('src'));
+        if (!im.dataset.t) { im.dataset.t = '1'; im.src = encodeURI(raw.normalize('NFD')); return; }
+        if (im.dataset.t === '1') { im.dataset.t = '2'; im.src = encodeURI(raw.normalize('NFC')); return; }
         var d = document.createElement('div');
         d.style.cssText = 'flex:1;min-width:0;aspect-ratio:1;border-radius:12px;background:#e4e7df;font-size:10px;padding:6px;word-break:break-all;color:#a4162b';
         d.textContent = '❌ ' + decodeURI(im.getAttribute('src'));
